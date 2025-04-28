@@ -1,0 +1,45 @@
+# Project Guidelines
+
+## Technology Stack
+
+This project utilizes the following technologies:
+
+- **Framework**: Next.js (React framework)
+- **Language**: TypeScript
+- **Backend/Auth/DB**: Supabase
+- **UI Library**: Ant Design (antd)
+- **Testing**: Vitest
+- **Linting/Formatting**: Biome
+- **Package Manager**: pnpm
+- **Styling**: CSS (potentially with Tailwind CSS or CSS Modules - needs
+  confirmation)
+
+## Documentation Requirements
+
+- Update relevant documentation in /docs when modifying features
+- Keep README.md in sync with new capabilities
+- Maintain changelog entries in CHANGELOG.md
+
+## Architecture Decision Records
+
+Create ADRs in /docs/adr for:
+
+- Major dependency changes
+- Architectural pattern changes
+- New integration patterns
+- Database schema changes Follow template in /docs/adr/template.md
+
+## Code Style & Patterns
+
+- Generate API clients using OpenAPI Generator
+- Use TypeScript axios template
+- Place generated code in /src/generated
+- Prefer composition over inheritance
+- Use repository pattern for data access
+- Follow error handling pattern in /src/utils/errors.ts
+
+## Testing Standards
+
+- Unit tests required for business logic
+- Integration tests for API endpoints
+- E2E tests for critical user flows

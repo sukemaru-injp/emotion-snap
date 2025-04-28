@@ -1,23 +1,45 @@
 {
-  "name": "emotion-snap",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.3.1"
-  },
-  "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19"
-  },
-  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
+	"name": "emotion-snap",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbopack -p 3100",
+		"build": "next build",
+		"start": "next start",
+		"test": "vitest",
+		"lint": "biome lint --write",
+		"format": "biome format --write",
+		"check": "biome check --write",
+		"gen:db-types": "source .env.local && supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > modules/database.types.ts"
+	},
+	"dependencies": {
+		"@ant-design/nextjs-registry": "^1.0.2",
+		"@supabase/auth-ui-react": "^0.4.7",
+		"@supabase/auth-ui-shared": "^0.1.8",
+		"@supabase/ssr": "^0.6.1",
+		"@supabase/supabase-js": "^2.49.4",
+		"@tanstack/react-form": "^1.8.0",
+		"antd": "^5.24.8",
+		"date-fns": "^4.1.0",
+		"neverthrow": "^8.2.0",
+		"next": "15.3.1",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"uuid": "^11.1.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/react": "^16.3.0",
+		"@types/node": "^20",
+		"@types/react": "^19",
+		"@types/react-dom": "^19",
+		"@types/uuid": "^10.0.0",
+		"@vitejs/plugin-react": "^4.4.1",
+		"jsdom": "^26.1.0",
+		"typescript": "^5.8.3",
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.1.2"
+	},
+	"packageManager": "pnpm@10.8.0"
 }
