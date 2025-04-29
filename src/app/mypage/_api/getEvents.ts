@@ -3,19 +3,16 @@ import type { Event } from '@/common/types/Event';
 import { createClient } from '@/libs/supabase/server';
 import { err, ok } from 'neverthrow';
 
-export const getEvents: ApiResults<readonly Event[]> = async () => {
+export const getEvents: ApiResults<
+	readonly Event[],
+	{ userId: string }
+> = async ({ userId }) => {
 	const supabase = await createClient();
-
-	const { data: userData } = await supabase.auth.getUser();
-
-	if (userData.user === null) {
-		return err({ error: new Error('User not authenticated') });
-	}
 
 	const { data, error } = await supabase
 		.from('event')
 		.select('*')
-		.eq('user_id', userData.user.id);
+		.eq('user_id', userId);
 
 	if (error) {
 		return err({ error });

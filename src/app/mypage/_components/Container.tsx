@@ -3,8 +3,11 @@ import type { JSX } from 'react';
 import { getEvents } from '../_api/getEvents';
 import { Presenter } from './Presenter';
 
-export const Container = async (): Promise<JSX.Element> => {
-	const result = await getEvents();
+type Props = {
+	userId: string;
+};
+export const Container = async (p: Props): Promise<JSX.Element> => {
+	const result = await getEvents({ userId: p.userId });
 
 	if (result.isErr()) {
 		console.error(result.error); // Log the error for debugging
@@ -20,5 +23,5 @@ export const Container = async (): Promise<JSX.Element> => {
 
 	const events = result.value;
 
-	return <Presenter events={events} />;
+	return <Presenter events={events} userId={p.userId} />;
 };
