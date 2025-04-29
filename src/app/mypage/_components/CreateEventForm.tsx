@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { Button, DatePicker, Form, Input, Modal, Space, message } from 'antd';
 import dayjs from 'dayjs';
 import { type FC, useCallback, useState, useTransition } from 'react'; // Add useEffect
-import { createEvent } from '../_actions/eventActions';
+import { createEvent } from '../_actions/createEvent';
 
 type EventInput = {
 	name: string;
