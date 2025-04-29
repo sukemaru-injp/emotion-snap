@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import { theme } from '@/styles/theme';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP, Poppins } from 'next/font/google';
@@ -37,12 +38,40 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ja">
-			<AntdRegistry>
-				<body className={`${poppins.className} ${notoSansJP.className}`}>
-					<header>header</header>
-					<main>{children}</main>
-				</body>
-			</AntdRegistry>
+			<body className={`${poppins.className} ${notoSansJP.className}`}>
+				<AntdRegistry>
+					<header
+						style={{
+							position: 'sticky',
+							top: 0,
+							backgroundColor: theme.colors.primary,
+							display: 'grid',
+							placeContent: 'center',
+							padding: `${theme.spacing.sm}`
+						}}
+					>
+						<h2
+							style={{
+								color: 'white',
+								fontWeight: 'bold'
+							}}
+						>
+							余興
+						</h2>
+					</header>
+					<main style={{ minHeight: '100vh' }}>{children}</main>
+					<footer
+						style={{
+							textAlign: 'center',
+							backgroundColor: theme.colors.background,
+							color: theme.colors.textSecondary,
+							padding: `${theme.spacing.md} 0`
+						}}
+					>
+						©{new Date().getFullYear()} sukemaru
+					</footer>
+				</AntdRegistry>
+			</body>
 		</html>
 	);
 }

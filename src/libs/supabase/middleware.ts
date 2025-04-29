@@ -40,11 +40,14 @@ export async function updateSession(request: NextRequest) {
 		data: { user }
 	} = await supabase.auth.getUser();
 
-	if (user || request.nextUrl.pathname.startsWith('/public')) {
-		return supabaseResponse;
-	}
+	console.log('user', user);
+	// if (
+	// 	request.nextUrl.pathname.startsWith('/public') ||
+	// 	request.nextUrl.pathname === '/'
+	// ) {
+	// 	return supabaseResponse;
+	// }
 
-	// TODO:loginページへの遷移条件の整理
 	if (
 		!user &&
 		!request.nextUrl.pathname.startsWith('/login') &&

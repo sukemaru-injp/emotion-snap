@@ -1,19 +1,17 @@
 import { createClient } from '@/libs/supabase/server';
+import { redirect } from 'next/navigation';
 import type { JSX } from 'react';
 import { LoginView } from './_components/LoginView';
 
 export default async function Login(): Promise<JSX.Element> {
 	const supabase = await createClient();
 
-	const { data, error } = await supabase.auth.getUser();
+	const { data } = await supabase.auth.getUser();
 
-	if (error || !data?.user) {
-		return <LoginView />;
+	if (data.user !== null) {
+		redirect('/mypage');
+		return <></>;
 	}
 
-	return (
-		<>
-			<p>ログインしています。</p>
-		</>
-	);
+	return <LoginView />;
 }

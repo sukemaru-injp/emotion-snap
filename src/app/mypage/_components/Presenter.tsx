@@ -1,9 +1,9 @@
 'use client'; // Add 'use client' because Ant Design components are client-side
 
 import type { Event } from '@/common/types/Event';
-import { type FC, useCallback } from 'react';
-import { List, Card, Typography } from 'antd';
+import { Card, List, Typography } from 'antd';
 import { format } from 'date-fns'; // Import format from date-fns
+import { type FC, useCallback } from 'react';
 
 const { Title, Text } = Typography;
 

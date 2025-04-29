@@ -1,10 +1,10 @@
-import type { JSX } from 'react';
 import { Alert } from 'antd';
+import type { JSX } from 'react';
 import { getEvents } from '../_api/getEvents';
 import { Presenter } from './Presenter';
 
 export const Container = async (): Promise<JSX.Element> => {
-	const result = await getEvents(undefined); // Pass undefined explicitly
+	const result = await getEvents();
 
 	if (result.isErr()) {
 		console.error(result.error); // Log the error for debugging
