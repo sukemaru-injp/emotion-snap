@@ -3,6 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { Button, DatePicker, Form, Input, Modal, Space, message } from 'antd';
 import dayjs from 'dayjs';
 import { type FC, useCallback, useState, useTransition } from 'react'; // Add useEffect
+import { AiOutlinePlus } from 'react-icons/ai';
 import { createEvent } from '../_actions/createEvent';
 
 type EventInput = {
@@ -13,8 +14,10 @@ type EventInput = {
 
 type Props = {
 	userId: string;
+	isCreateDisabled?: boolean; // Add optional prop
 };
-export const CreateEventForm: FC<Props> = ({ userId }) => {
+export const CreateEventForm: FC<Props> = ({ userId, isCreateDisabled }) => {
+	// Destructure prop
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [isSubmitting, start] = useTransition();
 	const [messageApi, contextHolder] = message.useMessage();
@@ -31,11 +34,10 @@ export const CreateEventForm: FC<Props> = ({ userId }) => {
 		undefined,
 		undefined
 	>({
-		// Let TypeScript infer the type again
 		defaultValues: {
 			name: '',
 			code: '',
-			date: null // Revert to null for DatePicker initial value
+			date: null
 		},
 		onSubmit: ({ value }) => {
 			start(async () => {
@@ -80,7 +82,11 @@ export const CreateEventForm: FC<Props> = ({ userId }) => {
 	return (
 		<>
 			{contextHolder}
-			<Button type="primary" onClick={showModal} style={{ marginBottom: 16 }}>
+			<Button
+				onClick={showModal}
+				icon={<AiOutlinePlus />}
+				disabled={isCreateDisabled}
+			>
 				新規作成
 			</Button>
 			<Modal

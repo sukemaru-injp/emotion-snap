@@ -2,12 +2,20 @@
 
 import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import type { Event } from '@/common/types/Event';
-import { Card, List, Typography } from 'antd';
+import { theme } from '@/styles/theme';
+// Import Button, Modal, Space, Alert
+import { Alert, Button, Card, List, Modal, Space, Typography } from 'antd'; // Add Alert
 import { format } from 'date-fns'; // Import format from date-fns
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useMemo, useState } from 'react'; // Add useMemo
+// Import delete, calendar, and clock icons
+import {
+	AiOutlineCalendar,
+	AiOutlineClockCircle,
+	AiOutlineDelete
+} from 'react-icons/ai';
 import { CreateEventForm } from './CreateEventForm';
 
-const { Title, Text } = Typography;
+const { Text, Title } = Typography; // Add Title
 
 type Props = {
 	events: readonly Event[];
@@ -15,39 +23,147 @@ type Props = {
 };
 
 export const Presenter: FC<Props> = ({ events, userId }) => {
+	const isCreateDisabled = useMemo(() => events.length >= 3, [events.length]);
+
+	// Update formatDate to handle errors and accept format string
 	const formatDate = useCallback((dateString: string | null): string => {
-		if (!dateString) return 'Date not set';
-		return format(new Date(dateString), 'yyyy-MM-dd');
+		if (!dateString) return 'Not set';
+		try {
+			return format(new Date(dateString), 'yyyy-MM-dd');
+		} catch (error) {
+			console.error('Error formatting date:', dateString, error);
+			return 'Invalid date';
+		}
+	}, []);
+
+	const [isOpen, setIsOpen] = useState(false);
+	const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
+	const handleDelete = useCallback((eventId: number) => {
+		setIsOpen(true);
+		setDeleteTarget(eventId);
+	}, []);
+	const handleOk = useCallback(() => {
+		console.log('Delete event:', deleteTarget); // Replace with actual delete logic later
+		// TODO: Implement actual deletion logic (e.g., call server action)
+	}, [deleteTarget]);
+
+	const handleCancel = useCallback(() => {
+		setIsOpen(false);
+		setDeleteTarget(null);
 	}, []);
 
 	return (
 		<ThemeProvider>
-			<div>
-				<CreateEventForm userId={userId} />
-				{events.length === 0 ? (
-					<Text>No events found.</Text>
-				) : (
-					<List
-						grid={{
-							gutter: 16,
-							xs: 1, // 1 column on extra small screens
-							sm: 1, // 1 column on small screens
-							md: 2, // 2 columns on medium screens
-							lg: 3, // 3 columns on large screens
-							xl: 4, // 4 columns on extra large screens
-							xxl: 4 // 4 columns on extra extra large screens
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					width: '100%'
+				}}
+			>
+				<div
+					style={{
+						padding: theme.spacing.md
+					}}
+				>
+					<div
+						style={{
+							display: 'flex',
+							gap: theme.spacing.md,
+							alignItems: 'center'
 						}}
-						dataSource={[...events]} // Create a mutable copy
-						renderItem={(event) => (
-							<List.Item>
-								<Card hoverable title={<Title level={5}>{event.name}</Title>}>
-									<Text>Date: {formatDate(event.date)}</Text>
-								</Card>
-							</List.Item>
-						)}
-					/>
-				)}
+					>
+						<Title
+							level={3}
+							style={{ marginTop: '24px', marginBottom: '16px' }}
+						>
+							イベント一覧
+						</Title>
+						<CreateEventForm
+							userId={userId}
+							isCreateDisabled={isCreateDisabled}
+						/>
+					</div>
+					{isCreateDisabled && (
+						<Alert
+							message="無料プランではイベントは3つまで作成できます。"
+							type="warning"
+							showIcon
+							style={{ marginBottom: theme.spacing.md }}
+						/>
+					)}
+					{events.length === 0 ? (
+						<Text>No events found.</Text>
+					) : (
+						<List
+							grid={{
+								gutter: 16,
+								xs: 1, // 1 column on extra small screens
+								sm: 1, // 1 column on small screens
+								md: 2, // 2 columns on medium screens
+								lg: 3, // 3 columns on large screens
+								xl: 4, // 4 columns on extra large screens
+								xxl: 4 // 4 columns on extra extra large screens
+							}}
+							dataSource={[...events]} // Create a mutable copy
+							renderItem={(event) => (
+								<List.Item>
+									<Card
+										hoverable
+										actions={[
+											// Move delete to actions for better standard placement
+											<Button
+												type="text" // Use text button for less visual weight
+												danger
+												icon={<AiOutlineDelete />}
+												onClick={() => handleDelete(event.id)}
+												key="delete"
+											>
+												Delete
+											</Button>
+										]}
+									>
+										<Card.Meta
+											title={event.name}
+											description={
+												<Space
+													direction="vertical"
+													style={{ width: '100%', marginTop: '8px' }}
+												>
+													<Text type="secondary">
+														<AiOutlineCalendar style={{ marginRight: '4px' }} />
+														Event Date: {formatDate(event.date)}
+													</Text>
+													<Text type="secondary">
+														<AiOutlineClockCircle
+															style={{ marginRight: '4px' }}
+														/>
+														Created: {formatDate(event.createdAt)}
+													</Text>
+													{/* Optionally display event code if needed */}
+													{/* <Text type="secondary">Code: {event.code}</Text> */}
+												</Space>
+											}
+										/>
+									</Card>
+								</List.Item>
+							)}
+						/>
+					)}
+				</div>
 			</div>
+
+			<Modal
+				title="Delete Event?"
+				open={isOpen}
+				okText="Delete"
+				okType="danger"
+				cancelText="Cancel"
+				onOk={handleOk}
+				onCancel={handleCancel}
+			>
+				<p>Are you sure you want to delete this event?</p>
+			</Modal>
 		</ThemeProvider>
 	);
 };

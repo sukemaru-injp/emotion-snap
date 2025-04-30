@@ -1,9 +1,9 @@
 'use server';
 
 import type { Database } from '@/../modules/database.types';
+import { generateRandomId } from '@/common/utils/generateRandomId';
 import { createClient } from '@/libs/supabase/server';
 import { type Result, err, ok } from 'neverthrow'; // Use type import for Result
-import { generateRandomId } from '@/common/utils/generateRandomId';
 
 type EventFormData = {
 	name: string;
