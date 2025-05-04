@@ -3,6 +3,7 @@ import { theme } from '@/styles/theme';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP, Poppins } from 'next/font/google';
+import Link from 'next/link';
 
 const poppins = Poppins({
 	weight: ['400', '600', '700'],
@@ -50,14 +51,16 @@ export default function RootLayout({
 							padding: `${theme.spacing.sm}`
 						}}
 					>
-						<h2
-							style={{
-								color: 'white',
-								fontWeight: 'bold'
-							}}
-						>
-							余興
-						</h2>
+						<Link href="/" style={{ textDecoration: 'none' }}>
+							<h2
+								style={{
+									color: 'white',
+									fontWeight: 'bold'
+								}}
+							>
+								余興
+							</h2>
+						</Link>
 					</header>
 					<main style={{ minHeight: '100vh' }}>{children}</main>
 					<footer

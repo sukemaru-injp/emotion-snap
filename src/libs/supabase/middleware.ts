@@ -39,14 +39,12 @@ export async function updateSession(request: NextRequest) {
 	const {
 		data: { user }
 	} = await supabase.auth.getUser();
-
-	console.log('user', user);
-	// if (
-	// 	request.nextUrl.pathname.startsWith('/public') ||
-	// 	request.nextUrl.pathname === '/'
-	// ) {
-	// 	return supabaseResponse;
-	// }
+	if (
+		request.nextUrl.pathname.startsWith('/public') ||
+		request.nextUrl.pathname === '/'
+	) {
+		return supabaseResponse;
+	}
 
 	if (
 		!user &&
