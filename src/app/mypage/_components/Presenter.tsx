@@ -6,12 +6,14 @@ import { theme } from '@/styles/theme';
 // Import Button, Modal, Space, Alert
 import { Alert, Button, Card, List, Modal, Space, Typography } from 'antd'; // Add Alert
 import { format } from 'date-fns'; // Import format from date-fns
+import Link from 'next/link'; // Import Link
 import { type FC, useCallback, useMemo, useState } from 'react'; // Add useMemo
-// Import delete, calendar, and clock icons
+// Import delete, calendar, clock, and info icons
 import {
 	AiOutlineCalendar,
 	AiOutlineClockCircle,
-	AiOutlineDelete
+	AiOutlineDelete,
+	AiOutlineInfoCircle // Import Info icon
 } from 'react-icons/ai';
 import { CreateEventForm } from './CreateEventForm';
 
@@ -111,9 +113,13 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 									<Card
 										hoverable
 										actions={[
-											// Move delete to actions for better standard placement
+											<Link href={`/mypage/event/${event.id}`} key="detail">
+												<Button type="text" icon={<AiOutlineInfoCircle />}>
+													Details
+												</Button>
+											</Link>,
 											<Button
-												type="text" // Use text button for less visual weight
+												type="text"
 												danger
 												icon={<AiOutlineDelete />}
 												onClick={() => handleDelete(event.id)}
