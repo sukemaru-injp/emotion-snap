@@ -1,14 +1,12 @@
-'use client'; // Add 'use client' because Ant Design components are client-side
+'use client';
 
 import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import type { Event } from '@/common/types/Event';
 import { theme } from '@/styles/theme';
-// Import Button, Modal, Space, Alert
-import { Alert, Button, Card, List, Modal, Space, Typography } from 'antd'; // Add Alert
-import { format } from 'date-fns'; // Import format from date-fns
-import Link from 'next/link'; // Import Link
-import { type FC, useCallback, useMemo, useState } from 'react'; // Add useMemo
-// Import delete, calendar, clock, and info icons
+import { Alert, Button, Card, List, Modal, Space, Typography } from 'antd';
+import { format } from 'date-fns';
+import Link from 'next/link';
+import { type FC, useCallback, useMemo, useState } from 'react';
 import {
 	AiOutlineCalendar,
 	AiOutlineClockCircle,
