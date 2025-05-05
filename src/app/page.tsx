@@ -1,5 +1,10 @@
-import type { JSX } from 'react';
+import { type JSX, Suspense } from 'react';
+import { TopContainer } from './_components/TopContainer';
 
 export default function Home(): JSX.Element {
-	return <h1>Hello world!</h1>;
+	return (
+		<Suspense fallback={null}>
+			<TopContainer />
+		</Suspense>
+	);
 }
