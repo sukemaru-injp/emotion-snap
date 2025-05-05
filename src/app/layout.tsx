@@ -71,7 +71,7 @@ export default function RootLayout({
 							padding: `${theme.spacing.md} 0`
 						}}
 					>
-						©{new Date().getFullYear()} sukemaru
+						©2025 sukemaru
 					</footer>
 				</AntdRegistry>
 			</body>

@@ -1,6 +1,6 @@
 import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import type React from 'react';
-import { getEvent } from '../_api/getEvent';
+import { getEvent } from '../../../../_api/getEvent';
 import { Presenter } from './Presenter';
 
 type ContainerProps = {

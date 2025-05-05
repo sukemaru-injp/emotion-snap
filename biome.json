@@ -6,9 +6,8 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"include": ["./*.ts", "./*.tsx", "./*.mts", "./*.json"],
-		"ignoreUnknown": false,
-		"ignore": ["node_modules", ".next/*", "public/*"]
+		"include": ["./*.js", "./*.mts", "./*.ts", "./*.tsx", "./*.json"],
+		"ignore": ["node_modules", ".next/*"]
 	},
 	"formatter": {
 		"enabled": true,
