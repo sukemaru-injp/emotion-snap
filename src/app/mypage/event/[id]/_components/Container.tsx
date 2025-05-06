@@ -5,9 +5,13 @@ import { Presenter } from './Presenter';
 
 type ContainerProps = {
 	eventId: number;
+	userId: string;
 };
 
-export const Container: React.FC<ContainerProps> = async ({ eventId }) => {
+export const Container: React.FC<ContainerProps> = async ({
+	eventId,
+	userId
+}) => {
 	const result = await getEvent({ id: eventId });
 
 	if (result.isErr()) {
@@ -15,5 +19,5 @@ export const Container: React.FC<ContainerProps> = async ({ eventId }) => {
 	}
 
 	const event = result.value;
-	return <Presenter event={event} />;
+	return <Presenter event={event} usrId={userId} />;
 };

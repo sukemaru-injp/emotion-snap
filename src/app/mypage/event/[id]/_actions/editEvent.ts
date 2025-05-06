@@ -1,13 +1,12 @@
 'use server';
-import type { Database } from '@/../modules/database.types';
 import {
 	type ServerActionResult,
 	failed,
 	success
 } from '@/common/types/ServerActionResult';
-import { generateRandomId } from '@/common/utils/generateRandomId';
 import { createClient } from '@/libs/supabase/server';
 type EventFormData = {
+	id: number;
 	name: string;
 	code: string;
 	date?: string | null;
@@ -16,29 +15,26 @@ type EventFormData = {
 // Define the success type and error type for the Result
 type CreateEventError = Error;
 
-export async function createEvent(
+export async function editEvent(
 	formData: EventFormData,
 	userId: string
 ): Promise<ServerActionResult<null, CreateEventError>> {
 	const supabase = await createClient();
 
 	try {
-		const generatedId = generateRandomId();
-
-		const eventData: Database['public']['Tables']['event']['Insert'] = {
-			id: generatedId,
-			user_id: userId,
-			name: formData.name,
-			code: formData.code,
-			date: formData.date || null
-		};
-
-		const { error: insertError } = await supabase
+		const { error } = await supabase
 			.from('event')
-			.insert(eventData);
+			.update({
+				name: formData.name,
+				code: formData.code,
+				date: formData.date || null,
+				updated_at: new Date().toDateString()
+			})
+			.eq('user_id', userId)
+			.eq('id', formData.id);
 
-		if (insertError) {
-			return failed(new Error(insertError.message));
+		if (error) {
+			return failed(new Error(error.message));
 		}
 		return success(null);
 	} catch (e) {

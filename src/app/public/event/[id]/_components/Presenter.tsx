@@ -15,7 +15,7 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
 
 	const handleChange = useCallback((info: UploadChangeParam) => {
-		console.log(info.file);
+		console.log(info.file.originFileObj);
 		setFileList([...info.fileList]);
 	}, []);
 
@@ -32,9 +32,9 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 						accept="image/*"
 						fileList={fileList}
 						maxCount={1}
-						listType="picture" // Changed from "picture"
+						listType="picture"
 						onChange={handleChange}
-						beforeUpload={() => false}
+						beforeUpload={() => false} // Prevent auto upload
 					>
 						{fileList.length >= 1 ? null : (
 							<Button

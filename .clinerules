@@ -8,6 +8,7 @@ This project utilizes the following technologies:
 - **Language**: TypeScript
 - **Backend/Auth/DB**: Supabase
 - **UI Library**: Ant Design (antd)
+- **Icons**: react-icons
 - **Testing**: Vitest
 - **Linting/Formatting**: Biome
 - **Package Manager**: pnpm
@@ -27,22 +28,17 @@ Create ADRs in /docs/adr for:
 - Major dependency changes
 - Architectural pattern changes
 - New integration patterns
-- Database schema changes Follow template in /docs/adr/template.md
 
 ## Code Style & Patterns
 
-- Generate API clients using OpenAPI Generator
-- Use TypeScript axios template
-- Place generated code in /src/generated
-- Prefer composition over inheritance
-- Use repository pattern for data access
-- Follow error handling pattern in /src/utils/errors.ts
+- Avoid using the `any` type
+- Formatting will be applied using `pnpm format` after implementation, so it can
+  be ignored during development.
 
 ## Testing Standards
 
 - Unit tests required for business logic
-- Integration tests for API endpoints
-- E2E tests for critical user flows
+- Place unit tests under the `__tests__` directory
 
 ## Security
 

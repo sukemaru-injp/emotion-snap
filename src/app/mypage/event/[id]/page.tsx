@@ -13,8 +13,8 @@ export default async function Page({ params }: { params: { id: string } }) {
 
 	return (
 		<CheckAuth
-			render={() => {
-				return <Container eventId={id} />;
+			render={(u) => {
+				return <Container eventId={id} userId={u.id} />;
 			}}
 		/>
 	);

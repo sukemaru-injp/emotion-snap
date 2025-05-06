@@ -4,6 +4,7 @@ import { Button, DatePicker, Form, Input, Modal, Space, message } from 'antd';
 import dayjs from 'dayjs';
 import { type FC, useCallback, useState, useTransition } from 'react'; // Add useEffect
 import { AiOutlinePlus } from 'react-icons/ai';
+import { match } from 'ts-pattern';
 import { createEvent } from '../_actions/createEvent';
 
 type EventInput = {
@@ -49,16 +50,16 @@ export const CreateEventForm: FC<Props> = ({ userId, isCreateDisabled }) => {
 					},
 					userId
 				);
-				result.match(
-					() => {
+				match(result)
+					.with({ tag: 'success' }, () => {
 						messageApi.success('Event created successfully!');
 						setIsModalVisible(false);
 						form.reset(); // Reset form on success
-					},
-					(_e) => {
+					})
+					.with({ tag: 'failed' }, (_e) => {
 						messageApi.error('An unexpected error occurred during submission.');
-					}
-				);
+					})
+					.exhaustive();
 			});
 		}
 	});
