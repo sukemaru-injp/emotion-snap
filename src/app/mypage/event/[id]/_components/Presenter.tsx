@@ -90,13 +90,13 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 				const result = await editEvent(formDataToSubmit, usrId);
 				console.log('Result:', result);
 				match(result)
-					.with({ tag: 'success' }, () => {
+					.with({ tag: 'right' }, () => {
 						// Success case
 						message.success('Event updated successfully!');
 						setEditedEvent(formDataToSubmit);
 						setIsEditing(false);
 					})
-					.with({ tag: 'failed' }, ({ error: e }) => {
+					.with({ tag: 'left' }, ({ error: e }) => {
 						// Error case
 						setError(e.message);
 						message.error(`Failed to update event: ${e.message}`);

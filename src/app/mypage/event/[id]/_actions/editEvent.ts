@@ -1,9 +1,9 @@
 'use server';
 import {
-	type ServerActionResult,
-	failed,
-	success
-} from '@/common/types/ServerActionResult';
+	type ServerActionEither,
+	left,
+	right
+} from '@/common/types/ServerActionEither';
 import { createClient } from '@/libs/supabase/server';
 type EventFormData = {
 	id: number;
@@ -18,7 +18,7 @@ type CreateEventError = Error;
 export async function editEvent(
 	formData: EventFormData,
 	userId: string
-): Promise<ServerActionResult<null, CreateEventError>> {
+): Promise<ServerActionEither<CreateEventError, null>> {
 	const supabase = await createClient();
 
 	try {
@@ -34,12 +34,12 @@ export async function editEvent(
 			.eq('id', formData.id);
 
 		if (error) {
-			return failed(new Error(error.message));
+			return left(new Error(error.message));
 		}
-		return success(null);
+		return right(null);
 	} catch (e) {
 		const error =
 			e instanceof Error ? e : new Error('An unknown error occurred.');
-		return failed(error);
+		return left(error);
 	}
 }

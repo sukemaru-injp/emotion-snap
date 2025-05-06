@@ -18,7 +18,6 @@ type Props = {
 	isCreateDisabled?: boolean; // Add optional prop
 };
 export const CreateEventForm: FC<Props> = ({ userId, isCreateDisabled }) => {
-	// Destructure prop
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [isSubmitting, start] = useTransition();
 	const [messageApi, contextHolder] = message.useMessage();
@@ -51,12 +50,12 @@ export const CreateEventForm: FC<Props> = ({ userId, isCreateDisabled }) => {
 					userId
 				);
 				match(result)
-					.with({ tag: 'success' }, () => {
+					.with({ tag: 'right' }, () => {
 						messageApi.success('Event created successfully!');
 						setIsModalVisible(false);
 						form.reset(); // Reset form on success
 					})
-					.with({ tag: 'failed' }, (_e) => {
+					.with({ tag: 'left' }, (_e) => {
 						messageApi.error('An unexpected error occurred during submission.');
 					})
 					.exhaustive();
