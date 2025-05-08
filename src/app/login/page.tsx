@@ -10,7 +10,6 @@ export default async function Login(): Promise<JSX.Element> {
 
 	if (data.user !== null) {
 		redirect('/mypage');
-		return <></>;
 	}
 
 	return <LoginView />;

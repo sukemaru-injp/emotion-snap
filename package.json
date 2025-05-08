@@ -21,7 +21,7 @@
 		"@supabase/ssr": "^0.6.1",
 		"@supabase/supabase-js": "^2.49.4",
 		"@tanstack/react-form": "^1.8.0",
-		"antd": "^5.24.9",
+		"antd": "^5.25.0",
 		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.13",
 		"neverthrow": "^8.2.0",

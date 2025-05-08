@@ -1,5 +1,6 @@
 'use client';
 import type { Event } from '@/common/types/Event';
+import { Loader } from '@/common/ui/Loader';
 import {
 	Alert,
 	Button,
@@ -9,7 +10,6 @@ import {
 	Form,
 	Input,
 	Space,
-	Spin,
 	message
 } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
@@ -114,7 +114,7 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 	if (isEditing) {
 		return (
 			<Card title="Edit Event">
-				<Spin tip="Loading..." spinning={isPending}>
+				<Loader tip="Loading..." isLoading={isPending}>
 					<Form
 						form={form}
 						layout="vertical"
@@ -167,7 +167,7 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 							</Space>
 						</Form.Item>
 					</Form>
-				</Spin>
+				</Loader>
 			</Card>
 		);
 	}
