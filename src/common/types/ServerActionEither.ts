@@ -23,7 +23,7 @@ export const left = <T = unknown>(e: T) =>
 /**
  * A type that represents the result of a server action.
  * It can either be a success (Right) or a failure (Left).
- * ServerAction用に、シリアライザブルなデータ型を提供する
+ * ServerAction用に、serializableなデータ型を提供する
  *
  */
 export type ServerActionEither<E = unknown, T = unknown> = Right<T> | Left<E>;
