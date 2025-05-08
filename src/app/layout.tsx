@@ -48,7 +48,8 @@ export default function RootLayout({
 							backgroundColor: theme.colors.primary,
 							display: 'grid',
 							placeContent: 'center',
-							padding: `${theme.spacing.sm}`
+							padding: `${theme.spacing.sm}`,
+							zIndex: 1000
 						}}
 					>
 						<Link href="/" style={{ textDecoration: 'none' }}>

@@ -3,17 +3,29 @@
 import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import type { Event } from '@/common/types/Event';
 import { theme } from '@/styles/theme';
-import { Alert, Button, Card, List, Modal, Space, Typography } from 'antd';
+import {
+	Alert,
+	Button,
+	Card,
+	List,
+	Modal,
+	Space,
+	Typography,
+	message
+} from 'antd';
 import { format } from 'date-fns';
 import Link from 'next/link';
-import { type FC, useCallback, useMemo, useState } from 'react';
+import { type FC, useCallback, useMemo, useState, useTransition } from 'react';
 import {
 	AiOutlineCalendar,
 	AiOutlineClockCircle,
 	AiOutlineDelete,
 	AiOutlineInfoCircle // Import Info icon
 } from 'react-icons/ai';
+import { deleteEvent } from '../_actions/deleteEvent';
 import { CreateEventForm } from './CreateEventForm';
+import '@ant-design/v5-patch-for-react-19'; // Import patch for React 19
+import { match } from 'ts-pattern';
 
 const { Text, Title } = Typography; // Add Title
 
@@ -42,10 +54,30 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 		setIsOpen(true);
 		setDeleteTarget(eventId);
 	}, []);
+
+	const [messageApi, contextHolder] = message.useMessage();
+
+	const [isPending, startTransition] = useTransition();
 	const handleOk = useCallback(() => {
-		console.log('Delete event:', deleteTarget); // Replace with actual delete logic later
-		// TODO: Implement actual deletion logic (e.g., call server action)
-	}, [deleteTarget]);
+		if (deleteTarget === null) return;
+		startTransition(async () => {
+			const result = await deleteEvent(deleteTarget, userId);
+
+			match(result)
+				.with({ tag: 'right' }, () => {
+					messageApi.success('Event deleted successfully!');
+				})
+				.with({ tag: 'left' }, (error) => {
+					messageApi.error(
+						'An unexpected error occurred while deleting the event.'
+					);
+					console.error('Error deleting event:', error);
+				})
+				.exhaustive();
+			setIsOpen(false);
+			setDeleteTarget(null);
+		});
+	}, [deleteTarget, userId, messageApi]);
 
 	const handleCancel = useCallback(() => {
 		setIsOpen(false);
@@ -54,6 +86,7 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 
 	return (
 		<ThemeProvider>
+			{contextHolder}
 			<div
 				style={{
 					display: 'flex',
@@ -165,6 +198,7 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 				cancelText="Cancel"
 				onOk={handleOk}
 				onCancel={handleCancel}
+				confirmLoading={isPending}
 			>
 				<p>Are you sure you want to delete this event?</p>
 			</Modal>

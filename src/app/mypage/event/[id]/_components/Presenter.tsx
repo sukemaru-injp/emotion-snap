@@ -75,6 +75,8 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 		form.resetFields();
 	};
 
+	const [messageApi, contextHolder] = message.useMessage();
+
 	const handleSave = useCallback(async () => {
 		try {
 			const values = await form.validateFields();
@@ -88,100 +90,103 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 			};
 			startTransition(async () => {
 				const result = await editEvent(formDataToSubmit, usrId);
-				console.log('Result:', result);
 				match(result)
 					.with({ tag: 'right' }, () => {
 						// Success case
-						message.success('Event updated successfully!');
+						messageApi.success('Event updated successfully!');
 						setEditedEvent(formDataToSubmit);
 						setIsEditing(false);
 					})
 					.with({ tag: 'left' }, ({ error: e }) => {
 						// Error case
 						setError(e.message);
-						message.error(`Failed to update event: ${e.message}`);
+						messageApi.error(`Failed to update event: ${e.message}`);
 					})
 					.exhaustive();
 			});
-		} catch (validationError) {
+		} catch (_e) {
 			// Form validation failed
 			// Antd Form automatically shows validation errors, so no explicit setError needed here
-			console.error('Form validation failed:', validationError);
 			message.error('Please check the form for errors.');
 		}
-	}, [form, event.id, usrId]);
-
-	if (isEditing) {
-		return (
-			<Card title="Edit Event">
-				<Loader tip="Loading..." isLoading={isPending}>
-					<Form
-						form={form}
-						layout="vertical"
-						initialValues={{
-							name: event.name,
-							code: event.code,
-							date: event.date ? dayjs(event.date) : null
-						}}
-					>
-						<Form.Item
-							name="name"
-							label="Event Name"
-							rules={[
-								{ required: true, message: 'Please input the event name!' }
-							]}
-						>
-							<Input />
-						</Form.Item>
-						<Form.Item
-							name="code"
-							label="Code"
-							rules={[
-								{ required: true, message: 'Please input the event code!' }
-							]}
-						>
-							<Input />
-						</Form.Item>
-						<Form.Item name="date" label="Date">
-							<DatePicker style={{ width: '100%' }} />
-						</Form.Item>
-						{error && (
-							<Form.Item>
-								<Alert
-									message={error}
-									type="error"
-									showIcon
-									closable
-									onClose={() => setError(null)}
-								/>
-							</Form.Item>
-						)}
-						<Form.Item>
-							<Space>
-								<Button type="primary" onClick={handleSave} loading={isPending}>
-									Save
-								</Button>
-								<Button onClick={handleCancelClick} disabled={isPending}>
-									Cancel
-								</Button>
-							</Space>
-						</Form.Item>
-					</Form>
-				</Loader>
-			</Card>
-		);
-	}
+	}, [form, event.id, usrId, messageApi]);
 
 	return (
-		<Card
-			title="Event Details"
-			extra={
-				<Button type="link" onClick={handleEditClick}>
-					Edit
-				</Button>
-			}
-		>
-			<Descriptions bordered items={viewItems} column={1} />
-		</Card>
+		<>
+			{contextHolder}
+			{isEditing ? (
+				<Card title="Edit Event">
+					<Loader tip="Loading..." isLoading={isPending}>
+						<Form
+							form={form}
+							layout="vertical"
+							initialValues={{
+								name: event.name,
+								code: event.code,
+								date: event.date ? dayjs(event.date) : null
+							}}
+						>
+							<Form.Item
+								name="name"
+								label="Event Name"
+								rules={[
+									{ required: true, message: 'Please input the event name!' }
+								]}
+							>
+								<Input />
+							</Form.Item>
+							<Form.Item
+								name="code"
+								label="Code"
+								rules={[
+									{ required: true, message: 'Please input the event code!' }
+								]}
+							>
+								<Input />
+							</Form.Item>
+							<Form.Item name="date" label="Date">
+								<DatePicker style={{ width: '100%' }} />
+							</Form.Item>
+							{error && (
+								<Form.Item>
+									<Alert
+										message={error}
+										type="error"
+										showIcon
+										closable
+										onClose={() => setError(null)}
+									/>
+								</Form.Item>
+							)}
+							<Form.Item>
+								<Space>
+									<Button
+										type="primary"
+										onClick={handleSave}
+										loading={isPending}
+									>
+										Save
+									</Button>
+									<Button onClick={handleCancelClick} disabled={isPending}>
+										Cancel
+									</Button>
+								</Space>
+							</Form.Item>
+						</Form>
+					</Loader>
+				</Card>
+			) : (
+				<Card
+					title="Event Details"
+					extra={
+						<Button type="link" onClick={handleEditClick}>
+							Edit
+						</Button>
+					}
+				>
+					<Descriptions bordered items={viewItems} column={1} />
+				</Card>
+			)}
+		</>
 	);
 };

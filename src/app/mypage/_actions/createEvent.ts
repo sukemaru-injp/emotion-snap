@@ -7,6 +7,8 @@ import {
 } from '@/common/types/ServerActionEither';
 import { generateRandomId } from '@/common/utils/generateRandomId';
 import { createClient } from '@/libs/supabase/server';
+import { revalidatePath } from 'next/cache';
+
 type EventFormData = {
 	name: string;
 	code: string;
@@ -40,6 +42,7 @@ export async function createEvent(
 		if (insertError) {
 			return left(new Error(insertError.message));
 		}
+		revalidatePath('/mypage');
 		return right(null);
 	} catch (e) {
 		const error =
