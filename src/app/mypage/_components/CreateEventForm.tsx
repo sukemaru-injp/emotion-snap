@@ -94,9 +94,7 @@ export const CreateEventForm: FC<Props> = ({ userId, isCreateDisabled }) => {
 				open={isModalVisible}
 				onCancel={handleCancel}
 				footer={null} // We'll use the form's submit button
-				destroyOnClose // Reset form state when modal closes
 			>
-				{/* Use form.useStore hook for reactive state if needed outside form.Subscribe */}
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
