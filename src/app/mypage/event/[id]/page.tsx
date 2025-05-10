@@ -2,7 +2,9 @@ import { CheckAuth } from '@/app/_components/CheckAuth';
 import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import { Container } from './_components/Container';
 
-export default async function Page({ params }: { params: { id: string } }) {
+const Page: React.FC<{ params: Promise<{ id: string }> }> = async ({
+	params
+}) => {
 	const { id: maybeId } = await params;
 
 	const id = Number.parseInt(maybeId, 10);
@@ -18,4 +20,6 @@ export default async function Page({ params }: { params: { id: string } }) {
 			}}
 		/>
 	);
-}
+};
+
+export default Page;

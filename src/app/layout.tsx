@@ -45,17 +45,18 @@ export default function RootLayout({
 						style={{
 							position: 'sticky',
 							top: 0,
-							backgroundColor: theme.colors.primary,
+							backgroundColor: 'white',
 							display: 'grid',
 							placeContent: 'center',
 							padding: `${theme.spacing.sm}`,
-							zIndex: 1000
+							zIndex: 1000,
+							boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
 						}}
 					>
 						<Link href="/" style={{ textDecoration: 'none' }}>
 							<h2
 								style={{
-									color: 'white',
+									color: theme.colors.primary,
 									fontWeight: 'bold'
 								}}
 							>
