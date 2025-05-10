@@ -1,6 +1,7 @@
 'use client';
 import type { Event } from '@/common/types/Event';
 import { Loader } from '@/common/ui/Loader';
+import { theme } from '@/styles/theme';
 import {
 	Alert,
 	Button,
@@ -17,7 +18,6 @@ import type React from 'react';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
 import { editEvent } from '../_actions/editEvent';
-import '@ant-design/v5-patch-for-react-19';
 
 type PresenterProps = {
 	event: Event;
@@ -112,7 +112,11 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 	}, [form, event.id, usrId, messageApi]);
 
 	return (
-		<>
+		<div
+			style={{
+				padding: theme.spacing.xl
+			}}
+		>
 			{contextHolder}
 			{isEditing ? (
 				<Card title="Edit Event">
@@ -187,6 +191,6 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 					<Descriptions bordered items={viewItems} column={1} />
 				</Card>
 			)}
-		</>
+		</div>
 	);
 };

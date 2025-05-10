@@ -1,16 +1,16 @@
 'use client';
 import { theme } from '@/styles/theme';
 import type { User } from '@supabase/supabase-js';
-import { Button, Card, Col, Row, Space, Typography } from 'antd';
+import { Button, Card, Col, Image, Row, Space, Typography } from 'antd';
 import Link from 'next/link';
 import {
+	FiArrowRight,
 	FiAward,
 	FiCamera,
 	FiGlobe,
 	FiSmartphone,
 	FiTarget
 } from 'react-icons/fi';
-import { ThemeProvider } from './ThemeProvider';
 
 const { Title, Paragraph } = Typography;
 
@@ -53,49 +53,132 @@ const features = [
 
 export const TopPresenter: React.FC<Props> = ({ user }) => {
 	return (
-		<ThemeProvider>
-			<section>
-				<div style={{ padding: theme.spacing.xl }}>
-					<Title
-						level={2}
-						style={{
-							color: theme.colors.textPrimary,
-							marginBottom: theme.spacing.md
-						}}
+		<>
+			<section
+				style={{
+					width: '100%',
+					backgroundColor: '#F2ECE5',
+					paddingTop: theme.spacing.xxl,
+					paddingBottom: theme.spacing.xxl
+				}}
+			>
+				<div
+					style={{
+						maxWidth: '1280px',
+						margin: '0 auto',
+						paddingLeft: theme.spacing.lg,
+						paddingRight: theme.spacing.lg
+					}}
+				>
+					<Row
+						gutter={[
+							{ lg: 48, xl: 60 },
+							{ lg: 48, xl: 60 }
+						]}
+						align="middle"
 					>
-						emotion-snap
-					</Title>
-					<Paragraph
-						style={{
-							color: theme.colors.textPrimary,
-							marginBottom: theme.spacing.lg
-						}}
-					>
-						感情を捉え、結婚式、パーティー、イベントなどでエキサイティングなランキングを作成します。
-					</Paragraph>
-					{user ? (
-						<Link href="/mypage">
-							<Button type="link">マイページへ</Button>
-						</Link>
-					) : (
-						<Link href="/login">
-							<Button type="link">ログイン</Button>
-						</Link>
-					)}
+						<Col lg={14} xl={15}>
+							<div
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									justifyContent: 'center',
+									gap: theme.spacing.lg
+								}}
+							>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										gap: theme.spacing.sm
+									}}
+								>
+									<Title
+										level={1}
+										style={{
+											fontSize: '2.25rem',
+											fontWeight: 'bold',
+											letterSpacing: '-0.025em'
+										}}
+									>
+										Detect and Rank Emotions in Real-Time
+									</Title>
+									<Paragraph
+										style={{
+											maxWidth: '600px',
+											color: theme.colors.textSecondary,
+											fontSize: '1.125rem'
+										}}
+									>
+										Upload photos, detect emotions, and rank participants based
+										on their emotional responses. Perfect for events,
+										competitions, and interactive experiences.
+									</Paragraph>
+								</div>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										gap: theme.spacing.sm
+									}}
+								>
+									<Link href={user ? '/mypage' : '/login'} passHref>
+										<Button
+											type="primary"
+											size="large"
+											icon={<FiArrowRight />}
+											iconPosition="end"
+										>
+											Get Started
+										</Button>
+									</Link>
+								</div>
+							</div>
+						</Col>
+						<Col lg={10} xl={9}>
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center'
+								}}
+							>
+								<div
+									style={{
+										position: 'relative',
+										height: '300px',
+										width: '300px'
+									}}
+								>
+									<Image
+										src="/emotion-snap-fav-min.png"
+										alt="Emotion Detection"
+										style={{
+											objectFit:
+												'cover' /* borderRadius: theme.borderRadius.md - this was removed as borderRadius is not in theme */
+										}}
+										width="100%"
+										height="100%"
+										preview={false}
+									/>
+								</div>
+							</div>
+						</Col>
+					</Row>
 				</div>
 			</section>
 			<div
 				style={{
 					width: '100%',
 					padding: `${theme.spacing.xxl || '64px'} 0`,
-					backgroundColor: theme.colors.background || '#f9fafb' // Equivalent to bg-muted/50
+					backgroundColor: theme.colors.background || '#f9fafb'
 				}}
 			>
 				<div
 					style={{
-						maxWidth: '1280px', // container
+						maxWidth: '1280px',
 						margin: '0 auto',
-						padding: `0 ${theme.spacing.lg || '24px'}` // px-4 md:px-6
+						padding: `0 ${theme.spacing.lg || '24px'}`
 					}}
 				>
 					<div
@@ -104,7 +187,7 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 							flexDirection: 'column',
 							alignItems: 'center',
 							textAlign: 'center',
-							marginBottom: theme.spacing.xl || '48px' // space-y-4 and py-12 before cards
+							marginBottom: theme.spacing.xl || '48px'
 						}}
 					>
 						<div style={{ marginBottom: theme.spacing.md }}>
@@ -129,12 +212,12 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 					</div>
 					<Row
 						gutter={[
-							{ xs: 16, sm: 24, md: 24 }, // Corresponds to gap-6 (24px)
+							{ xs: 16, sm: 24, md: 24 },
 							{ xs: 16, sm: 24, md: 24 }
 						]}
 						style={{
-							maxWidth: '1024px', // max-w-5xl
-							margin: '0 auto' // mx-auto for the grid
+							maxWidth: '1024px',
+							margin: '0 auto'
 						}}
 						justify="center"
 					>
@@ -185,6 +268,6 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 					</Row>
 				</div>
 			</div>
-		</ThemeProvider>
+		</>
 	);
 };

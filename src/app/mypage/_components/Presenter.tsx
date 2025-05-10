@@ -1,6 +1,4 @@
 'use client';
-
-import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import type { Event } from '@/common/types/Event';
 import { theme } from '@/styles/theme';
 import {
@@ -22,10 +20,9 @@ import {
 	AiOutlineDelete,
 	AiOutlineInfoCircle // Import Info icon
 } from 'react-icons/ai';
+import { match } from 'ts-pattern';
 import { deleteEvent } from '../_actions/deleteEvent';
 import { CreateEventForm } from './CreateEventForm';
-import '@ant-design/v5-patch-for-react-19'; // Import patch for React 19
-import { match } from 'ts-pattern';
 
 const { Text, Title } = Typography; // Add Title
 
@@ -85,7 +82,7 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 	}, []);
 
 	return (
-		<ThemeProvider>
+		<>
 			{contextHolder}
 			<div
 				style={{
@@ -202,6 +199,6 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 			>
 				<p>Are you sure you want to delete this event?</p>
 			</Modal>
-		</ThemeProvider>
+		</>
 	);
 };

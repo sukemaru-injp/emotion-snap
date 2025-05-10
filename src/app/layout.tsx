@@ -4,6 +4,8 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP, Poppins } from 'next/font/google';
 import Link from 'next/link';
+import { ThemeProvider } from './_components/ThemeProvider';
+import '@ant-design/v5-patch-for-react-19';
 
 const poppins = Poppins({
 	weight: ['400', '600', '700'],
@@ -64,7 +66,9 @@ export default function RootLayout({
 							</h2>
 						</Link>
 					</header>
-					<main style={{ minHeight: '100vh' }}>{children}</main>
+					<main style={{ minHeight: '100vh' }}>
+						<ThemeProvider>{children}</ThemeProvider>
+					</main>
 					<footer
 						style={{
 							textAlign: 'center',
