@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
 	const type = searchParams.get('type') as EmailOtpType | null;
 	const next = searchParams.get('next') ?? '/';
 
+	console.log('Successfully exchanged code for session:', `${searchParams}`);
+
 	if (token_hash && type) {
 		const supabase = await createClient();
 
@@ -24,5 +26,5 @@ export async function GET(request: NextRequest) {
 	}
 
 	// redirect the user to an error page with some instructions
-	redirect('/');
+	redirect('/mypage');
 }

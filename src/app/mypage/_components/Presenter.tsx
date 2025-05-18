@@ -18,10 +18,12 @@ import {
 	AiOutlineCalendar,
 	AiOutlineClockCircle,
 	AiOutlineDelete,
-	AiOutlineInfoCircle // Import Info icon
+	AiOutlineInfoCircle, // Import Info icon
+	AiOutlineLogout // Import Logout icon
 } from 'react-icons/ai';
 import { match } from 'ts-pattern';
 import { deleteEvent } from '../_actions/deleteEvent';
+import { logout } from '../_actions/logout'; // Import logout action
 import { CreateEventForm } from './CreateEventForm';
 
 const { Text, Title } = Typography; // Add Title
@@ -81,6 +83,18 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 		setDeleteTarget(null);
 	}, []);
 
+	const [isLogoutPending, startLogoutTransition] = useTransition();
+
+	const handleLogout = useCallback(() => {
+		startLogoutTransition(async () => {
+			try {
+				await logout();
+			} catch (_error) {
+				messageApi.error('An unexpected error occurred during logout.');
+			}
+		});
+	}, [messageApi]);
+
 	return (
 		<>
 			{contextHolder}
@@ -91,6 +105,30 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 					width: '100%'
 				}}
 			>
+				<div
+					style={{
+						padding: theme.spacing.md,
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						borderBottom: `1px solid ${theme.colors.border}`
+					}}
+				>
+					<Title
+						level={3}
+						style={{ margin: 0 }} // Adjusted margin
+					>
+						マイページ
+					</Title>
+					<Button
+						icon={<AiOutlineLogout />}
+						onClick={handleLogout}
+						loading={isLogoutPending}
+					>
+						ログアウト
+					</Button>
+				</div>
+
 				<div
 					style={{
 						padding: theme.spacing.md
@@ -104,7 +142,7 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 						}}
 					>
 						<Title
-							level={3}
+							level={4} // Changed to H4 for better hierarchy
 							style={{ marginTop: '24px', marginBottom: '16px' }}
 						>
 							イベント一覧
@@ -174,8 +212,6 @@ export const Presenter: FC<Props> = ({ events, userId }) => {
 														/>
 														Created: {formatDate(event.createdAt)}
 													</Text>
-													{/* Optionally display event code if needed */}
-													{/* <Text type="secondary">Code: {event.code}</Text> */}
 												</Space>
 											}
 										/>

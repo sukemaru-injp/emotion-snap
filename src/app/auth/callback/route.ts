@@ -13,6 +13,10 @@ export async function GET(request: Request) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code);
 
 		if (!error) {
+			console.log(
+				'Successfully exchanged code for session:',
+				`${origin}${next}`
+			);
 			const forwardedHost = request.headers.get('x-forwarded-host'); // original origin before load balancer
 			const isLocalEnv = process.env.NODE_ENV === 'development';
 			if (isLocalEnv) {
