@@ -16,6 +16,7 @@
 		"@ant-design/nextjs-registry": "^1.0.2",
 		"@ant-design/v5-patch-for-react-19": "^1.0.3",
 		"@aws-sdk/client-rekognition": "^3.806.0",
+		"@aws-sdk/client-s3": "^3.812.0",
 		"@supabase/auth-ui-react": "^0.4.7",
 		"@supabase/auth-ui-shared": "^0.1.8",
 		"@supabase/ssr": "^0.6.1",
@@ -46,7 +47,7 @@
 		"jsdom": "^26.1.0",
 		"typescript": "^5.8.3",
 		"vite-tsconfig-paths": "^5.1.4",
-		"vitest": "^3.1.2"
+		"vitest": "^3.1.3"
 	},
 	"packageManager": "pnpm@10.8.0"
 }
