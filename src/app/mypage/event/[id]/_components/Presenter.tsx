@@ -14,6 +14,7 @@ import {
 	message
 } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
+import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
@@ -31,6 +32,7 @@ type FormValues = {
 };
 
 export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
+	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState<string | null>(null);
@@ -114,10 +116,23 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 	return (
 		<div
 			style={{
-				padding: theme.spacing.xl
+				padding: theme.spacing.xl,
+				display: 'flex',
+				flexDirection: 'column',
+				gap: theme.spacing.md
 			}}
 		>
 			{contextHolder}
+			<div>
+				<Button
+					type="link"
+					style={{ marginTop: theme.spacing.md }}
+					onClick={() => router.push('/mypage')}
+				>
+					マイページへ戻る
+				</Button>
+			</div>
+
 			{isEditing ? (
 				<Card title="Edit Event">
 					<Loader tip="Loading..." isLoading={isPending}>
@@ -183,7 +198,7 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 				<Card
 					title="Event Details"
 					extra={
-						<Button type="link" onClick={handleEditClick}>
+						<Button type="primary" onClick={handleEditClick}>
 							Edit
 						</Button>
 					}
