@@ -1,26 +1,34 @@
 'use client';
 import { ThemeProvider } from '@/app/_components/ThemeProvider';
-import client from '@/libs/supabase/client';
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { Card } from 'antd';
-import type { FC } from 'react';
+import { Button, Card } from 'antd';
+import { type FC, useCallback, useTransition } from 'react';
+import { FaGoogle } from 'react-icons/fa';
+import { loginWithGoogle } from '../_actions/login';
 
 export const LoginView: FC = () => {
+	const [isPending, startTransition] = useTransition();
+
+	const handleGoogleLogin = useCallback(() => {
+		startTransition(async () => {
+			await loginWithGoogle();
+		});
+	}, []);
+
 	return (
 		<ThemeProvider>
 			<div style={{ display: 'grid', placeContent: 'center', height: '100vh' }}>
-				<Card title="ログイン" style={{ width: '100%' }}>
-					<Auth
-						supabaseClient={client}
-						appearance={{ theme: ThemeSupa }}
-						providers={['google']}
-						onlyThirdPartyProviders
-						queryParams={{
-							access_type: 'offline',
-							prompt: 'consent'
-						}}
-					/>
+				<Card title="ログイン" style={{ width: 300 }}>
+					<form action={handleGoogleLogin}>
+						<Button
+							type="primary"
+							icon={<FaGoogle />}
+							disabled={isPending}
+							htmlType="submit"
+							block
+						>
+							Googleでログイン
+						</Button>
+					</form>
 				</Card>
 			</div>
 		</ThemeProvider>

@@ -129,7 +129,7 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 											icon={<FiArrowRight />}
 											iconPosition="end"
 										>
-											Get Started
+											Get {user ? 'My Page' : 'Login'}
 										</Button>
 									</Link>
 								</div>
