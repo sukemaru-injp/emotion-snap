@@ -119,7 +119,7 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 				padding: theme.spacing.xl,
 				display: 'flex',
 				flexDirection: 'column',
-				gap: theme.spacing.md
+				gap: theme.spacing.sm
 			}}
 		>
 			{contextHolder}
