@@ -107,8 +107,6 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 					.exhaustive();
 			});
 		} catch (_e) {
-			// Form validation failed
-			// Antd Form automatically shows validation errors, so no explicit setError needed here
 			message.error('Please check the form for errors.');
 		}
 	}, [form, event.id, usrId, messageApi]);
