@@ -17,19 +17,14 @@ import {
 import dayjs, { type Dayjs } from 'dayjs';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
-import {
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-	useTransition
-} from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
 import { type UpdateEventFormData, editEvent } from '../_actions/editEvent';
 
 type PresenterProps = {
 	event: Event;
 	usrId: string;
+	showQR?: boolean;
 };
 
 type FormValues = {
@@ -38,7 +33,11 @@ type FormValues = {
 	date?: Dayjs | null;
 };
 
-export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
+export const Presenter: React.FC<PresenterProps> = ({
+	event,
+	usrId,
+	showQR = true
+}) => {
 	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isPending, startTransition] = useTransition();
@@ -46,13 +45,13 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 	const [form] = Form.useForm<FormValues>();
 
 	const [editedEvent, setEditedEvent] = useState<Partial<Event>>({});
-	const [qrCodeUrl, setQrCodeUrl] = useState<string | undefined>();
 
-	useEffect(() => {
-		if (typeof window !== 'undefined' && qrCodeUrl === undefined) {
-			setQrCodeUrl(`${window.location.origin}/public/event/${event.id}`);
+	const qrCodeUrl = useMemo(() => {
+		if (typeof window !== 'undefined') {
+			return `${window.location.origin}/public/event/${event.id}`;
 		}
-	}, [event.id, qrCodeUrl]);
+		return undefined;
+	}, [event.id]);
 
 	const viewItems = useMemo(
 		() => [
@@ -232,7 +231,7 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 						<Descriptions bordered items={viewItems} column={1} />
 					</Card>
 				)}
-				{qrCodeUrl && (
+				{showQR && qrCodeUrl && (
 					<Card title="Event QR Code">
 						<div
 							style={{
