@@ -1,4 +1,4 @@
-## App Directory
+## Next.js App Directory Rules
 
 - `_actions_` Implement the next server actions.
 - `_components` Implement the react component

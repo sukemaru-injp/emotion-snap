@@ -1,3 +1,3 @@
 export default async function Public() {
-	return <h1>public</h1>;
+	return <h1>ようこそ</h1>;
 }
