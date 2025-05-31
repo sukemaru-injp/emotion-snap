@@ -2,9 +2,9 @@
 
 import type { Event } from '@/common/types/Event';
 import { theme } from '@/styles/theme';
-import { Button, Card, Typography, Upload, type UploadFile } from 'antd';
+import { Button, Card, Input, Typography, Upload, type UploadFile } from 'antd';
 import type { UploadChangeParam } from 'antd/es/upload';
-import { useCallback, useState } from 'react'; // Added useEffect
+import { useCallback, useState } from 'react';
 import { BiUpload } from 'react-icons/bi';
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
 
 export const Presenter: React.FC<Props> = ({ event }) => {
 	const [fileList, setFileList] = useState<UploadFile<File>[]>([]);
+	const [name, setName] = useState('');
 
 	const handleChange = useCallback((info: UploadChangeParam) => {
 		console.log(info.file);
@@ -35,7 +36,9 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 					gap: theme.spacing.sm
 				}}
 			>
-				<Typography.Title>{event.name}</Typography.Title>
+				<Typography.Title level={2} style={{ margin: 0 }}>
+					{event.name}
+				</Typography.Title>
 				{event.date && <Typography.Text>{event.date}</Typography.Text>}
 			</div>
 			<Card title="Upload Image">
@@ -47,6 +50,20 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 						gap: theme.spacing.md
 					}}
 				>
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							gap: theme.spacing.sm
+						}}
+					>
+						<Typography.Text>Your name</Typography.Text>
+						<Input
+							size="large"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+						/>
+					</div>
 					<Upload
 						accept="image/*"
 						fileList={fileList}
