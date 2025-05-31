@@ -5,7 +5,8 @@ import {
 	right
 } from '@/common/types/ServerActionEither';
 import { createClient } from '@/libs/supabase/server';
-type EventFormData = {
+
+export type UpdateEventFormData = {
 	id: number;
 	name: string;
 	code: string;
@@ -16,7 +17,7 @@ type EventFormData = {
 type CreateEventError = Error;
 
 export async function editEvent(
-	formData: EventFormData,
+	formData: UpdateEventFormData,
 	userId: string
 ): Promise<ServerActionEither<CreateEventError, null>> {
 	const supabase = await createClient();

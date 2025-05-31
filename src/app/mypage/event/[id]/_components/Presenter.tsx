@@ -10,15 +10,22 @@ import {
 	Descriptions,
 	Form,
 	Input,
+	QRCode,
 	Space,
 	message
 } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
-import { useCallback, useMemo, useState, useTransition } from 'react';
+import {
+	useCallback,
+	useEffect,
+	useMemo,
+	useState,
+	useTransition
+} from 'react';
 import { match } from 'ts-pattern';
-import { editEvent } from '../_actions/editEvent';
+import { type UpdateEventFormData, editEvent } from '../_actions/editEvent';
 
 type PresenterProps = {
 	event: Event;
@@ -39,6 +46,13 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 	const [form] = Form.useForm<FormValues>();
 
 	const [editedEvent, setEditedEvent] = useState<Partial<Event>>({});
+	const [qrCodeUrl, setQrCodeUrl] = useState<string | undefined>();
+
+	useEffect(() => {
+		if (typeof window !== 'undefined' && qrCodeUrl === undefined) {
+			setQrCodeUrl(`${window.location.origin}/public/event/${event.id}`);
+		}
+	}, [event.id, qrCodeUrl]);
 
 	const viewItems = useMemo(
 		() => [
@@ -84,12 +98,13 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 			const values = await form.validateFields();
 			setError(null);
 
-			const formDataToSubmit = {
-				id: event.id, // id must be number
+			const formDataToSubmit: UpdateEventFormData = {
+				id: event.id,
 				name: values.name,
 				code: values.code,
 				date: values.date ? values.date.format('YYYY-MM-DD') : null
 			};
+
 			startTransition(async () => {
 				const result = await editEvent(formDataToSubmit, usrId);
 				match(result)
@@ -131,79 +146,109 @@ export const Presenter: React.FC<PresenterProps> = ({ event, usrId }) => {
 				</Button>
 			</div>
 
-			{isEditing ? (
-				<Card title="Edit Event">
-					<Loader tip="Loading..." isLoading={isPending}>
-						<Form
-							form={form}
-							layout="vertical"
-							initialValues={{
-								name: event.name,
-								code: event.code,
-								date: event.date ? dayjs(event.date) : null
+			<div
+				style={{
+					display: 'grid',
+					gridTemplateColumns: '2fr 1fr',
+					gap: theme.spacing.md
+				}}
+			>
+				{isEditing ? (
+					<Card title="Edit Event">
+						<Loader tip="Loading..." isLoading={isPending}>
+							<Form
+								form={form}
+								layout="vertical"
+								initialValues={{
+									name: event.name,
+									code: event.code,
+									date: event.date ? dayjs(event.date) : null
+								}}
+							>
+								<Form.Item
+									name="name"
+									label="Event Name"
+									rules={[
+										{
+											required: true,
+											message: 'Please input the event name!'
+										}
+									]}
+								>
+									<Input />
+								</Form.Item>
+								<Form.Item
+									name="code"
+									label="Code"
+									rules={[
+										{
+											required: true,
+											message: 'Please input the event code!'
+										}
+									]}
+								>
+									<Input />
+								</Form.Item>
+								<Form.Item name="date" label="Date">
+									<DatePicker style={{ width: '100%' }} />
+								</Form.Item>
+								{error && (
+									<Form.Item>
+										<Alert
+											message={error}
+											type="error"
+											showIcon
+											closable
+											onClose={() => setError(null)}
+										/>
+									</Form.Item>
+								)}
+								<Form.Item>
+									<Space>
+										<Button
+											type="primary"
+											onClick={handleSave}
+											loading={isPending}
+										>
+											Save
+										</Button>
+										<Button onClick={handleCancelClick} disabled={isPending}>
+											Cancel
+										</Button>
+									</Space>
+								</Form.Item>
+							</Form>
+						</Loader>
+					</Card>
+				) : (
+					<Card
+						title="Event Details"
+						extra={
+							<Button type="primary" onClick={handleEditClick}>
+								Edit
+							</Button>
+						}
+					>
+						<Descriptions bordered items={viewItems} column={1} />
+					</Card>
+				)}
+				{qrCodeUrl && (
+					<Card title="Event QR Code">
+						<div
+							style={{
+								textAlign: 'center',
+								paddingTop: theme.spacing.md,
+								display: 'flex',
+								flexDirection: 'column',
+								gap: theme.spacing.sm
 							}}
 						>
-							<Form.Item
-								name="name"
-								label="Event Name"
-								rules={[
-									{ required: true, message: 'Please input the event name!' }
-								]}
-							>
-								<Input />
-							</Form.Item>
-							<Form.Item
-								name="code"
-								label="Code"
-								rules={[
-									{ required: true, message: 'Please input the event code!' }
-								]}
-							>
-								<Input />
-							</Form.Item>
-							<Form.Item name="date" label="Date">
-								<DatePicker style={{ width: '100%' }} />
-							</Form.Item>
-							{error && (
-								<Form.Item>
-									<Alert
-										message={error}
-										type="error"
-										showIcon
-										closable
-										onClose={() => setError(null)}
-									/>
-								</Form.Item>
-							)}
-							<Form.Item>
-								<Space>
-									<Button
-										type="primary"
-										onClick={handleSave}
-										loading={isPending}
-									>
-										Save
-									</Button>
-									<Button onClick={handleCancelClick} disabled={isPending}>
-										Cancel
-									</Button>
-								</Space>
-							</Form.Item>
-						</Form>
-					</Loader>
-				</Card>
-			) : (
-				<Card
-					title="Event Details"
-					extra={
-						<Button type="primary" onClick={handleEditClick}>
-							Edit
-						</Button>
-					}
-				>
-					<Descriptions bordered items={viewItems} column={1} />
-				</Card>
-			)}
+							<QRCode value={qrCodeUrl} size={200} />
+							<Input value={qrCodeUrl} readOnly />
+						</div>
+					</Card>
+				)}
+			</div>
 		</div>
 	);
 };
