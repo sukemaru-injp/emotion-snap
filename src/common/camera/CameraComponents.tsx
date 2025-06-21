@@ -2,7 +2,7 @@ import React from 'react';
 import { useCamera } from './useCamera';
 
 interface CameraComponentProps {
-	onCapture?: (imageData: string) => void;
+	onCapture?: (imageFile: File) => void;
 	onError?: (error: string) => void;
 	facingMode?: 'user' | 'environment';
 	className?: string;
@@ -30,23 +30,15 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 		}
 	}, [error, onError]);
 
-	const handleCapture = () => {
-		const imageData = capturePhoto();
-		if (imageData && onCapture) {
-			onCapture(imageData);
+	const handleCapture = async () => {
+		const imageFile = await capturePhoto();
+		if (imageFile && onCapture) {
+			onCapture(imageFile);
 		}
 	};
 
 	return (
 		<div className={`camera-container ${className}`}>
-			<video
-				ref={videoRef}
-				autoPlay
-				playsInline
-				muted
-				style={{ width: '100%', height: 'auto' }}
-			/>
-
 			<div className="camera-controls">
 				{!isActive ? (
 					<button
@@ -76,6 +68,14 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 					</>
 				)}
 			</div>
+
+			<video
+				ref={videoRef}
+				autoPlay
+				playsInline
+				muted
+				style={{ width: '100%', height: 'auto' }}
+			/>
 
 			{error && <div className="camera-error">エラー: {error}</div>}
 		</div>

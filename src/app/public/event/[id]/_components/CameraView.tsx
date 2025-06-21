@@ -2,11 +2,20 @@
 import { CameraComponent } from '@/common/camera/CameraComponents';
 import { useState } from 'react';
 
-export const CameraView: React.FC = () => {
-	const [capturedImage, setCapturedImage] = useState<string | null>(null);
+type Props = {
+	onCapture: (file: File | null) => void;
+};
 
-	const handleCapture = (imageData: string) => {
-		setCapturedImage(imageData);
+export const CameraView: React.FC<Props> = ({ onCapture }) => {
+	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+	const handleCapture = (imageFile: File) => {
+		console.log('Captured image file:', imageFile);
+		onCapture(imageFile);
+		if (previewUrl) {
+			URL.revokeObjectURL(previewUrl);
+		}
+		setPreviewUrl(URL.createObjectURL(imageFile));
 	};
 
 	const handleError = (error: string) => {
@@ -20,14 +29,10 @@ export const CameraView: React.FC = () => {
 				onError={handleError}
 				facingMode="environment"
 			/>
-			{capturedImage && (
+			{previewUrl && (
 				<div>
-					<h2>撮影された画像</h2>
-					<img
-						src={capturedImage}
-						alt="Captured"
-						style={{ maxWidth: '100%' }}
-					/>
+					<h2>Captured</h2>
+					<img src={previewUrl} alt="Captured" style={{ maxWidth: '100%' }} />
 				</div>
 			)}
 		</div>

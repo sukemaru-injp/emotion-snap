@@ -78,20 +78,41 @@ export const useCamera = (options: CameraOptions = {}) => {
 		});
 	}, [state.stream]);
 
-	const capturePhoto = useCallback((): string | null => {
-		if (!videoRef.current || !state.isActive) return null;
+	const capturePhoto = useCallback((): Promise<File | null> => {
+		return new Promise((resolve) => {
+			if (!videoRef.current || !state.isActive) {
+				resolve(null);
+				return;
+			}
 
-		const canvas = document.createElement('canvas');
-		const context = canvas.getContext('2d');
+			const canvas = document.createElement('canvas');
+			const context = canvas.getContext('2d');
 
-		if (!context) return null;
+			if (!context) {
+				resolve(null);
+				return;
+			}
 
-		canvas.width = videoRef.current.videoWidth;
-		canvas.height = videoRef.current.videoHeight;
+			canvas.width = videoRef.current.videoWidth;
+			canvas.height = videoRef.current.videoHeight;
 
-		context.drawImage(videoRef.current, 0, 0);
+			context.drawImage(videoRef.current, 0, 0);
 
-		return canvas.toDataURL('image/jpeg', 0.8);
+			canvas.toBlob(
+				(blob) => {
+					if (blob) {
+						const file = new File([blob], 'captured_photo.jpg', {
+							type: 'image/jpeg'
+						});
+						resolve(file);
+					} else {
+						resolve(null);
+					}
+				},
+				'image/jpeg',
+				0.8
+			);
+		});
 	}, [state.isActive]);
 
 	// クリーンアップ

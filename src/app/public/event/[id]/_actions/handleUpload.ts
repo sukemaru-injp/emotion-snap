@@ -1,9 +1,11 @@
 'use server';
-
-import type { ApiResults } from '@/common/types/ApiResults';
+import {
+	type ServerActionEither,
+	right,
+	left
+} from '@/common/types/ServerActionEither';
 import s3Client from '@/libs/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { err, ok } from 'neverthrow';
 
 export type UploadParam = {
 	userName: string;
@@ -11,9 +13,9 @@ export type UploadParam = {
 	file: File;
 };
 
-export const handleUpload: ApiResults<null, UploadParam> = async (
+export const handleUpload = async (
 	params: UploadParam
-) => {
+): Promise<ServerActionEither<string, null>> => {
 	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}_emotion_snap_user_photos`;
 	const key = `${params.userName}/${params.eventId}/${params.file.name}`;
 
@@ -26,10 +28,14 @@ export const handleUpload: ApiResults<null, UploadParam> = async (
 			ContentType: params.file.type
 		});
 
-		await s3Client.send(command);
-		return ok(null);
+		const res = await s3Client.send(command);
+		console.log('S3 upload response:', res);
+
+		return right(null);
 	} catch (error) {
 		console.error('Error uploading to S3:', error);
-		return err({ error });
+		return left(
+			`S3へのアップロードに失敗しました: ${error instanceof Error ? error.message : '不明なエラー'}`
+		);
 	}
 };
