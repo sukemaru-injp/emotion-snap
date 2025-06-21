@@ -1,5 +1,5 @@
 'use client';
-import { CameraComponent } from '@/common/camera/CameraComponents';
+import { CameraComponent } from '@/common/camera';
 import { useState } from 'react';
 
 type Props = {
@@ -10,7 +10,6 @@ export const CameraView: React.FC<Props> = ({ onCapture }) => {
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
 	const handleCapture = (imageFile: File) => {
-		console.log('Captured image file:', imageFile);
 		onCapture(imageFile);
 		if (previewUrl) {
 			URL.revokeObjectURL(previewUrl);

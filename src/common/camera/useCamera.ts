@@ -104,6 +104,7 @@ export const useCamera = (options: CameraOptions = {}) => {
 						const file = new File([blob], 'captured_photo.jpg', {
 							type: 'image/jpeg'
 						});
+						stopCamera();
 						resolve(file);
 					} else {
 						resolve(null);
@@ -113,7 +114,7 @@ export const useCamera = (options: CameraOptions = {}) => {
 				0.8
 			);
 		});
-	}, [state.isActive]);
+	}, [state.isActive, stopCamera]);
 
 	// クリーンアップ
 	useEffect(() => {
