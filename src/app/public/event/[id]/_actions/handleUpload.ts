@@ -16,8 +16,8 @@ export type UploadParam = {
 export const handleUpload = async (
 	params: UploadParam
 ): Promise<ServerActionEither<string, null>> => {
-	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}_emotion_snap_user_photos`;
-	const key = `${params.userName}/${params.eventId}/${params.file.name}`;
+	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}-emotion-snap-user-photos`;
+	const key = `/${params.eventId}/${params.userName}-${params.file.name}`;
 
 	try {
 		const fileBuffer = await params.file.arrayBuffer();

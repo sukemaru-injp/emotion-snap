@@ -35,6 +35,10 @@ const validateUploadParams = ({
 		if (!file) {
 			return err(['ファイルは必須です']);
 		}
+		if (file.size > 10 * 1024 * 1024) {
+			// 10MB制限
+			return err(['ファイルサイズは10MB以下にしてください']);
+		}
 		return ok(file);
 	};
 
