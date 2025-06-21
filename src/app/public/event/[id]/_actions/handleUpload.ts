@@ -1,4 +1,5 @@
 'use server';
+import { rekognitionClient, DetectFacesCommand } from '@/libs/rekognition';
 import {
 	type ServerActionEither,
 	right,
@@ -6,6 +7,7 @@ import {
 } from '@/common/types/ServerActionEither';
 import s3Client from '@/libs/s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
 
 export type UploadParam = {
 	userName: string;
@@ -13,9 +15,14 @@ export type UploadParam = {
 	file: File;
 };
 
+export type RekognitionResult = {
+	emotions: Emotion[];
+	smile: Smile;
+};
+
 export const handleUpload = async (
 	params: UploadParam
-): Promise<ServerActionEither<string, null>> => {
+): Promise<ServerActionEither<string, RekognitionResult>> => {
 	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}-emotion-snap-user-photos`;
 	const key = `/${params.eventId}/${params.userName}-${params.file.name}`;
 
@@ -29,9 +36,42 @@ export const handleUpload = async (
 		});
 
 		const res = await s3Client.send(command);
-		console.log('S3 upload response:', res);
+		console.info('S3 uploaded:', JSON.stringify(res));
 
-		return right(null);
+		const detectFacesCommand = new DetectFacesCommand({
+			Image: {
+				S3Object: {
+					Bucket: bucketName,
+					Name: key
+				}
+			},
+			Attributes: ['EMOTIONS', 'SMILE']
+		});
+
+		const rekognitionResponse =
+			await rekognitionClient.send(detectFacesCommand);
+
+		console.info('Rekognition response:', rekognitionResponse);
+
+		if (
+			!rekognitionResponse.FaceDetails ||
+			rekognitionResponse.FaceDetails.length === 0
+		) {
+			return left('顔が検出できませんでした。');
+		}
+
+		const faceDetails = rekognitionResponse.FaceDetails[0];
+		const emotions = faceDetails.Emotions;
+		const smile = faceDetails.Smile;
+
+		if (!emotions || !smile) {
+			return left('感情・笑顔が検出できませんでした。');
+		}
+
+		return right({
+			emotions,
+			smile
+		});
 	} catch (error) {
 		console.error('Error uploading to S3:', error);
 		return left(

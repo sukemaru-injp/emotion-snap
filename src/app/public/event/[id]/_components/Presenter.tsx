@@ -79,6 +79,7 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 				console.error('Upload failed:', error);
 			})
 			.with({ tag: 'right' }, () => {
+				setErrors(undefined);
 				console.log('Upload successful');
 			})
 			.exhaustive();
