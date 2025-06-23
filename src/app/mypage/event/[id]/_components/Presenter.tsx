@@ -20,11 +20,13 @@ import type React from 'react';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
 import { type UpdateEventFormData, editEvent } from '../_actions/editEvent';
+import type { S3ObjectInfo } from '../types/S3ObjectInfo';
 
 type PresenterProps = {
 	event: Event;
 	usrId: string;
 	showQR?: boolean;
+	s3Objects: readonly S3ObjectInfo[];
 };
 
 type FormValues = {
@@ -36,8 +38,11 @@ type FormValues = {
 export const Presenter: React.FC<PresenterProps> = ({
 	event,
 	usrId,
-	showQR = true
+	showQR = true,
+	s3Objects
 }) => {
+	console.log('s3Objects:', s3Objects);
+
 	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isPending, startTransition] = useTransition();

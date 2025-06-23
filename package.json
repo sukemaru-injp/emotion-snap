@@ -15,8 +15,9 @@
 	"dependencies": {
 		"@ant-design/nextjs-registry": "^1.0.2",
 		"@ant-design/v5-patch-for-react-19": "^1.0.3",
-		"@aws-sdk/client-rekognition": "^3.806.0",
-		"@aws-sdk/client-s3": "^3.812.0",
+		"@aws-sdk/client-rekognition": "^3.830.0",
+		"@aws-sdk/client-s3": "^3.832.0",
+		"@aws-sdk/s3-request-presigner": "^3.832.0",
 		"@supabase/ssr": "^0.6.1",
 		"@supabase/supabase-js": "^2.49.4",
 		"@tanstack/react-form": "^1.11.3",
