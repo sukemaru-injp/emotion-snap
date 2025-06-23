@@ -27,7 +27,14 @@ const mockEvent: Event = {
 
 describe('Presenter Component for mypage/event/[id]', () => {
 	it('should display the event name', () => {
-		render(<Presenter event={mockEvent} usrId="usr123" showQR={false} />);
+		render(
+			<Presenter
+				event={mockEvent}
+				usrId="usr123"
+				showQR={false}
+				s3Objects={[]}
+			/>
+		);
 		// Check if the event name is rendered
 		// Ant Design Descriptions renders label and content in separate elements.
 		// We need to find the element containing the event name.
@@ -35,13 +42,27 @@ describe('Presenter Component for mypage/event/[id]', () => {
 	});
 
 	it('should display the event code', () => {
-		render(<Presenter event={mockEvent} usrId="usr123" showQR={false} />);
+		render(
+			<Presenter
+				event={mockEvent}
+				usrId="usr123"
+				showQR={false}
+				s3Objects={[]}
+			/>
+		);
 		// Check if the event code is rendered
 		expect(screen.getByText(mockEvent.code)).toBeInTheDocument();
 	});
 
 	it('should display the event date', () => {
-		render(<Presenter event={mockEvent} usrId="usr123" showQR={false} />);
+		render(
+			<Presenter
+				event={mockEvent}
+				usrId="usr123"
+				showQR={false}
+				s3Objects={[]}
+			/>
+		);
 		expect(screen.getByText(mockEvent.date ?? 'Not set')).toBeInTheDocument();
 	});
 
@@ -49,7 +70,12 @@ describe('Presenter Component for mypage/event/[id]', () => {
 		// Create a new object for this test case to avoid modifying mockEvent
 		const eventWithoutDate: Event = { ...mockEvent, date: null };
 		render(
-			<Presenter event={eventWithoutDate} usrId="usr123" showQR={false} />
+			<Presenter
+				event={eventWithoutDate}
+				usrId="usr123"
+				showQR={false}
+				s3Objects={[]}
+			/>
 		);
 		expect(screen.getByText('Not set')).toBeInTheDocument();
 	});
