@@ -3,11 +3,11 @@
 import type { Event } from '@/common/types/Event';
 import { theme } from '@/styles/theme';
 import { Button, Card, Input, Typography } from 'antd';
+import { Result, err, ok } from 'neverthrow';
 import { useState } from 'react';
-import { handleUpload, type UploadParam } from '../_actions/handleUpload';
-import { CameraView } from './CameraView';
-import { Result, ok, err } from 'neverthrow';
 import { match } from 'ts-pattern';
+import { type UploadParam, handleUpload } from '../_actions/handleUpload';
+import { CameraView } from './CameraView';
 
 type Props = {
 	event: Event;

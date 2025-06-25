@@ -1,9 +1,9 @@
 import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import type React from 'react';
-import { getEvent } from '../../../../_api/getEvent';
-import { Presenter } from './Presenter';
-import { getObjects } from '../_api/getObjects';
 import { match } from 'ts-pattern';
+import { getEvent } from '../../../../_api/getEvent';
+import { getObjects } from '../_api/getObjects';
+import { Presenter } from './Presenter';
 
 type ContainerProps = {
 	eventId: number;

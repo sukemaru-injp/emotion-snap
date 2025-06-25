@@ -46,9 +46,9 @@ export type Database = {
 					event_id: number;
 					happy_score: number | null;
 					id: number;
+					s3_key: string;
 					sad_score: number | null;
 					surprised_score: number | null;
-					url: string;
 					user_name: string | null;
 				};
 				Insert: {
@@ -57,9 +57,9 @@ export type Database = {
 					event_id: number;
 					happy_score?: number | null;
 					id?: number;
+					s3_key: string;
 					sad_score?: number | null;
 					surprised_score?: number | null;
-					url: string;
 					user_name?: string | null;
 				};
 				Update: {
@@ -68,9 +68,9 @@ export type Database = {
 					event_id?: number;
 					happy_score?: number | null;
 					id?: number;
+					s3_key?: string;
 					sad_score?: number | null;
 					surprised_score?: number | null;
-					url?: string;
 					user_name?: string | null;
 				};
 				Relationships: [

@@ -1,13 +1,13 @@
 'use server';
-import { rekognitionClient, DetectFacesCommand } from '@/libs/rekognition';
 import {
 	type ServerActionEither,
-	right,
-	left
+	left,
+	right
 } from '@/common/types/ServerActionEither';
+import { DetectFacesCommand, rekognitionClient } from '@/libs/rekognition';
 import s3Client from '@/libs/s3';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
 import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
 
 export type UploadParam = {
 	userName: string;
