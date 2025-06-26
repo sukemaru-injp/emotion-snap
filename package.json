@@ -19,7 +19,7 @@
 		"@aws-sdk/client-s3": "^3.832.0",
 		"@aws-sdk/s3-request-presigner": "^3.832.0",
 		"@supabase/ssr": "^0.6.1",
-		"@supabase/supabase-js": "^2.49.4",
+		"@supabase/supabase-js": "^2.50.2",
 		"@tanstack/react-form": "^1.11.3",
 		"antd": "^5.26.1",
 		"date-fns": "^4.1.0",

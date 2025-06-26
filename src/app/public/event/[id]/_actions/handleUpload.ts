@@ -4,10 +4,16 @@ import {
 	left,
 	right
 } from '@/common/types/ServerActionEither';
+import { generateRandomId } from '@/common/utils/generateRandomId';
+import { roundToFourDecimals } from '@/common/utils/roundToFourDecimals';
 import { DetectFacesCommand, rekognitionClient } from '@/libs/rekognition';
 import s3Client from '@/libs/s3';
+import { createClient } from '@/libs/supabase/server';
+import type { TablesInsert } from '@/libs/supabase/types';
 import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
+
+const checkScore = (score: number): number => (score < 1 ? 1 : score);
 
 export type UploadParam = {
 	userName: string;
@@ -51,8 +57,6 @@ export const handleUpload = async (
 		const rekognitionResponse =
 			await rekognitionClient.send(detectFacesCommand);
 
-		console.info('Rekognition response:', rekognitionResponse);
-
 		if (
 			!rekognitionResponse.FaceDetails ||
 			rekognitionResponse.FaceDetails.length === 0
@@ -68,10 +72,63 @@ export const handleUpload = async (
 			return left('感情・笑顔が検出できませんでした。');
 		}
 
-		return right({
-			emotions,
-			smile
-		});
+		// Save to Supabase
+		try {
+			const supabase = await createClient();
+
+			// Extract emotion scores
+			const happyEmotion = emotions.find((e) => e.Type === 'HAPPY');
+			const angryEmotion = emotions.find((e) => e.Type === 'ANGRY');
+			const sadEmotion = emotions.find((e) => e.Type === 'SAD');
+			const surprisedEmotion = emotions.find((e) => e.Type === 'SURPRISED');
+
+			// Prepare data for insertion
+			const eventImageData: TablesInsert<'event_image'> = {
+				id: generateRandomId(),
+				event_id: Number.parseInt(params.eventId, 10),
+				s3_key: key,
+				user_name: params.userName,
+				happy_score: happyEmotion?.Confidence
+					? checkScore(roundToFourDecimals(happyEmotion.Confidence))
+					: 1,
+				angry_score: angryEmotion?.Confidence
+					? checkScore(roundToFourDecimals(angryEmotion.Confidence))
+					: 1,
+				sad_score: sadEmotion?.Confidence
+					? checkScore(roundToFourDecimals(sadEmotion.Confidence))
+					: 1,
+				surprised_score: surprisedEmotion?.Confidence
+					? checkScore(roundToFourDecimals(surprisedEmotion.Confidence))
+					: 1,
+				smile_score: smile.Confidence
+					? checkScore(roundToFourDecimals(smile.Confidence))
+					: 1
+			};
+
+			console.info('Event image data to insert:', eventImageData);
+
+			// Insert into event_image table
+			const { error: insertError } = await supabase
+				.from('event_image')
+				.insert(eventImageData);
+
+			if (insertError) {
+				console.error('Error saving to Supabase:', insertError);
+				return left(
+					`データベースへの保存に失敗しました: ${insertError.message}`
+				);
+			}
+
+			return right({
+				emotions,
+				smile
+			});
+		} catch (dbError) {
+			console.error('Error with database operation:', dbError);
+			return left(
+				`データベース操作に失敗しました: ${dbError instanceof Error ? dbError.message : '不明なエラー'}`
+			);
+		}
 	} catch (error) {
 		console.error('Error uploading to S3:', error);
 		return left(

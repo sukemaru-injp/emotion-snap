@@ -48,6 +48,7 @@ export type Database = {
 					id: number;
 					s3_key: string;
 					sad_score: number | null;
+					smile_score: number | null;
 					surprised_score: number | null;
 					user_name: string | null;
 				};
@@ -59,6 +60,7 @@ export type Database = {
 					id?: number;
 					s3_key: string;
 					sad_score?: number | null;
+					smile_score?: number | null;
 					surprised_score?: number | null;
 					user_name?: string | null;
 				};
@@ -70,6 +72,7 @@ export type Database = {
 					id?: number;
 					s3_key?: string;
 					sad_score?: number | null;
+					smile_score?: number | null;
 					surprised_score?: number | null;
 					user_name?: string | null;
 				};

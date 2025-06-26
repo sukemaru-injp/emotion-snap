@@ -1,1 +1,5 @@
-export type { Database as SupabaseDatabase } from '../../../modules/database.types';
+export type {
+	Database as SupabaseDatabase,
+	Tables,
+	TablesInsert
+} from '../../../modules/database.types';
