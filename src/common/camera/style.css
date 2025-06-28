@@ -1,0 +1,25 @@
+.camera-video {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* モバイル用（768px以下）- 縦長にする */
+@media (max-w-width: 768px) {
+    .camera-video {
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+/* デスクトップ用（769px以上）- 現在の横長を維持 */
+@media (min-width: 769px) {
+    .camera-video {
+        width: 100%;
+        height: auto;
+    }
+}
