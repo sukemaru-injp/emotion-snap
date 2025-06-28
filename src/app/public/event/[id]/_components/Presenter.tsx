@@ -24,13 +24,14 @@ const validateUploadParams = ({
 	eventId: number;
 }): Result<UploadParam, string[]> => {
 	const validateName = (name: string): Result<string, string[]> => {
-		if (!name || name.trim() === '') {
+		const trimName = name.trim();
+		if (!trimName) {
 			return err(['ユーザー名は必須です']);
 		}
-		if (name.length > 50) {
-			return err(['ユーザー名は50文字以内で入力してください']);
+		if (trimName.length > 20) {
+			return err(['ユーザー名は20文字以内で入力してください']);
 		}
-		return ok(name);
+		return ok(trimName);
 	};
 	const validateFile = (file: File | null): Result<File, string[]> => {
 		if (!file) {

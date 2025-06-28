@@ -12,7 +12,7 @@ import { createClient } from '@/libs/supabase/server';
 import type { TablesInsert } from '@/libs/supabase/types';
 import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
-
+import { format } from 'date-fns';
 const checkScore = (score: number): number => (score < 1 ? 1 : score);
 
 export type UploadParam = {
@@ -30,7 +30,7 @@ export const handleUpload = async (
 	params: UploadParam
 ): Promise<ServerActionEither<string, RekognitionResult>> => {
 	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}-emotion-snap-user-photos`;
-	const key = `/${params.eventId}/${params.userName}-${params.file.name}`;
+	const key = `/${params.eventId}/${params.userName}${format(new Date(), 'yyyyMMddHHmmss')}-${params.file.name}`;
 
 	try {
 		const fileBuffer = await params.file.arrayBuffer();
