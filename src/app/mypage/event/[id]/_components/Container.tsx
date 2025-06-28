@@ -1,8 +1,7 @@
 import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import type React from 'react';
-import { match } from 'ts-pattern';
 import { getEvent } from '../../../../_api/getEvent';
-import { getObjects } from '../_api/getObjects';
+import { ImagesContainer } from './ImagesContainer';
 import { Presenter } from './Presenter';
 
 type ContainerProps = {
@@ -14,10 +13,7 @@ export const Container: React.FC<ContainerProps> = async ({
 	eventId,
 	userId
 }) => {
-	const [eventResult, objectsResult] = await Promise.all([
-		getEvent({ id: eventId }),
-		getObjects(eventId.toString())
-	]);
+	const [eventResult] = await Promise.all([getEvent({ id: eventId })]);
 
 	if (eventResult.isErr()) {
 		return <ErrorAlert description="Event not found" />;
@@ -25,13 +21,9 @@ export const Container: React.FC<ContainerProps> = async ({
 
 	const event = eventResult.value;
 	return (
-		<Presenter
-			event={event}
-			usrId={userId}
-			s3Objects={match(objectsResult)
-				.with({ tag: 'right' }, ({ value }) => value)
-				.with({ tag: 'left' }, () => [])
-				.exhaustive()}
-		/>
+		<>
+			<Presenter event={event} usrId={userId} />
+			<ImagesContainer eventId={eventId} />
+		</>
 	);
 };

@@ -1,6 +1,7 @@
 'use client';
 
 import type { Event } from '@/common/types/Event';
+import { Loader } from '@/common/ui/Loader';
 import { theme } from '@/styles/theme';
 import { Button, Card, Input, Typography, message } from 'antd';
 import { Result, err, ok } from 'neverthrow';
@@ -8,7 +9,6 @@ import { useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
 import { type UploadParam, handleUpload } from '../_actions/handleUpload';
 import { CameraView } from './CameraView';
-import { Loader } from '@/common/ui/Loader';
 
 type Props = {
 	event: Event;
@@ -98,63 +98,63 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 			{contextHolder}
 			<Loader isLoading={isPending} tip="画像を送信中...">
 				<div
-				style={{
-					padding: theme.spacing.md,
-					display: 'flex',
-					flexDirection: 'column',
-					gap: theme.spacing.md
-				}}
-			>
-				<div
 					style={{
+						padding: theme.spacing.md,
 						display: 'flex',
-						alignItems: 'center',
-						gap: theme.spacing.sm
+						flexDirection: 'column',
+						gap: theme.spacing.md
 					}}
 				>
-					<Typography.Title level={2} style={{ margin: 0 }}>
-						{event.name}
-					</Typography.Title>
-					{event.date && <Typography.Text>{event.date}</Typography.Text>}
-				</div>
-				<Card title="Upload Image">
 					<div
 						style={{
-							padding: theme.spacing.md,
 							display: 'flex',
-							flexDirection: 'column',
-							gap: theme.spacing.md
+							alignItems: 'center',
+							gap: theme.spacing.sm
 						}}
 					>
-						<div style={{ marginBottom: theme.spacing.md }}>
-							<Typography.Text strong>
-								ユーザー名 <span style={{ color: 'red' }}>*</span>
-							</Typography.Text>
-							<Input
-								placeholder="ユーザー名を入力してください"
-								value={userName}
-								onChange={handleUserNameChange}
-								required
-								disabled={isPending}
-							/>
-						</div>
-						<CameraView onCapture={setCapturedImage} />
-						{errors && errors.length > 0 && (
-							<div>
-								{errors.map((error) => (
-									<Typography.Text type="danger" key={`${error}`}>
-										{error}
-									</Typography.Text>
-								))}
-							</div>
-						)}
-						<div>
-							<Button onClick={handleSubmit} loading={isPending}>
-								Submit
-							</Button>
-						</div>
+						<Typography.Title level={2} style={{ margin: 0 }}>
+							{event.name}
+						</Typography.Title>
+						{event.date && <Typography.Text>{event.date}</Typography.Text>}
 					</div>
-				</Card>
+					<Card title="Upload Image">
+						<div
+							style={{
+								padding: theme.spacing.md,
+								display: 'flex',
+								flexDirection: 'column',
+								gap: theme.spacing.md
+							}}
+						>
+							<div style={{ marginBottom: theme.spacing.md }}>
+								<Typography.Text strong>
+									ユーザー名 <span style={{ color: 'red' }}>*</span>
+								</Typography.Text>
+								<Input
+									placeholder="ユーザー名を入力してください"
+									value={userName}
+									onChange={handleUserNameChange}
+									required
+									disabled={isPending}
+								/>
+							</div>
+							<CameraView onCapture={setCapturedImage} />
+							{errors && errors.length > 0 && (
+								<div>
+									{errors.map((error) => (
+										<Typography.Text type="danger" key={`${error}`}>
+											{error}
+										</Typography.Text>
+									))}
+								</div>
+							)}
+							<div>
+								<Button onClick={handleSubmit} loading={isPending}>
+									Submit
+								</Button>
+							</div>
+						</div>
+					</Card>
 				</div>
 			</Loader>
 		</>
