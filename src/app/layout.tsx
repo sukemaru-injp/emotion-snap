@@ -31,7 +31,11 @@ export const metadata: Metadata = {
 		'ランキングアプリ',
 		'結婚式余興',
 		'パーティーツール'
-	]
+	],
+	icons: {
+		icon: '/favicon.ico',
+		shortcut: '/favicon.ico'
+	}
 };
 
 export default function RootLayout({
@@ -41,9 +45,6 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ja">
-			<head>
-				<link rel="icon" href="/favicon.ico" sizes="any" />
-			</head>
 			<body className={`${poppins.className} ${notoSansJP.className}`}>
 				<AntdRegistry>
 					<header
