@@ -41,6 +41,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ja">
+			<head>
+				<link rel="icon" href="/favicon.ico" sizes="any" />
+			</head>
 			<body className={`${poppins.className} ${notoSansJP.className}`}>
 				<AntdRegistry>
 					<header
