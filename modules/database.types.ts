@@ -86,6 +86,38 @@ export type Database = {
 					}
 				];
 			};
+			public_event: {
+				Row: {
+					created_at: string;
+					event_id: number;
+					event_name: string;
+					expire: string;
+					updated_at: string;
+				};
+				Insert: {
+					created_at?: string;
+					event_id: number;
+					event_name: string;
+					expire: string;
+					updated_at?: string;
+				};
+				Update: {
+					created_at?: string;
+					event_id?: number;
+					event_name?: string;
+					expire?: string;
+					updated_at?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'fk_event_public_event_id';
+						columns: ['event_id'];
+						isOneToOne: false;
+						referencedRelation: 'event';
+						referencedColumns: ['id'];
+					}
+				];
+			};
 		};
 		Views: {
 			[_ in never]: never;
