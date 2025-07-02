@@ -58,3 +58,42 @@ web application that:
 - Uses Biome for linting/formatting with tab indentation and single quotes
 - TypeScript strict mode enabled
 - Ant Design components for UI with custom theme in `src/styles/theme.ts`
+
+## Implementation Patterns & Learnings
+
+### Public Event Publishing Feature Implementation
+
+**Context**: Added event publication feature with expiry date functionality
+(2025-07-02)
+
+**Key Patterns**:
+
+1. **Server Actions Structure**: Follow existing pattern of server actions in
+   `_actions/` folders
+   - Use `ServerActionEither<Error, T>` for consistent error handling
+   - Import from `@/common/types/ServerActionEither`
+   - Always verify user ownership before operations
+   - Handle existing records (upsert pattern for publication settings)
+
+2. **Form Dependencies in Ant Design**:
+   - Use `Form.Item dependencies={['fieldName']} noStyle` pattern for
+     conditional form fields
+   - Access field values via `{({ getFieldValue }) => ...}` render prop pattern
+   - Enables real-time enable/disable of form fields based on other field values
+
+3. **Data Loading Pattern**:
+   - Load initial data in Container component using Promise.all for parallel
+     fetching
+   - Pass initial data as props to avoid useEffect in client components
+   - Handle error cases gracefully with fallback data
+
+4. **Component State Management**:
+   - Separate form state (`Form.useForm()`) from display state (`useState`)
+   - Update display state after successful server actions
+   - Use optimistic updates for better UX
+
+**Files Created/Modified**:
+
+- `publishEvent.ts`: Server actions for publish/unpublish/getPublishedEvent
+- `Presenter.tsx`: Added publication form with conditional fields
+- `Container.tsx`: Load initial publication data

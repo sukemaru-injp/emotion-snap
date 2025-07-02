@@ -6,25 +6,41 @@ import {
 	Alert,
 	Button,
 	Card,
+	Checkbox,
 	DatePicker,
 	Descriptions,
+	Divider,
 	Form,
 	Input,
-	QRCode,
 	Space,
 	message
 } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
 import { type UpdateEventFormData, editEvent } from '../_actions/editEvent';
+import {
+	type PublishEventFormData,
+	publishEvent,
+	unpublishEvent
+} from '../_actions/publishEvent';
+
+const QRCodeCard = dynamic(() => import('./QRCodeCard'), {
+	ssr: false
+});
 
 type PresenterProps = {
 	event: Event;
 	usrId: string;
 	showQR?: boolean;
+	initialPublishData?: {
+		isPublished: boolean;
+		expire?: string;
+		eventName?: string;
+	};
 };
 
 type FormValues = {
@@ -33,25 +49,32 @@ type FormValues = {
 	date?: Dayjs | null;
 };
 
+type PublishFormValues = {
+	isPublished: boolean;
+	eventName?: string;
+	expire?: Dayjs | null;
+};
+
 export const Presenter: React.FC<PresenterProps> = ({
 	event,
 	usrId,
-	showQR = true
+	showQR = true,
+	initialPublishData = { isPublished: false }
 }) => {
 	const router = useRouter();
 	const [isEditing, setIsEditing] = useState(false);
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState<string | null>(null);
 	const [form] = Form.useForm<FormValues>();
+	const [publishForm] = Form.useForm<PublishFormValues>();
 
 	const [editedEvent, setEditedEvent] = useState<Partial<Event>>({});
 
-	const qrCodeUrl = useMemo(() => {
-		if (typeof window !== 'undefined') {
-			return `${window.location.origin}/public/event/${event.id}`;
-		}
-		return undefined;
-	}, [event.id]);
+	const [publishData, setPublishData] = useState<{
+		isPublished: boolean;
+		expire?: string;
+		eventName?: string;
+	}>(initialPublishData);
 
 	const viewItems = useMemo(
 		() => [
@@ -124,6 +147,74 @@ export const Presenter: React.FC<PresenterProps> = ({
 			message.error('Please check the form for errors.');
 		}
 	}, [form, event.id, usrId, messageApi]);
+
+	const handlePublishSave = useCallback(async () => {
+		try {
+			const values = await publishForm.validateFields();
+			setError(null);
+
+			if (values.isPublished) {
+				if (!values.eventName || !values.expire) {
+					message.error(
+						'Event name and expiry date are required for publication.'
+					);
+					return;
+				}
+
+				const formDataToSubmit: PublishEventFormData = {
+					eventId: event.id,
+					eventName: values.eventName,
+					expire: values.expire.format('YYYY-MM-DD')
+				};
+
+				startTransition(async () => {
+					const result = await publishEvent(formDataToSubmit, usrId);
+					match(result)
+						.with({ tag: 'right' }, () => {
+							messageApi.success('Event published successfully!');
+							setPublishData({
+								isPublished: true,
+								expire: formDataToSubmit.expire,
+								eventName: formDataToSubmit.eventName
+							});
+						})
+						.with({ tag: 'left' }, ({ error: e }) => {
+							setError(e.message);
+							messageApi.error(`Failed to publish event: ${e.message}`);
+						})
+						.exhaustive();
+				});
+			} else {
+				startTransition(async () => {
+					const result = await unpublishEvent(event.id, usrId);
+					match(result)
+						.with({ tag: 'right' }, () => {
+							messageApi.success('Event unpublished successfully!');
+							setPublishData({ isPublished: false });
+						})
+						.with({ tag: 'left' }, ({ error: e }) => {
+							setError(e.message);
+							messageApi.error(`Failed to unpublish event: ${e.message}`);
+						})
+						.exhaustive();
+				});
+			}
+		} catch (_e) {
+			message.error('Please check the form for errors.');
+		}
+	}, [publishForm, event.id, usrId, messageApi]);
+
+	const handlePublishChange = useCallback(
+		(checked: boolean) => {
+			if (checked) {
+				publishForm.setFieldsValue({
+					eventName: event.name,
+					expire: dayjs().add(7, 'day')
+				});
+			}
+		},
+		[event.name, publishForm]
+	);
 
 	return (
 		<div
@@ -231,23 +322,109 @@ export const Presenter: React.FC<PresenterProps> = ({
 						<Descriptions bordered items={viewItems} column={1} />
 					</Card>
 				)}
-				{showQR && qrCodeUrl && (
-					<Card title="Event QR Code">
-						<div
-							style={{
-								textAlign: 'center',
-								paddingTop: theme.spacing.md,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: theme.spacing.sm
-							}}
-						>
-							<QRCode value={qrCodeUrl} size={200} />
-							<Input value={qrCodeUrl} readOnly />
-						</div>
-					</Card>
-				)}
+				{showQR && <QRCodeCard eventId={event.id} />}
 			</div>
+
+			<Divider />
+
+			<Card title="Public Event Settings">
+				<Loader tip="Loading..." isLoading={isPending}>
+					<Form
+						form={publishForm}
+						layout="vertical"
+						initialValues={{
+							isPublished: initialPublishData.isPublished,
+							eventName: initialPublishData.eventName || event.name,
+							expire: initialPublishData.expire
+								? dayjs(initialPublishData.expire)
+								: null
+						}}
+					>
+						<Form.Item name="isPublished" valuePropName="checked">
+							<Checkbox onChange={(e) => handlePublishChange(e.target.checked)}>
+								公開する
+							</Checkbox>
+						</Form.Item>
+
+						<Form.Item dependencies={['isPublished']} noStyle>
+							{({ getFieldValue }) => (
+								<Form.Item
+									name="eventName"
+									label="公開用イベント名"
+									rules={[
+										{
+											required: getFieldValue('isPublished'),
+											message: 'Please input the public event name!'
+										}
+									]}
+								>
+									<Input disabled={!getFieldValue('isPublished')} />
+								</Form.Item>
+							)}
+						</Form.Item>
+
+						<Form.Item dependencies={['isPublished']} noStyle>
+							{({ getFieldValue }) => (
+								<Form.Item
+									name="expire"
+									label="公開期限日"
+									rules={[
+										{
+											required: getFieldValue('isPublished'),
+											message: 'Please select the expiry date!'
+										}
+									]}
+								>
+									<DatePicker
+										style={{ width: '100%' }}
+										disabled={!getFieldValue('isPublished')}
+										disabledDate={(current) =>
+											current && current < dayjs().startOf('day')
+										}
+									/>
+								</Form.Item>
+							)}
+						</Form.Item>
+
+						{error && (
+							<Form.Item>
+								<Alert
+									message={error}
+									type="error"
+									showIcon
+									closable
+									onClose={() => setError(null)}
+								/>
+							</Form.Item>
+						)}
+
+						<Form.Item dependencies={['isPublished']} noStyle>
+							{({ getFieldValue }) => (
+								<Form.Item>
+									<Button
+										type="primary"
+										onClick={handlePublishSave}
+										loading={isPending}
+									>
+										{getFieldValue('isPublished') || publishData.isPublished
+											? 'Save Publication Settings'
+											: 'Unpublish Event'}
+									</Button>
+								</Form.Item>
+							)}
+						</Form.Item>
+
+						{publishData.isPublished && (
+							<Alert
+								message={`Event is currently published until ${publishData.expire ? dayjs(publishData.expire).format('YYYY-MM-DD') : 'Unknown'}`}
+								type="info"
+								showIcon
+								style={{ marginTop: '16px' }}
+							/>
+						)}
+					</Form>
+				</Loader>
+			</Card>
 		</div>
 	);
 };
