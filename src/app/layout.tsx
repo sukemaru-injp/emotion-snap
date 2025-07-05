@@ -81,6 +81,19 @@ export default function RootLayout({
 							padding: `${theme.spacing.md} 0`
 						}}
 					>
+						<div style={{ marginBottom: theme.spacing.sm }}>
+							<Link
+								href=""
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									color: theme.colors.textSecondary,
+									textDecoration: 'underline'
+								}}
+							>
+								使い方
+							</Link>
+						</div>
 						©2025 sukemaru
 					</footer>
 				</AntdRegistry>
