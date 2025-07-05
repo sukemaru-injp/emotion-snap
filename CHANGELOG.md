@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added emotion ranking system with fullscreen modal interface in ImagesPresenter
 - Added ranking button with trophy icon to display emotion-based rankings
 - Added sortable emotion scoring system for 5 emotion types (Happy, Angry, Sad, Smile, Surprised)
+- Added Happy+Smile combined scoring option for ranking system
 - Added special UI styling for top 3 rankings with distinct icons and visual effects:
   - 1st place: Gold crown icon with golden border and shadow
   - 2nd place: Silver trophy icon with silver border  
@@ -35,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added proper error handling for non-existent public events
 
 ### Enhanced
+- **Optimized ranking system performance with improved useMemo usage:**
+  - Separated data processing into two optimized useMemo hooks for better performance
+  - Reduced unnecessary re-computations when only score type changes
+  - Improved component re-rendering efficiency
 - **Improved public event UI (`/public/event/[id]`) for mobile-first user experience:**
   - Added warm orange gradient background for friendly atmosphere
   - Implemented card-based layout with rounded corners and shadows

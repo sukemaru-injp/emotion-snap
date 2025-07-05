@@ -14,14 +14,16 @@ export type ScoreType =
 	| 'happy_score'
 	| 'sad_score'
 	| 'smile_score'
-	| 'surprised_score';
+	| 'surprised_score'
+	| 'happy_smile_combined';
 
 const scoreLabels: Record<ScoreType, string> = {
 	angry_score: 'Angry',
 	happy_score: 'Happy',
 	sad_score: 'Sad',
 	smile_score: 'Smile',
-	surprised_score: 'Surprised'
+	surprised_score: 'Surprised',
+	happy_smile_combined: 'Happy+Smile'
 };
 
 const getRankIcon = (rank: number) => {
@@ -63,22 +65,33 @@ export const RankingModal: React.FC<Props> = ({
 		[images]
 	);
 
-	const sortedImages = useMemo(() => {
-		const imageDataWithObjects = objects
+	const imageDataWithObjects = useMemo(() => {
+		return objects
 			.map((object) => {
 				const imageMeta = imageMetaMap.get(object.key);
 				return {
 					...object,
 					meta: imageMeta,
-					userName: imageMeta?.user_name || 'No Name',
-					score: imageMeta?.[selectedScoreType] || 0
+					userName: imageMeta?.user_name || 'No Name'
 				};
 			})
-			.filter((item) => item.meta) // Only include items with valid metadata
-			.sort((a, b) => (b.score || 0) - (a.score || 0)); // Sort by score descending
+			.filter((item) => item.meta); // Only include items with valid metadata
+	}, [objects, imageMetaMap]);
 
-		return imageDataWithObjects;
-	}, [objects, imageMetaMap, selectedScoreType]);
+	const sortedImages = useMemo(() => {
+		return imageDataWithObjects
+			.map((item) => {
+				const score =
+					selectedScoreType === 'happy_smile_combined'
+						? (item.meta?.happy_score || 0) + (item.meta?.smile_score || 0)
+						: item.meta?.[selectedScoreType] || 0;
+				return {
+					...item,
+					score
+				};
+			})
+			.sort((a, b) => (b.score || 0) - (a.score || 0)); // Sort by score descending
+	}, [imageDataWithObjects, selectedScoreType]);
 
 	return (
 		<Modal

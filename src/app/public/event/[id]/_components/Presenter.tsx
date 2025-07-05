@@ -8,8 +8,8 @@ import { match } from 'ts-pattern';
 import { Loader } from '@/common/ui/Loader';
 import type { PublicEventData } from '../_actions/getPublicEvent';
 import { handleUpload, type UploadParam } from '../_actions/handleUpload';
-import { CameraView } from './CameraView';
 import styles from './_styles/Presenter.module.css';
+import { CameraView } from './CameraView';
 
 type Props = {
 	publicEvent: PublicEventData;
