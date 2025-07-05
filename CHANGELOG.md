@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced `@ant-design/icons` with `react-icons` for better icon management
 - Migrated global CSS styles to local CSS Modules (removed !important usage)
 - Enhanced ImagesPresenter with real-time emotion score sorting and ranking display
+- Refactored ranking functionality into separate RankingModal component for better code organization and reusability
 - Modified public event page (`/public/event/[id]`) to fetch data from `public_event` table instead of `event` table
 - Updated public event page to display event expiry information
 - Enhanced event publication form with date range validation (today to 1 week maximum)
