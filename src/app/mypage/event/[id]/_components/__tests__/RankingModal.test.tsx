@@ -14,10 +14,13 @@ vi.mock('antd', () => ({
 			<div data-testid="card-content">{children}</div>
 		</div>
 	),
+	// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 	Col: ({ children }: any) => <div data-testid="col">{children}</div>,
+	// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 	Image: ({ src, alt, className }: any) => (
 		<img src={src} alt={alt} className={className} data-testid="image" />
 	),
+	// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 	Modal: ({ children, open, onCancel, className }: any) =>
 		open ? (
 			<div data-testid="modal" className={className}>
@@ -27,8 +30,10 @@ vi.mock('antd', () => ({
 				{children}
 			</div>
 		) : null,
+	// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 	Row: ({ children }: any) => <div data-testid="row">{children}</div>,
 	Select: Object.assign(
+		// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 		({ value, onChange, children }: any) => (
 			<select
 				data-testid="score-select"
@@ -39,17 +44,20 @@ vi.mock('antd', () => ({
 			</select>
 		),
 		{
+			// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 			Option: ({ children, value: optionValue }: any) => (
 				<option value={optionValue}>{children}</option>
 			)
 		}
 	),
 	Typography: {
-		Title: ({ children, level, className }: any) => (
+		// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
+		Title: ({ children, className }: any) => (
 			<h1 data-testid="title" className={className}>
 				{children}
 			</h1>
 		),
+		// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 		Text: ({ children, strong, type, className, style }: any) => (
 			<span
 				data-testid="text"
