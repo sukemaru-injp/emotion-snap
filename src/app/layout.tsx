@@ -83,7 +83,7 @@ export default function RootLayout({
 					>
 						<div style={{ marginBottom: theme.spacing.sm }}>
 							<Link
-								href=""
+								href="https://florentine-lodge-080.notion.site/Emotion-Snap-212c3909c04080238da0cccc90dbd82a?source=copy_link"
 								target="_blank"
 								rel="noopener noreferrer"
 								style={{

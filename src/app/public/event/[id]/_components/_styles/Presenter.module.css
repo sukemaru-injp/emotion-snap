@@ -1,0 +1,138 @@
+/* Public Event Presenter Styles */
+
+.container {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #FFD4A3 0%, #FFF8F2 100%);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.header {
+	text-align: center;
+	margin-bottom: 16px;
+}
+
+.title {
+	margin: 0 !important;
+	color: #333333;
+	font-weight: bold !important;
+	margin-bottom: 8px !important;
+}
+
+.expireText {
+	color: #666666;
+	font-size: 16px;
+}
+
+.card {
+	border-radius: 16px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	border: none;
+	overflow: hidden;
+}
+
+.cardContent {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.section {
+	padding: 16px;
+	background-color: #FFF8F2;
+	border-radius: 12px;
+	border: 1px solid #E0E0E0;
+}
+
+.sectionHeader {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.sectionTitle {
+	color: #333333;
+	font-size: 18px;
+}
+
+.requiredMark {
+	color: #F78C3D;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.input {
+	padding: 16px;
+	font-size: 16px;
+	border-radius: 8px;
+	border: 2px solid #E0E0E0;
+}
+
+.cameraSection {
+	padding: 16px;
+	background-color: #FFF8F2;
+	border-radius: 12px;
+	border: 1px solid #E0E0E0;
+}
+
+.cameraHeader {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.cameraTitle {
+	color: #333333;
+	font-size: 18px;
+}
+
+.cameraGuide {
+	color: #666666;
+	font-size: 14px;
+	margin-bottom: 16px;
+	display: block;
+}
+
+.errorContainer {
+	padding: 16px;
+	background-color: #FFF2F0;
+	border-radius: 8px;
+	border: 1px solid #FFCCC7;
+}
+
+.errorText {
+	display: block;
+	margin-bottom: 4px;
+}
+
+.submitContainer {
+	text-align: center;
+	margin-top: 16px;
+}
+
+.submitButton {
+	width: 100%;
+	max-width: 300px;
+	height: 56px;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 28px;
+	background-color: #F78C3D;
+	border-color: #F78C3D;
+	box-shadow: 0 4px 16px rgba(247, 140, 61, 0.3);
+}
+
+.submitButton:hover {
+	background-color: #F78C3D;
+	border-color: #F78C3D;
+}
+
+.submitButton:focus {
+	background-color: #F78C3D;
+	border-color: #F78C3D;
+}

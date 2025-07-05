@@ -6,11 +6,11 @@
 }
 
 /* モバイル用（768px以下）- 縦長にする */
-@media (max-w-width: 768px) {
+@media (max-width: 768px) {
     .camera-video {
         width: 100%;
-        max-width: 300px;
-        height: 400px;
+        max-width: 350px;
+        height: 450px;
         margin: 0 auto;
         display: block;
     }

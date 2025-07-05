@@ -33,3 +33,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed public event page to properly handle expired events and display appropriate messages
 - Added proper error handling for non-existent public events
+
+### Enhanced
+- **Improved public event UI (`/public/event/[id]`) for mobile-first user experience:**
+  - Added warm orange gradient background for friendly atmosphere
+  - Implemented card-based layout with rounded corners and shadows
+  - Added section icons (user, camera, upload) for better visual hierarchy
+  - Enlarged camera component for mobile devices (350px max width, 450px height)
+  - Enhanced submit button with large touch-friendly design (300px max width, 56px height)
+  - Added conditional button activation (requires both name and photo)
+  - Implemented Japanese UI text with helpful guidance messages
+  - Added styled error display with warning icons
+  - Improved photo preview with completion message and rounded corners
+- **Refactored public event Presenter component to use CSS Modules:**
+  - Created `_styles/Presenter.module.css` with 12 style classes for better organization
+  - Replaced all inline styles with CSS Module classes for improved maintainability
+  - Removed unused theme imports and dependencies
+  - Improved code consistency with existing CSS Module patterns (matching RankingModal structure)
+  - Enhanced type safety and prevented style-related typos through modular CSS approach
