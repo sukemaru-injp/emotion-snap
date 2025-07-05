@@ -1,5 +1,5 @@
-import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import type { JSX } from 'react';
+import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import { getEvents } from '../_api/getEvents';
 import { Presenter } from './Presenter';
 

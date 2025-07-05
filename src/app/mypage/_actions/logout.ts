@@ -1,7 +1,7 @@
 'use server';
 
-import { createClient } from '@/libs/supabase/server';
 import { redirect } from 'next/navigation';
+import { createClient } from '@/libs/supabase/server';
 
 export const logout = async (): Promise<void> => {
 	const supabase = await createClient();

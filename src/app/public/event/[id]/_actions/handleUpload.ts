@@ -1,8 +1,11 @@
 'use server';
+import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
+import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { format } from 'date-fns';
 import {
-	type ServerActionEither,
 	left,
-	right
+	right,
+	type ServerActionEither
 } from '@/common/types/ServerActionEither';
 import { generateRandomId } from '@/common/utils/generateRandomId';
 import { roundToFourDecimals } from '@/common/utils/roundToFourDecimals';
@@ -10,9 +13,7 @@ import { DetectFacesCommand, rekognitionClient } from '@/libs/rekognition';
 import s3Client from '@/libs/s3';
 import { createClient } from '@/libs/supabase/server';
 import type { TablesInsert } from '@/libs/supabase/types';
-import type { Emotion, Smile } from '@aws-sdk/client-rekognition';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
-import { format } from 'date-fns';
+
 const checkScore = (score: number): number => (score < 1 ? 1 : score);
 
 export type UploadParam = {

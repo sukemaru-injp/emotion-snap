@@ -1,7 +1,7 @@
-import { createClient } from '@/libs/supabase/server';
 import type { User } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { createClient } from '@/libs/supabase/server';
 
 type Props = {
 	render: (user: User) => ReactNode;

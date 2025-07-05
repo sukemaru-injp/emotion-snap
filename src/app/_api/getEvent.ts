@@ -1,7 +1,7 @@
+import { err, ok } from 'neverthrow';
 import type { ApiResults } from '@/common/types/ApiResults';
 import type { Event } from '@/common/types/Event';
 import { createClient } from '@/libs/supabase/server';
-import { err, ok } from 'neverthrow';
 
 export const getEvent: ApiResults<Event, { id: number }> = async ({ id }) => {
 	const supabase = await createClient();

@@ -22,9 +22,7 @@ export const Container: React.FC<Props> = async ({ id }) => {
 
 	if (isExpired) {
 		return (
-			<ErrorAlert
-				description="This event has expired and is no longer accepting submissions."
-			/>
+			<ErrorAlert description="This event has expired and is no longer accepting submissions." />
 		);
 	}
 

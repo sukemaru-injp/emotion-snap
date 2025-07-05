@@ -1,5 +1,5 @@
-import type { Event } from '@/common/types/Event';
 import { render, screen } from '@testing-library/react';
+import type { Event } from '@/common/types/Event';
 import { Presenter } from '../Presenter';
 
 vi.mock('next/navigation', () => {

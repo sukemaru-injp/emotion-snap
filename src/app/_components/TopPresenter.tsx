@@ -1,5 +1,4 @@
 'use client';
-import { theme } from '@/styles/theme';
 import type { User } from '@supabase/supabase-js';
 import { Button, Card, Col, Image, Row, Space, Typography } from 'antd';
 import Link from 'next/link';
@@ -11,6 +10,7 @@ import {
 	FiSmartphone,
 	FiTarget
 } from 'react-icons/fi';
+import { theme } from '@/styles/theme';
 
 const { Title, Paragraph } = Typography;
 

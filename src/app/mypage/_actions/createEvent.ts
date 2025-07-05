@@ -1,13 +1,13 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import type { Database } from '@/../modules/database.types';
 import {
-	type ServerActionEither,
 	left,
-	right
+	right,
+	type ServerActionEither
 } from '@/common/types/ServerActionEither';
 import { generateRandomId } from '@/common/utils/generateRandomId';
 import { createClient } from '@/libs/supabase/server';
-import { revalidatePath } from 'next/cache';
 
 type EventFormData = {
 	name: string;

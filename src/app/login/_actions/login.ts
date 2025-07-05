@@ -1,8 +1,8 @@
 'use server';
 
-import { createClient } from '@/libs/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { createClient } from '@/libs/supabase/server';
 
 export const loginWithGoogle = async (): Promise<void> => {
 	const requestHeaders = await headers();

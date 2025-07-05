@@ -1,6 +1,6 @@
+import { err, ok } from 'neverthrow';
 import type { ApiResults } from '@/common/types/ApiResults';
 import { createClient } from '@/libs/supabase/server';
-import { err, ok } from 'neverthrow';
 import type { EventImage } from '../types/EventImage';
 
 export const getEventImages: ApiResults<

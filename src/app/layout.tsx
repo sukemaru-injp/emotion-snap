@@ -1,9 +1,9 @@
 import '../styles/globals.css';
-import { theme } from '@/styles/theme';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import type { Metadata } from 'next';
 import { Noto_Sans_JP, Poppins } from 'next/font/google';
 import Link from 'next/link';
+import { theme } from '@/styles/theme';
 import { ThemeProvider } from './_components/ThemeProvider';
 import '@ant-design/v5-patch-for-react-19';
 

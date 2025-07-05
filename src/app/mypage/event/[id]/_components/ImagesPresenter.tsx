@@ -1,7 +1,7 @@
 'use client';
-import { theme } from '@/styles/theme';
 import { Card, Col, Image, Row } from 'antd';
 import { useMemo } from 'react';
+import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
 import type { S3ObjectInfo } from '../types/S3ObjectInfo';
 

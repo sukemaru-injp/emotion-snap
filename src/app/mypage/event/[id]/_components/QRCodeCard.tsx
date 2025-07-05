@@ -1,9 +1,9 @@
 'use client';
 
-import { theme } from '@/styles/theme';
 import { Card, Input, QRCode } from 'antd';
 import type React from 'react';
 import { useMemo } from 'react';
+import { theme } from '@/styles/theme';
 
 type QRCodeCardProps = {
 	eventId: number;

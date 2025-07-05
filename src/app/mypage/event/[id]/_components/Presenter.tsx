@@ -1,7 +1,4 @@
 'use client';
-import type { Event } from '@/common/types/Event';
-import { Loader } from '@/common/ui/Loader';
-import { theme } from '@/styles/theme';
 import {
 	Alert,
 	Button,
@@ -12,8 +9,8 @@ import {
 	Divider,
 	Form,
 	Input,
-	Space,
-	message
+	message,
+	Space
 } from 'antd';
 import dayjs, { type Dayjs } from 'dayjs';
 import dynamic from 'next/dynamic';
@@ -21,7 +18,10 @@ import { useRouter } from 'next/navigation';
 import type React from 'react';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
-import { type UpdateEventFormData, editEvent } from '../_actions/editEvent';
+import type { Event } from '@/common/types/Event';
+import { Loader } from '@/common/ui/Loader';
+import { theme } from '@/styles/theme';
+import { editEvent, type UpdateEventFormData } from '../_actions/editEvent';
 import {
 	type PublishEventFormData,
 	publishEvent,

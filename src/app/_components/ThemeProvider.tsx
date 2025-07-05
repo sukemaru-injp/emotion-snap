@@ -1,6 +1,6 @@
-import { theme } from '@/styles/theme';
 import { ConfigProvider } from 'antd';
 import type { FC, ReactNode } from 'react';
+import { theme } from '@/styles/theme';
 
 export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	return (

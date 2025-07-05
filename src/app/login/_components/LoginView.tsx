@@ -1,8 +1,8 @@
 'use client';
-import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import { Button, Card } from 'antd';
 import { type FC, useCallback, useTransition } from 'react';
 import { FaGoogle } from 'react-icons/fa';
+import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import { loginWithGoogle } from '../_actions/login';
 
 export const LoginView: FC = () => {

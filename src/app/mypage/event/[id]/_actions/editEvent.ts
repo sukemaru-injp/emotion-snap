@@ -1,8 +1,8 @@
 'use server';
 import {
-	type ServerActionEither,
 	left,
-	right
+	right,
+	type ServerActionEither
 } from '@/common/types/ServerActionEither';
 import { createClient } from '@/libs/supabase/server';
 

@@ -62,7 +62,6 @@ export const useCamera = (options: CameraOptions = {}) => {
 
 	const stopCamera = useCallback(() => {
 		if (state.stream) {
-			// biome-ignore lint/complexity/noForEach: fixme
 			state.stream.getTracks().forEach((track) => track.stop());
 		}
 
@@ -120,7 +119,6 @@ export const useCamera = (options: CameraOptions = {}) => {
 	useEffect(() => {
 		return () => {
 			if (state.stream) {
-				// biome-ignore lint/complexity/noForEach: fixme
 				state.stream.getTracks().forEach((track) => track.stop());
 			}
 		};

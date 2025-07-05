@@ -1,11 +1,11 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import {
-	type ServerActionEither,
 	left,
-	right
+	right,
+	type ServerActionEither
 } from '@/common/types/ServerActionEither';
 import { createClient } from '@/libs/supabase/server';
-import { revalidatePath } from 'next/cache';
 
 // Define the success type and error type for the Result
 type DeleteEventError = Error;

@@ -1,5 +1,5 @@
-import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import type React from 'react';
+import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import { getEvent } from '../../../../_api/getEvent';
 import { getPublishedEvent } from '../_actions/publishEvent';
 import { ImagesContainer } from './ImagesContainer';

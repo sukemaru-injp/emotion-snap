@@ -1,6 +1,6 @@
-import { theme } from '@/styles/theme';
 import React from 'react';
 import { FaCamera } from 'react-icons/fa';
+import { theme } from '@/styles/theme';
 import { useCamera } from './useCamera';
 import './style.css';
 

@@ -1,15 +1,13 @@
 'use client';
-import type { Event } from '@/common/types/Event';
-import { theme } from '@/styles/theme';
 import {
 	Alert,
 	Button,
 	Card,
 	List,
 	Modal,
+	message,
 	Space,
-	Typography,
-	message
+	Typography
 } from 'antd';
 import { format } from 'date-fns';
 import Link from 'next/link';
@@ -22,6 +20,8 @@ import {
 	AiOutlineLogout // Import Logout icon
 } from 'react-icons/ai';
 import { match } from 'ts-pattern';
+import type { Event } from '@/common/types/Event';
+import { theme } from '@/styles/theme';
 import { deleteEvent } from '../_actions/deleteEvent';
 import { logout } from '../_actions/logout'; // Import logout action
 import { CreateEventForm } from './CreateEventForm';
