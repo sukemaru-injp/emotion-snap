@@ -1,11 +1,12 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-import { RankingModal, type ScoreType } from '../RankingModal';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import type { EventImage } from '../../types/EventImage';
 import type { S3ObjectInfo } from '../../types/S3ObjectInfo';
+import { RankingModal, type ScoreType } from '../RankingModal';
 
 // Mock Ant Design components
 vi.mock('antd', () => ({
+	// biome-ignore lint/suspicious/noExplicitAny: This is a test mock
 	Card: ({ children, title, extra, className }: any) => (
 		<div data-testid="card" className={className}>
 			<div data-testid="card-title">{title}</div>
@@ -20,7 +21,7 @@ vi.mock('antd', () => ({
 	Modal: ({ children, open, onCancel, className }: any) =>
 		open ? (
 			<div data-testid="modal" className={className}>
-				<button data-testid="modal-close" onClick={onCancel}>
+				<button data-testid="modal-close" onClick={onCancel} type="button">
 					Close
 				</button>
 				{children}
@@ -188,19 +189,18 @@ describe('RankingModal', () => {
 	it('calls onClose when close button is clicked', () => {
 		const onClose = vi.fn();
 		render(<RankingModal {...defaultProps} onClose={onClose} />);
-		
+
 		fireEvent.click(screen.getByTestId('modal-close'));
 		expect(onClose).toHaveBeenCalledTimes(1);
 	});
 
 	it('sorts images by happy_score in descending order by default', () => {
 		render(<RankingModal {...defaultProps} />);
-		
-		const cards = screen.getAllByTestId('card');
+
 		const titles = screen.getAllByTestId('card-title');
-		
+
 		// Charlie should be first (90 happy_score)
-		// Alice should be second (80 happy_score)  
+		// Alice should be second (80 happy_score)
 		// Bob should be third (60 happy_score)
 		expect(titles[0]).toHaveTextContent('Charlie');
 		expect(titles[1]).toHaveTextContent('Alice');
@@ -209,7 +209,7 @@ describe('RankingModal', () => {
 
 	it('displays rank icons correctly', () => {
 		render(<RankingModal {...defaultProps} />);
-		
+
 		// First place should have crown icon
 		expect(screen.getByTestId('crown-icon')).toBeInTheDocument();
 		// Second place should have trophy icon (there are multiple trophy icons)
@@ -220,9 +220,9 @@ describe('RankingModal', () => {
 
 	it('applies correct CSS classes for ranking positions', () => {
 		render(<RankingModal {...defaultProps} />);
-		
+
 		const cards = screen.getAllByTestId('card');
-		
+
 		// First place should have first-place class
 		expect(cards[0]).toHaveClass('first-place');
 		// Second place should have second-place class
@@ -233,7 +233,7 @@ describe('RankingModal', () => {
 
 	it('displays scores correctly with points format', () => {
 		render(<RankingModal {...defaultProps} />);
-		
+
 		// Charlie's happy_score should be displayed as 90 Points
 		expect(screen.getByText('90 Points')).toBeInTheDocument();
 		// Alice's happy_score should be displayed as 80 Points
@@ -244,7 +244,7 @@ describe('RankingModal', () => {
 
 	it('displays rank numbers correctly', () => {
 		render(<RankingModal {...defaultProps} />);
-		
+
 		expect(screen.getByText('#1')).toBeInTheDocument();
 		expect(screen.getByText('#2')).toBeInTheDocument();
 		expect(screen.getByText('#3')).toBeInTheDocument();
@@ -252,26 +252,30 @@ describe('RankingModal', () => {
 
 	it('calls onScoreTypeChange when score type is changed', () => {
 		const onScoreTypeChange = vi.fn();
-		render(<RankingModal {...defaultProps} onScoreTypeChange={onScoreTypeChange} />);
-		
+		render(
+			<RankingModal {...defaultProps} onScoreTypeChange={onScoreTypeChange} />
+		);
+
 		const select = screen.getByTestId('score-select');
 		fireEvent.change(select, { target: { value: 'smile_score' } });
-		
+
 		expect(onScoreTypeChange).toHaveBeenCalledWith('smile_score');
 	});
 
 	it('re-sorts images when score type changes', () => {
 		const { rerender } = render(<RankingModal {...defaultProps} />);
-		
+
 		// Initially sorted by happy_score: Charlie (90), Alice (80), Bob (60)
 		let titles = screen.getAllByTestId('card-title');
 		expect(titles[0]).toHaveTextContent('Charlie');
 		expect(titles[1]).toHaveTextContent('Alice');
 		expect(titles[2]).toHaveTextContent('Bob');
-		
+
 		// Change to smile_score: Bob (85), Alice (75), Charlie (70)
-		rerender(<RankingModal {...defaultProps} selectedScoreType="smile_score" />);
-		
+		rerender(
+			<RankingModal {...defaultProps} selectedScoreType="smile_score" />
+		);
+
 		titles = screen.getAllByTestId('card-title');
 		expect(titles[0]).toHaveTextContent('Bob');
 		expect(titles[1]).toHaveTextContent('Alice');
@@ -308,16 +312,16 @@ describe('RankingModal', () => {
 				objects={objectsWithNullScores}
 			/>
 		);
-		
+
 		// Should display 0 Points for null scores
 		expect(screen.getByText('0 Points')).toBeInTheDocument();
 	});
 
 	it('displays images with correct src and alt attributes', () => {
 		render(<RankingModal {...defaultProps} />);
-		
+
 		const images = screen.getAllByTestId('image');
-		
+
 		expect(images[0]).toHaveAttribute('src', 'https://example.com/image3.jpg');
 		expect(images[0]).toHaveAttribute('alt', 'Charlie');
 		expect(images[1]).toHaveAttribute('src', 'https://example.com/image1.jpg');
@@ -338,7 +342,7 @@ describe('RankingModal', () => {
 		];
 
 		render(<RankingModal {...defaultProps} objects={incompleteObjects} />);
-		
+
 		// Should only render 3 cards (not 4) since nonexistent.jpg has no metadata
 		const cards = screen.getAllByTestId('card');
 		expect(cards).toHaveLength(3);

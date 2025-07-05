@@ -8,9 +8,13 @@ const CameraComponent = dynamic(() => import('@/common/camera'), {
 
 type Props = {
 	onCapture: (file: File | null) => void;
+	isRetake?: boolean;
 };
 
-export const CameraView: React.FC<Props> = ({ onCapture }) => {
+export const CameraView: React.FC<Props> = ({
+	onCapture,
+	isRetake = false
+}) => {
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
 	const handleCapture = (imageFile: File) => {
@@ -31,6 +35,7 @@ export const CameraView: React.FC<Props> = ({ onCapture }) => {
 				onCapture={handleCapture}
 				onError={handleError}
 				facingMode="environment"
+				isRetake={isRetake}
 			/>
 			{previewUrl && (
 				<div>

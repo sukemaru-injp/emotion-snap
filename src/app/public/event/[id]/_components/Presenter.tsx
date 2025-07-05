@@ -142,7 +142,10 @@ export const Presenter: React.FC<Props> = ({ publicEvent }) => {
 									disabled={isPending}
 								/>
 							</div>
-							<CameraView onCapture={setCapturedImage} />
+							<CameraView
+								onCapture={setCapturedImage}
+								isRetake={!!capturedImage}
+							/>
 							{errors && errors.length > 0 && (
 								<div>
 									{errors.map((error) => (

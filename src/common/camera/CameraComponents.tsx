@@ -9,13 +9,15 @@ interface CameraComponentProps {
 	onError?: (error: string) => void;
 	facingMode?: 'user' | 'environment';
 	className?: string;
+	isRetake?: boolean;
 }
 
 export const CameraComponent: React.FC<CameraComponentProps> = ({
 	onCapture,
 	onError,
 	facingMode = 'user',
-	className = ''
+	className = '',
+	isRetake = false
 }) => {
 	const {
 		videoRef,
@@ -58,7 +60,7 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 						width: '100%'
 					}}
 				>
-					{isLoading ? 'カメラ起動中...' : 'カメラ開始'}
+					{isLoading ? 'カメラ起動中...' : isRetake ? '撮り直し' : 'カメラ開始'}
 				</button>
 			)}
 			<div
