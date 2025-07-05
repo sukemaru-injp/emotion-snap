@@ -161,6 +161,19 @@ export const Presenter: React.FC<PresenterProps> = ({
 					return;
 				}
 
+				// Additional validation for expire date
+				const today = dayjs().startOf('day');
+				const oneWeekFromToday = today.add(7, 'day');
+
+				if (values.expire < today) {
+					message.error('Expiry date cannot be in the past');
+					return;
+				}
+				if (values.expire > oneWeekFromToday) {
+					message.error('Expiry date cannot be more than 7 days from today');
+					return;
+				}
+
 				const formDataToSubmit: PublishEventFormData = {
 					eventId: event.id,
 					eventName: values.eventName,
@@ -372,15 +385,39 @@ export const Presenter: React.FC<PresenterProps> = ({
 										{
 											required: getFieldValue('isPublished'),
 											message: 'Please select the expiry date!'
+										},
+										{
+											validator: (_, value) => {
+												if (!getFieldValue('isPublished') || !value) {
+													return Promise.resolve();
+												}
+												const today = dayjs().startOf('day');
+												const oneWeekFromToday = today.add(7, 'day');
+
+												if (value < today) {
+													return Promise.reject(
+														'Expiry date cannot be in the past'
+													);
+												}
+												if (value > oneWeekFromToday) {
+													return Promise.reject(
+														'Expiry date cannot be more than 7 days from today'
+													);
+												}
+												return Promise.resolve();
+											}
 										}
 									]}
 								>
 									<DatePicker
 										style={{ width: '100%' }}
 										disabled={!getFieldValue('isPublished')}
-										disabledDate={(current) =>
-											current && current < dayjs().startOf('day')
-										}
+										disabledDate={(current) => {
+											if (!current) return false;
+											const today = dayjs().startOf('day');
+											const oneWeekFromToday = today.add(7, 'day');
+											return current < today || current > oneWeekFromToday;
+										}}
 									/>
 								</Form.Item>
 							)}

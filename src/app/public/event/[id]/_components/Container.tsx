@@ -1,5 +1,5 @@
-import { getEvent } from '@/app/_api/getEvent';
 import { ErrorAlert } from '@/common/ui/ErrorAlert';
+import { getPublicEvent } from '../_actions/getPublicEvent';
 import { Presenter } from './Presenter';
 
 type Props = {
@@ -7,11 +7,27 @@ type Props = {
 };
 
 export const Container: React.FC<Props> = async ({ id }) => {
-	const result = await getEvent({ id });
+	const result = await getPublicEvent(id);
 
-	if (result.isErr()) {
-		return <ErrorAlert description="Failed to load event data." />;
+	if (result.tag === 'left') {
+		return <ErrorAlert description="Event not found." />;
 	}
 
-	return <Presenter event={result.value} />;
+	const publicEvent = result.value;
+
+	// Check if event is expired
+	const now = new Date();
+	const expireDate = new Date(publicEvent.expire);
+	const isExpired = now > expireDate;
+
+	if (isExpired) {
+		return (
+			<ErrorAlert
+				title="Event Expired"
+				description="This event has expired and is no longer accepting submissions."
+			/>
+		);
+	}
+
+	return <Presenter publicEvent={publicEvent} />;
 };

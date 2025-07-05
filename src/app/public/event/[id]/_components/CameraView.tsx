@@ -1,6 +1,10 @@
 'use client';
-import { CameraComponent } from '@/common/camera';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
+
+const CameraComponent = dynamic(() => import('@/common/camera'), {
+	ssr: false
+});
 
 type Props = {
 	onCapture: (file: File | null) => void;

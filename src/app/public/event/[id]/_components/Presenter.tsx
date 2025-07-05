@@ -1,17 +1,17 @@
 'use client';
-
-import type { Event } from '@/common/types/Event';
 import { Loader } from '@/common/ui/Loader';
 import { theme } from '@/styles/theme';
 import { Button, Card, Input, Typography, message } from 'antd';
+import dayjs from 'dayjs';
 import { Result, err, ok } from 'neverthrow';
 import { useState, useTransition } from 'react';
 import { match } from 'ts-pattern';
+import type { PublicEventData } from '../_actions/getPublicEvent';
 import { type UploadParam, handleUpload } from '../_actions/handleUpload';
 import { CameraView } from './CameraView';
 
 type Props = {
-	event: Event;
+	publicEvent: PublicEventData;
 };
 
 const validateUploadParams = ({
@@ -53,7 +53,7 @@ const validateUploadParams = ({
 	);
 };
 
-export const Presenter: React.FC<Props> = ({ event }) => {
+export const Presenter: React.FC<Props> = ({ publicEvent }) => {
 	const [capturedImage, setCapturedImage] = useState<File | null>(null);
 	const [userName, setUserName] = useState<string>('');
 	const [errors, setErrors] = useState<string[] | undefined>([]);
@@ -69,7 +69,7 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 		const validationResult = validateUploadParams({
 			userName,
 			file: capturedImage,
-			eventId: event.id
+			eventId: publicEvent.event_id
 		});
 
 		if (validationResult.isErr()) {
@@ -114,9 +114,12 @@ export const Presenter: React.FC<Props> = ({ event }) => {
 						}}
 					>
 						<Typography.Title level={2} style={{ margin: 0 }}>
-							{event.name}
+							{publicEvent.event_name}
 						</Typography.Title>
-						{event.date && <Typography.Text>{event.date}</Typography.Text>}
+						<Typography.Text style={{ color: theme.colors.textSecondary }}>
+							Expire on:
+							{dayjs(new Date(publicEvent.expire)).format('YYYY-MM-DD')}
+						</Typography.Text>
 					</div>
 					<Card title="Upload Image">
 						<div

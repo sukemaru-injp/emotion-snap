@@ -1,1 +1,3 @@
-export { CameraComponent } from './CameraComponents';
+import { CameraComponent } from './CameraComponents';
+
+export default CameraComponent;
