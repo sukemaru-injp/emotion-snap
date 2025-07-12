@@ -5,6 +5,7 @@ import {
 	right,
 	type ServerActionEither
 } from '@/common/types/ServerActionEither';
+import { deleteObjectsByPrefix } from '@/libs/s3';
 import { createClient } from '@/libs/supabase/server';
 
 // Define the success type and error type for the Result
@@ -16,6 +17,10 @@ export async function deleteEvent(
 ): Promise<ServerActionEither<DeleteEventError, null>> {
 	const supabase = await createClient();
 
+	const res = await deleteObjectsByPrefix(eventId);
+	if (res.isErr()) {
+		console.warn(`S3 deletion failed for event ${eventId}`);
+	}
 	try {
 		const { error: deleteError } = await supabase
 			.from('event')
@@ -25,6 +30,7 @@ export async function deleteEvent(
 		if (deleteError) {
 			return left(new Error(deleteError.message));
 		}
+
 		revalidatePath('/mypage');
 		return right(null);
 	} catch (e) {
