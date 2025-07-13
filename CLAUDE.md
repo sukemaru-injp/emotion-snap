@@ -58,6 +58,11 @@ web application that:
 - Uses Biome for linting/formatting with tab indentation and single quotes
 - TypeScript strict mode enabled
 - Ant Design components for UI with custom theme in `src/styles/theme.ts`
+- **CSS Modules**: Local component styling in `_components/_styles` directory
+  - Prevents style conflicts and improves maintainability
+  - Replace inline styles and global CSS with modular approach
+  - Follow pattern: `ComponentName.module.css` with descriptive class names
+- **Icon Management**: Uses `react-icons` library (migrated from `@ant-design/icons`)
 
 ## Implementation Patterns & Learnings
 
@@ -97,3 +102,75 @@ web application that:
 - `publishEvent.ts`: Server actions for publish/unpublish/getPublishedEvent
 - `Presenter.tsx`: Added publication form with conditional fields
 - `Container.tsx`: Load initial publication data
+
+### Emotion Ranking System Implementation
+
+**Context**: Added comprehensive emotion ranking and scoring system with fullscreen modal interface
+
+**Key Patterns**:
+
+1. **Emotion Analysis & Scoring**:
+   - Process AWS Rekognition emotion data for 5 emotion types (Happy, Angry, Sad, Smile, Surprised)
+   - Implement sortable scoring system with Happy+Smile combined option
+   - Use optimized `useMemo` hooks for performance (separate data processing and score type changes)
+   - Handle missing emotion data gracefully with EmptyState component
+
+2. **Modal Component Architecture**:
+   - Create reusable RankingModal component with fullscreen interface
+   - Use CSS Modules for styling (`_styles/RankingModal.module.css`)
+   - Implement conditional rendering based on data availability
+   - Separate ranking logic from main component for better organization
+
+3. **Visual Hierarchy for Rankings**:
+   - Special UI styling for top 3 positions with distinct icons and effects:
+     - 1st place: Gold crown icon with golden border and shadow
+     - 2nd place: Silver trophy icon with silver border
+     - 3rd place: Bronze star icon with bronze border
+   - Use `react-icons` for consistent icon management
+
+4. **Empty State Handling**:
+   - Create reusable EmptyState component for consistent UX
+   - Display informative messages when no data is available
+   - Disable functionality gracefully (e.g., "View Ranking" button when no images)
+
+**Files Created/Modified**:
+
+- `RankingModal.tsx`: Fullscreen emotion ranking interface
+- `_styles/RankingModal.module.css`: CSS Modules styling for ranking
+- `EmptyState.tsx`: Reusable empty state component
+- `ImagesPresenter.tsx`: Enhanced with ranking functionality and empty states
+
+### Mobile-First Public Event UI Enhancement
+
+**Context**: Enhanced public event pages (`/public/event/[id]`) for mobile-optimized user experience
+
+**Key Patterns**:
+
+1. **Mobile-First Design Approach**:
+   - Use warm orange gradient backgrounds for friendly atmosphere
+   - Implement card-based layouts with rounded corners and shadows
+   - Design touch-friendly interfaces (300px max width buttons, 56px height)
+   - Optimize camera component sizing (350px max width, 450px height)
+
+2. **CSS Modules Migration**:
+   - Create component-specific stylesheets in `_styles/` directory
+   - Replace inline styles with CSS Module classes for maintainability
+   - Follow consistent naming patterns across components
+   - Remove global CSS dependencies and `!important` usage
+
+3. **Conditional UI Logic**:
+   - Implement form validation with conditional button activation
+   - Display contextual messages based on event publication status
+   - Handle expired events and non-existent events gracefully
+   - Show appropriate QR code states (published vs unpublished)
+
+4. **Date Validation Patterns**:
+   - Implement both UI-level (DatePicker) and server-side validation
+   - Restrict date selection to today through 1 week maximum
+   - Provide clear user feedback for invalid selections
+
+**Files Created/Modified**:
+
+- `_styles/Presenter.module.css`: Mobile-optimized styles for public event UI
+- Public event page components with enhanced mobile UX
+- Event publication validation logic
