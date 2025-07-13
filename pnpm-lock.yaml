@@ -27,7 +27,7 @@ importers:
         specifier: ^0.6.1
         version: 0.6.1(@supabase/supabase-js@2.50.5)
       '@supabase/supabase-js':
-        specifier: ^2.50.3
+        specifier: ^2.50.5
         version: 2.50.5
       '@tanstack/react-form':
         specifier: ^1.12.4
