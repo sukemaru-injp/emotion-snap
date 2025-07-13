@@ -1,5 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["config:recommended", ":disableDependencyDashboard"],
-	"schedule": ["* 0-8 * * 0"]
+	"schedule": ["* 3-8 * * 0"],
+	"rangeStrategy": "bump"
 }
