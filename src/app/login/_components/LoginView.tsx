@@ -2,7 +2,6 @@
 import { Button, Card } from 'antd';
 import { type FC, useCallback, useTransition } from 'react';
 import { FaGoogle } from 'react-icons/fa';
-import { ThemeProvider } from '@/app/_components/ThemeProvider';
 import { loginWithGoogle } from '../_actions/login';
 
 export const LoginView: FC = () => {
@@ -15,22 +14,20 @@ export const LoginView: FC = () => {
 	}, []);
 
 	return (
-		<ThemeProvider>
-			<div style={{ display: 'grid', placeContent: 'center', height: '100vh' }}>
-				<Card title="ログイン" style={{ width: 300 }}>
-					<form action={handleGoogleLogin}>
-						<Button
-							type="primary"
-							icon={<FaGoogle />}
-							disabled={isPending}
-							htmlType="submit"
-							block
-						>
-							Googleでログイン
-						</Button>
-					</form>
-				</Card>
-			</div>
-		</ThemeProvider>
+		<div style={{ display: 'grid', placeContent: 'center', height: '100vh' }}>
+			<Card title="ログイン" style={{ width: 300 }}>
+				<form action={handleGoogleLogin}>
+					<Button
+						type="primary"
+						icon={<FaGoogle />}
+						disabled={isPending}
+						htmlType="submit"
+						block
+					>
+						Googleでログイン
+					</Button>
+				</form>
+			</Card>
+		</div>
 	);
 };
