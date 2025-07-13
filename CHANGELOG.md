@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added EmptyState component for consistent empty state handling across the application
+- Added empty state display when no Event Images are uploaded with informative messaging
 - Added emotion ranking system with fullscreen modal interface in ImagesPresenter
 - Added ranking button with trophy icon to display emotion-based rankings
 - Added sortable emotion scoring system for 5 emotion types (Happy, Angry, Sad, Smile, Surprised)
@@ -23,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added conditional QR code display based on event publication status
 
 ### Changed
+- Modified ImagesPresenter to disable "View Ranking" button when no images are available
+- Enhanced RankingModal to show empty state when no photos have emotion data
 - Replaced `@ant-design/icons` with `react-icons` for better icon management
 - Migrated global CSS styles to local CSS Modules (removed !important usage)
 - Enhanced ImagesPresenter with real-time emotion score sorting and ranking display

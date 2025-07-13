@@ -2,6 +2,7 @@
 import { Card, Col, Image, Modal, Row, Select, Typography } from 'antd';
 import { useMemo } from 'react';
 import { FaCrown, FaStar, FaTrophy } from 'react-icons/fa';
+import { EmptyState } from '@/common/ui/EmptyState';
 import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
 import type { S3ObjectInfo } from '../types/S3ObjectInfo';
@@ -147,52 +148,64 @@ export const RankingModal: React.FC<Props> = ({
 					</div>
 				</div>
 
-				<Row gutter={[24, 24]}>
-					{sortedImages.map((item, index) => {
-						const rank = index + 1;
-						const scoreValue = item.score || 0;
-						const rankIcon = getRankIcon(rank);
-						const rankStyleClass = getRankStyleClass(rank);
+				{sortedImages.length > 0 ? (
+					<Row gutter={[24, 24]}>
+						{sortedImages.map((item, index) => {
+							const rank = index + 1;
+							const scoreValue = item.score || 0;
+							const rankIcon = getRankIcon(rank);
+							const rankStyleClass = getRankStyleClass(rank);
 
-						return (
-							<Col key={item.key} xs={24} sm={12} md={8} lg={6}>
-								<Card
-									className={`${styles.rankingCard} ${rankStyleClass}`}
-									title={
-										<div className={styles.cardTitle}>
-											<span>{item.userName}</span>
-											<div className={styles.rankInfo}>
-												{rankIcon}
-												<Text strong className={styles.rankNumber}>
-													#{rank}
+							return (
+								<Col key={item.key} xs={24} sm={12} md={8} lg={6}>
+									<Card
+										className={`${styles.rankingCard} ${rankStyleClass}`}
+										title={
+											<div className={styles.cardTitle}>
+												<span>{item.userName}</span>
+												<div className={styles.rankInfo}>
+													{rankIcon}
+													<Text strong className={styles.rankNumber}>
+														#{rank}
+													</Text>
+												</div>
+											</div>
+										}
+										extra={
+											<div className={styles.scoreInfo}>
+												<Text type="secondary">Score</Text>
+												<br />
+												<Text
+													strong
+													className={styles.scoreValue}
+													style={{ color: theme.colors.primary }}
+												>
+													{scoreValue} Points
 												</Text>
 											</div>
-										</div>
-									}
-									extra={
-										<div className={styles.scoreInfo}>
-											<Text type="secondary">Score</Text>
-											<br />
-											<Text
-												strong
-												className={styles.scoreValue}
-												style={{ color: theme.colors.primary }}
-											>
-												{scoreValue} Points
-											</Text>
-										</div>
-									}
-								>
-									<Image
-										src={item.url}
-										alt={item.userName || 'Event image'}
-										className={styles.imageContainer}
-									/>
-								</Card>
-							</Col>
-						);
-					})}
-				</Row>
+										}
+									>
+										<Image
+											src={item.url}
+											alt={item.userName || 'Event image'}
+											className={styles.imageContainer}
+										/>
+									</Card>
+								</Col>
+							);
+						})}
+					</Row>
+				) : (
+					<EmptyState
+						title="No photos available for ranking"
+						description="Upload photos with emotion data to see the ranking! Photos need to be processed for emotion detection to appear in rankings."
+						icon={
+							<FaTrophy
+								style={{ fontSize: '48px', color: theme.colors.textSecondary }}
+							/>
+						}
+					/>
+				)}
 			</div>
 		</Modal>
 	);

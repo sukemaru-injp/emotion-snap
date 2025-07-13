@@ -2,6 +2,7 @@
 import { Button, Card, Col, Image, Row, Typography } from 'antd';
 import { useMemo, useState } from 'react';
 import { FaTrophy } from 'react-icons/fa';
+import { EmptyState } from '@/common/ui/EmptyState';
 import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
 import type { S3ObjectInfo } from '../types/S3ObjectInfo';
@@ -23,6 +24,8 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 	const [isRankingModalOpen, setIsRankingModalOpen] = useState(false);
 	const [selectedScoreType, setSelectedScoreType] =
 		useState<ScoreType>('happy_score');
+
+	const hasImages = objects.length > 0;
 
 	return (
 		<div
@@ -46,26 +49,34 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 					type="primary"
 					icon={<FaTrophy />}
 					size="large"
+					disabled={!hasImages}
 					onClick={() => setIsRankingModalOpen(true)}
 				>
 					View Ranking
 				</Button>
 			</div>
 
-			<Row gutter={[16, 16]}>
-				{objects.map((object) => {
-					const imageMeta = imageMetaMap.get(object.key);
-					const userName = imageMeta?.user_name || 'No Name';
+			{hasImages ? (
+				<Row gutter={[16, 16]}>
+					{objects.map((object) => {
+						const imageMeta = imageMetaMap.get(object.key);
+						const userName = imageMeta?.user_name || 'No Name';
 
-					return (
-						<Col key={object.key} xs={24} sm={12} md={8} lg={6}>
-							<Card title={userName}>
-								<Image src={object.url} alt={userName || 'Event image'} />
-							</Card>
-						</Col>
-					);
-				})}
-			</Row>
+						return (
+							<Col key={object.key} xs={24} sm={12} md={8} lg={6}>
+								<Card title={userName}>
+									<Image src={object.url} alt={userName || 'Event image'} />
+								</Card>
+							</Col>
+						);
+					})}
+				</Row>
+			) : (
+				<EmptyState
+					title="No photos uploaded yet"
+					description="Be the first to upload a photo to this event! Upload your photo and let our emotion detection analyze your expression."
+				/>
+			)}
 
 			<RankingModal
 				isOpen={isRankingModalOpen}
