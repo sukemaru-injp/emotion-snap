@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@ant-design/nextjs-registry':
         specifier: ^1.0.2
-        version: 1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/v5-patch-for-react-19':
         specifier: ^1.0.3
-        version: 1.0.3(antd@5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.3(antd@5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@aws-sdk/client-rekognition':
         specifier: ^3.840.0
         version: 3.840.0
@@ -34,7 +34,7 @@ importers:
         version: 1.12.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       antd:
         specifier: ^5.26.3
-        version: 5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1393,8 +1393,8 @@ packages:
     resolution: {integrity: sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==}
     engines: {node: '>=10'}
 
-  antd@5.26.3:
-    resolution: {integrity: sha512-M/s9Q39h/+G7AWnS6fbNxmAI9waTH4ti022GVEXBLq2j810V1wJ3UOQps13nEilzDNcyxnFN/EIbqIgS7wSYaA==}
+  antd@5.26.4:
+    resolution: {integrity: sha512-e1EnOvEkvvqcQ18dxfzChBJyJACyih13WpNf2OtnP9z2POh/SF0fXL+ynUemT1zfr+p+P1po/tmHXaMc5PMghg==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -2364,10 +2364,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/nextjs-registry@1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/nextjs-registry@1.0.2(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      antd: 5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next: 15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -2381,9 +2381,9 @@ snapshots:
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.2
 
-  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      antd: 5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
@@ -3992,7 +3992,7 @@ snapshots:
 
   ansi-styles@5.2.0: {}
 
-  antd@5.26.3(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  antd@5.26.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@ant-design/colors': 7.2.1
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
