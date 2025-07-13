@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Loader } from '@/common/ui/Loader';
 import { CheckAuth } from '../_components/CheckAuth';
 import { Container } from './_components/Container';
+
 export default async function MyPage() {
 	return (
 		<CheckAuth

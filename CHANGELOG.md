@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added validation for event publication expiry dates to limit selection to today through 1 week from today
 - Added proper data fetching from `public_event` table for public event pages
 - Added guards for non-existent and expired events on public event pages
+- Added conditional QR code display based on event publication status
 
 ### Changed
 - Replaced `@ant-design/icons` with `react-icons` for better icon management
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated public event page to display event expiry information
 - Enhanced event publication form with date range validation (today to 1 week maximum)
 - Added comprehensive validation both in UI (DatePicker) and form submission for expiry dates
+- Modified QRCodeCard component to show informational message when event is not published
 
 ### Fixed
 - Fixed public event page to properly handle expired events and display appropriate messages

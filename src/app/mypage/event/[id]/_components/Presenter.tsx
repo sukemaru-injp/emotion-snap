@@ -335,7 +335,12 @@ export const Presenter: React.FC<PresenterProps> = ({
 						<Descriptions bordered items={viewItems} column={1} />
 					</Card>
 				)}
-				{showQR && <QRCodeCard eventId={event.id} />}
+				{showQR && (
+					<QRCodeCard
+						eventId={event.id}
+						isPublished={publishData.isPublished}
+					/>
+				)}
 			</div>
 
 			<Divider />
