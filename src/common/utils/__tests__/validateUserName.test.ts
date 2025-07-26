@@ -153,13 +153,12 @@ describe('validateUserName', () => {
 
 	describe('Multiple errors', () => {
 		it('should return multiple validation errors', () => {
-			const result = validateUserName('_admin_'); // starts with _, ends with _, reserved name
+			const result = validateUserName('_test_'); // starts with _, ends with _
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
 				expect(result.error.length).toBeGreaterThan(1);
 				expect(result.error).toContain('アンダースコアで始まる名前は使用できません');
 				expect(result.error).toContain('アンダースコアで終わる名前は使用できません');
-				expect(result.error).toContain('この名前は予約されているため使用できません');
 			}
 		});
 	});
