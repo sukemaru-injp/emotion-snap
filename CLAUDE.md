@@ -64,6 +64,34 @@ web application that:
   - Follow pattern: `ComponentName.module.css` with descriptive class names
 - **Icon Management**: Uses `react-icons` library (migrated from `@ant-design/icons`)
 
+### Security Guidelines
+
+- **Input Validation**: All user inputs must be validated on both client and server side
+  - Use comprehensive validation functions like `validateUserName` for user-provided data
+  - Implement reserved word blacklists and character restrictions
+  - Reject malicious patterns (underscore prefixes, numeric-only strings, special characters)
+- **Credential Management**: Keep sensitive data server-side only
+  - AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`) must never be exposed to client
+  - Use `'use server'` directive for all operations involving sensitive data
+  - Environment variables with `NEXT_PUBLIC_` prefix are exposed to client - use sparingly
+- **Authentication & Authorization**: Implement proper access controls
+  - Always verify user ownership before data operations (check `user_id` matches)
+  - Use Supabase RLS (Row Level Security) for database-level protection
+  - Implement session management through middleware
+- **XSS Prevention**: Avoid dangerous HTML output methods
+  - Never use `dangerouslySetInnerHTML`, `innerHTML`, or `eval()`
+  - Rely on React's automatic escaping for user content
+  - Sanitize all user inputs before database storage
+- **Security Headers**: Implement comprehensive response headers
+  - `Strict-Transport-Security` for HTTPS enforcement
+  - `X-Frame-Options: SAMEORIGIN` for clickjacking protection
+  - `X-Content-Type-Options: nosniff` for MIME type security
+  - Configure headers in `next.config.ts`
+- **SQL Injection Prevention**: Use parameterized queries only
+  - Utilize Supabase's type-safe query builder exclusively
+  - Never construct dynamic SQL strings
+  - Implement `ServerActionEither<E, T>` pattern for consistent error handling
+
 ## Implementation Patterns & Learnings
 
 ### Public Event Publishing Feature Implementation
