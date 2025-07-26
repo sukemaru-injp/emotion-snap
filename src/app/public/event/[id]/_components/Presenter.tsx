@@ -6,6 +6,7 @@ import { useState, useTransition } from 'react';
 import { FaCamera, FaImage, FaUser } from 'react-icons/fa';
 import { match } from 'ts-pattern';
 import { Loader } from '@/common/ui/Loader';
+import { validateUserName } from '@/common/utils/validateUserName';
 import type { PublicEventData } from '../_actions/getPublicEvent';
 import { handleUpload, type UploadParam } from '../_actions/handleUpload';
 import styles from './_styles/Presenter.module.css';
@@ -24,16 +25,7 @@ const validateUploadParams = ({
 	file: File | null;
 	eventId: number;
 }): Result<UploadParam, string[]> => {
-	const validateName = (name: string): Result<string, string[]> => {
-		const trimName = name.trim();
-		if (!trimName) {
-			return err(['ユーザー名は必須です']);
-		}
-		if (trimName.length > 20) {
-			return err(['ユーザー名は20文字以内で入力してください']);
-		}
-		return ok(trimName);
-	};
+	const validateName = validateUserName;
 	const validateFile = (file: File | null): Result<File, string[]> => {
 		if (!file) {
 			return err(['ファイルは必須です']);
