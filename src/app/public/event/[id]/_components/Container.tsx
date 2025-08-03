@@ -4,9 +4,10 @@ import { Presenter } from './Presenter';
 
 type Props = {
 	id: number;
+	isCompleted: boolean;
 };
 
-export const Container: React.FC<Props> = async ({ id }) => {
+export const Container: React.FC<Props> = async ({ id, isCompleted }) => {
 	const result = await getPublicEvent(id);
 
 	if (result.tag === 'left') {
@@ -26,5 +27,5 @@ export const Container: React.FC<Props> = async ({ id }) => {
 		);
 	}
 
-	return <Presenter publicEvent={publicEvent} />;
+	return <Presenter publicEvent={publicEvent} isCompleted={isCompleted} />;
 };

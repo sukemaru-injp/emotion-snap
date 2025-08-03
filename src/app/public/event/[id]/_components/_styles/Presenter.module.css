@@ -136,3 +136,24 @@
 	background-color: #F78C3D;
 	border-color: #F78C3D;
 }
+
+.completionSection {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+	padding: 48px 24px;
+	text-align: center;
+}
+
+.completionTitle {
+	margin: 0 !important;
+	color: #52c41a;
+	font-weight: bold !important;
+}
+
+.completionMessage {
+	color: #333333;
+	font-size: 18px;
+	line-height: 1.6;
+}

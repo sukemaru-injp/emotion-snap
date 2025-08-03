@@ -2,6 +2,7 @@
 import { Button, Card, Input, message, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { err, ok, Result } from 'neverthrow';
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { FaCamera, FaImage, FaUser } from 'react-icons/fa';
 import { match } from 'ts-pattern';
@@ -11,9 +12,11 @@ import type { PublicEventData } from '../_actions/getPublicEvent';
 import { handleUpload, type UploadParam } from '../_actions/handleUpload';
 import styles from './_styles/Presenter.module.css';
 import { CameraView } from './CameraView';
+import { CompletedView } from './CompletedView';
 
 type Props = {
 	publicEvent: PublicEventData;
+	isCompleted: boolean;
 };
 
 const validateUploadParams = ({
@@ -46,7 +49,8 @@ const validateUploadParams = ({
 	);
 };
 
-export const Presenter: React.FC<Props> = ({ publicEvent }) => {
+export const Presenter: React.FC<Props> = ({ publicEvent, isCompleted }) => {
+	const router = useRouter();
 	const [capturedImage, setCapturedImage] = useState<File | null>(null);
 	const [userName, setUserName] = useState<string>('');
 	const [errors, setErrors] = useState<string[] | undefined>([]);
@@ -79,13 +83,15 @@ export const Presenter: React.FC<Props> = ({ publicEvent }) => {
 				})
 				.with({ tag: 'right' }, () => {
 					setErrors(undefined);
-					messageApi.success('Upload completed successfully!');
-					setCapturedImage(null);
-					setUserName('');
+					router.push(`/public/event/${publicEvent.event_id}?isCompleted=true`);
 				})
 				.exhaustive();
 		});
 	};
+
+	if (isCompleted) {
+		return <CompletedView eventName={publicEvent.event_name} />;
+	}
 
 	return (
 		<>

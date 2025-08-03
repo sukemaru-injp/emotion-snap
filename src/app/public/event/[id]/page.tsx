@@ -2,11 +2,14 @@ import { ErrorAlert } from '@/common/ui/ErrorAlert';
 import { Container } from './_components/Container';
 
 export default async function Page({
-	params
+	params,
+	searchParams
 }: {
 	params: Promise<{ id: string }>;
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const { id: maybeId } = await params;
+	const searchParamsResolved = await searchParams;
 
 	const id = Number.parseInt(maybeId, 10);
 
@@ -14,5 +17,7 @@ export default async function Page({
 		return <ErrorAlert description="Invalid event ID" />;
 	}
 
-	return <Container id={id} />;
+	const isCompleted = searchParamsResolved.isCompleted === 'true';
+
+	return <Container id={id} isCompleted={isCompleted} />;
 }

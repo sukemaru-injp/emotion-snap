@@ -5,7 +5,8 @@ export const theme = {
 		background: '#FFF8F2', // 優しいアイボリー
 		textPrimary: '#333333', // メインテキスト（濃いグレー）
 		textSecondary: '#666666', // サブテキスト
-		border: '#E0E0E0' // 枠線カラー
+		border: '#E0E0E0', // 枠線カラー
+		success: '#52c41a' // 成功メッセージ用グリーン
 	} as const,
 	spacing: {
 		xs: '4px',
