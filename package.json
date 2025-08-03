@@ -18,6 +18,7 @@
 		"@aws-sdk/client-rekognition": "^3.848.0",
 		"@aws-sdk/client-s3": "^3.850.0",
 		"@aws-sdk/s3-request-presigner": "^3.850.0",
+		"@next/third-parties": "^15.4.5",
 		"@supabase/ssr": "^0.6.1",
 		"@supabase/supabase-js": "^2.50.5",
 		"@tanstack/react-form": "^1.12.4",

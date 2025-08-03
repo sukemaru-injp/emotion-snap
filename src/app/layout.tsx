@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { theme } from '@/styles/theme';
 import { ThemeProvider } from './_components/ThemeProvider';
 import '@ant-design/v5-patch-for-react-19';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const poppins = Poppins({
 	weight: ['400', '600', '700'],
@@ -98,6 +99,11 @@ export default function RootLayout({
 					</footer>
 				</AntdRegistry>
 			</body>
+
+			{process.env.NEXT_PUBLIC_APP_ENV === 'prod' &&
+				process.env.NEXT_PUBLIC_GA_ID && (
+					<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+				)}
 		</html>
 	);
 }
