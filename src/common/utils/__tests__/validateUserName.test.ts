@@ -23,7 +23,9 @@ describe('validateUserName', () => {
 			const result = validateUserName('a'.repeat(21));
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('ユーザー名は20文字以内で入力してください');
+				expect(result.error).toContain(
+					'ユーザー名は20文字以内で入力してください'
+				);
 			}
 		});
 
@@ -31,7 +33,9 @@ describe('validateUserName', () => {
 			const result = validateUserName('a');
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('ユーザー名は2文字以上で入力してください');
+				expect(result.error).toContain(
+					'ユーザー名は2文字以上で入力してください'
+				);
 			}
 		});
 
@@ -49,7 +53,9 @@ describe('validateUserName', () => {
 			const result = validateUserName('_admin');
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('アンダースコアで始まる名前は使用できません');
+				expect(result.error).toContain(
+					'アンダースコアで始まる名前は使用できません'
+				);
 			}
 		});
 
@@ -57,7 +63,9 @@ describe('validateUserName', () => {
 			const result = validateUserName('admin_');
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('アンダースコアで終わる名前は使用できません');
+				expect(result.error).toContain(
+					'アンダースコアで終わる名前は使用できません'
+				);
 			}
 		});
 
@@ -65,7 +73,9 @@ describe('validateUserName', () => {
 			const result = validateUserName('user__name');
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('連続するアンダースコアは使用できません');
+				expect(result.error).toContain(
+					'連続するアンダースコアは使用できません'
+				);
 			}
 		});
 
@@ -90,13 +100,23 @@ describe('validateUserName', () => {
 
 	describe('Reserved names validation', () => {
 		it('should reject reserved application routes', () => {
-			const reservedRoutes = ['admin', 'api', 'auth', 'login', 'mypage', 'public', 'event'];
-			
+			const reservedRoutes = [
+				'admin',
+				'api',
+				'auth',
+				'login',
+				'mypage',
+				'public',
+				'event'
+			];
+
 			for (const name of reservedRoutes) {
 				const result = validateUserName(name);
 				expect(result.isErr()).toBe(true);
 				if (result.isErr()) {
-					expect(result.error).toContain('この名前は予約されているため使用できません');
+					expect(result.error).toContain(
+						'この名前は予約されているため使用できません'
+					);
 				}
 			}
 		});
@@ -105,18 +125,29 @@ describe('validateUserName', () => {
 			const result = validateUserName('ADMIN');
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
-				expect(result.error).toContain('この名前は予約されているため使用できません');
+				expect(result.error).toContain(
+					'この名前は予約されているため使用できません'
+				);
 			}
 		});
 
 		it('should reject common reserved words', () => {
-			const commonReserved = ['contact', 'support', 'help', 'about', 'root', 'system'];
-			
+			const commonReserved = [
+				'contact',
+				'support',
+				'help',
+				'about',
+				'root',
+				'system'
+			];
+
 			for (const name of commonReserved) {
 				const result = validateUserName(name);
 				expect(result.isErr()).toBe(true);
 				if (result.isErr()) {
-					expect(result.error).toContain('この名前は予約されているため使用できません');
+					expect(result.error).toContain(
+						'この名前は予約されているため使用できません'
+					);
 				}
 			}
 		});
@@ -139,13 +170,21 @@ describe('validateUserName', () => {
 		});
 
 		it('should reject special characters', () => {
-			const invalidChars = ['user@name', 'user-name', 'user.name', 'user#name', 'user%name'];
-			
+			const invalidChars = [
+				'user@name',
+				'user-name',
+				'user.name',
+				'user#name',
+				'user%name'
+			];
+
 			for (const name of invalidChars) {
 				const result = validateUserName(name);
 				expect(result.isErr()).toBe(true);
 				if (result.isErr()) {
-					expect(result.error).toContain('ユーザー名には英数字、アンダースコア、ひらがな、カタカナ、漢字のみ使用できます');
+					expect(result.error).toContain(
+						'ユーザー名には英数字、アンダースコア、ひらがな、カタカナ、漢字のみ使用できます'
+					);
 				}
 			}
 		});
@@ -157,8 +196,12 @@ describe('validateUserName', () => {
 			expect(result.isErr()).toBe(true);
 			if (result.isErr()) {
 				expect(result.error.length).toBeGreaterThan(1);
-				expect(result.error).toContain('アンダースコアで始まる名前は使用できません');
-				expect(result.error).toContain('アンダースコアで終わる名前は使用できません');
+				expect(result.error).toContain(
+					'アンダースコアで始まる名前は使用できません'
+				);
+				expect(result.error).toContain(
+					'アンダースコアで終わる名前は使用できません'
+				);
 			}
 		});
 	});

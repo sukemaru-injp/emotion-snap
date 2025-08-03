@@ -1,7 +1,7 @@
 'use client';
 import { Card, Col, Image, Modal, Row, Select, Typography } from 'antd';
 import { useMemo } from 'react';
-import { FaCrown, FaStar, FaTrophy } from 'react-icons/fa';
+import { FaCrown, FaMedal, FaStar, FaTrophy } from 'react-icons/fa';
 import { EmptyState } from '@/common/ui/EmptyState';
 import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
@@ -29,11 +29,13 @@ const scoreLabels: Record<ScoreType, string> = {
 
 const getRankIcon = (rank: number) => {
 	if (rank === 1)
-		return <FaCrown style={{ color: '#FFD700', fontSize: '24px' }} />;
+		return <FaCrown style={{ color: '#FFD700', fontSize: '32px' }} />;
 	if (rank === 2)
-		return <FaTrophy style={{ color: '#C0C0C0', fontSize: '20px' }} />;
+		return <FaTrophy style={{ color: '#C0C0C0', fontSize: '28px' }} />;
 	if (rank === 3)
-		return <FaStar style={{ color: '#CD7F32', fontSize: '18px' }} />;
+		return <FaStar style={{ color: '#CD7F32', fontSize: '24px' }} />;
+	if (rank === 4)
+		return <FaMedal style={{ color: '#8B7355', fontSize: '20px' }} />;
 	return null;
 };
 
@@ -41,6 +43,7 @@ const getRankStyleClass = (rank: number) => {
 	if (rank === 1) return styles.firstPlace;
 	if (rank === 2) return styles.secondPlace;
 	if (rank === 3) return styles.thirdPlace;
+	if (rank === 4) return styles.fourthPlace;
 	return '';
 };
 
@@ -131,20 +134,6 @@ export const RankingModal: React.FC<Props> = ({
 								</Select.Option>
 							))}
 						</Select>
-						<button
-							type="button"
-							onClick={onClose}
-							style={{
-								padding: '8px 16px',
-								fontSize: '16px',
-								background: '#fff',
-								border: '1px solid #d9d9d9',
-								borderRadius: '6px',
-								cursor: 'pointer'
-							}}
-						>
-							Close
-						</button>
 					</div>
 				</div>
 

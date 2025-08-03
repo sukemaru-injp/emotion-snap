@@ -1,7 +1,7 @@
 import { Card, Typography } from 'antd';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from './_styles/Presenter.module.css';
 import { theme } from '@/styles/theme';
+import styles from './_styles/Presenter.module.css';
 
 type Props = {
 	eventName: string;

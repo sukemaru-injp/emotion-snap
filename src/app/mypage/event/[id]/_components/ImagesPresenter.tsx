@@ -8,7 +8,7 @@ import type { EventImage } from '../types/EventImage';
 import type { S3ObjectInfo } from '../types/S3ObjectInfo';
 import { RankingModal, type ScoreType } from './RankingModal';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export type Props = {
 	images: EventImage[];
@@ -44,7 +44,9 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 					marginBottom: theme.spacing.md
 				}}
 			>
-				<Title level={2}>Event Images</Title>
+				<Title level={2}>
+					Event Images <Text type="secondary">({objects.length})</Text>
+				</Title>
 				<Button
 					type="primary"
 					icon={<FaTrophy />}
