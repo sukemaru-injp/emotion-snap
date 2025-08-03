@@ -13,7 +13,7 @@
 		"gen:db-types": "source .env.local && supabase gen types typescript --project-id $SUPABASE_PROJECT_ID > modules/database.types.ts"
 	},
 	"dependencies": {
-		"@ant-design/nextjs-registry": "^1.0.2",
+		"@ant-design/nextjs-registry": "^1.1.0",
 		"@ant-design/v5-patch-for-react-19": "^1.0.3",
 		"@aws-sdk/client-rekognition": "^3.848.0",
 		"@aws-sdk/client-s3": "^3.850.0",
