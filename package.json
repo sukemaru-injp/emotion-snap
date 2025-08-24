@@ -21,7 +21,6 @@
 		"@next/third-parties": "^15.4.5",
 		"@supabase/ssr": "^0.6.1",
 		"@supabase/supabase-js": "^2.50.5",
-		"@tanstack/react-form": "^1.12.4",
 		"antd": "^5.26.7",
 		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.13",
