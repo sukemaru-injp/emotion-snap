@@ -45,8 +45,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="ja" suppressHydrationWarning>
-			<body className={`${poppins.className} ${notoSansJP.className}`}>
+		<html lang="ja">
+			<body
+				suppressHydrationWarning
+				className={`${poppins.className} ${notoSansJP.className}`}
+			>
 				<AntdRegistry>
 					<header
 						style={{
