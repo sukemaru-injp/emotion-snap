@@ -1,6 +1,6 @@
 'use client';
 import type { User } from '@supabase/supabase-js';
-import { Button, Card, Col, Image, Row, Space, Typography } from 'antd';
+import { Button, Card, Col, Image, Row, Typography } from 'antd';
 import Link from 'next/link';
 import {
 	FiArrowRight,
@@ -225,18 +225,19 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 							<Col key={feature.title} xs={24} sm={12} lg={8}>
 								<Card
 									title={
-										<Space
-											align="center"
-											size={
-												theme.spacing.md
-													? Number.parseInt(theme.spacing.md)
-													: 16
-											}
+										<div
+											style={{
+												display: 'flex',
+												placeContent: 'center',
+												gap: '8px'
+											}}
 										>
 											<feature.icon
 												style={{
 													fontSize: '28px',
-													color: theme.colors.primary
+													color: theme.colors.primary,
+													display: 'grid',
+													placeContent: 'center'
 												}}
 											/>
 											<Title
@@ -245,7 +246,7 @@ export const TopPresenter: React.FC<Props> = ({ user }) => {
 											>
 												{feature.title}
 											</Title>
-										</Space>
+										</div>
 									}
 									style={{ height: '100%' }}
 									styles={{

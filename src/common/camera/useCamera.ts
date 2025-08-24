@@ -62,7 +62,9 @@ export const useCamera = (options: CameraOptions = {}) => {
 
 	const stopCamera = useCallback(() => {
 		if (state.stream) {
-			state.stream.getTracks().forEach((track) => track.stop());
+			state.stream.getTracks().forEach((track) => {
+				track.stop();
+			});
 		}
 
 		if (videoRef.current) {
@@ -119,7 +121,9 @@ export const useCamera = (options: CameraOptions = {}) => {
 	useEffect(() => {
 		return () => {
 			if (state.stream) {
-				state.stream.getTracks().forEach((track) => track.stop());
+				state.stream.getTracks().forEach((track) => {
+					track.stop();
+				});
 			}
 		};
 	}, [state.stream]);
