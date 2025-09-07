@@ -23,7 +23,7 @@
 		"@supabase/supabase-js": "^2.50.5",
 		"antd": "^5.26.7",
 		"date-fns": "^4.1.0",
-		"dayjs": "^1.11.13",
+		"dayjs": "^1.11.18",
 		"neverthrow": "^8.2.0",
 		"next": "15.3.5",
 		"react": "^19.1.0",
