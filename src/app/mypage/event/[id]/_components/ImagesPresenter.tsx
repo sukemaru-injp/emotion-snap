@@ -1,7 +1,9 @@
 'use client';
 import { Button, Card, Col, Image, Row, Typography } from 'antd';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { FaTrophy } from 'react-icons/fa';
+import { FiRefreshCw } from 'react-icons/fi';
 import { EmptyState } from '@/common/ui/EmptyState';
 import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
@@ -21,6 +23,7 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 		[images]
 	);
 
+	const router = useRouter();
 	const [isRankingModalOpen, setIsRankingModalOpen] = useState(false);
 	const [selectedScoreType, setSelectedScoreType] =
 		useState<ScoreType>('happy_score');
@@ -47,15 +50,24 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 				<Title level={2}>
 					Event Images <Text type="secondary">({objects.length})</Text>
 				</Title>
-				<Button
-					type="primary"
-					icon={<FaTrophy />}
-					size="large"
-					disabled={!hasImages}
-					onClick={() => setIsRankingModalOpen(true)}
-				>
-					View Ranking
-				</Button>
+				<div style={{ display: 'flex', gap: theme.spacing.xs }}>
+					<Button
+						icon={<FiRefreshCw />}
+						size="large"
+						onClick={() => router.refresh()}
+					>
+						Refresh
+					</Button>
+					<Button
+						type="primary"
+						icon={<FaTrophy />}
+						size="large"
+						disabled={!hasImages}
+						onClick={() => setIsRankingModalOpen(true)}
+					>
+						View Ranking
+					</Button>
+				</div>
 			</div>
 
 			{hasImages ? (
