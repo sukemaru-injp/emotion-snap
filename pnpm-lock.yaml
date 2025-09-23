@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@ant-design/nextjs-registry':
         specifier: ^1.1.0
-        version: 1.1.0(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.1.0(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@ant-design/v5-patch-for-react-19':
         specifier: ^1.0.3
-        version: 1.0.3(antd@5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 1.0.3(antd@5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@aws-sdk/client-rekognition':
         specifier: ^3.888.0
         version: 3.888.0
@@ -33,8 +33,8 @@ importers:
         specifier: ^2.57.4
         version: 2.57.4
       antd:
-        specifier: ^5.26.7
-        version: 5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^5.27.4
+        version: 5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1403,8 +1403,8 @@ packages:
     resolution: {integrity: sha512-Cxwpt2SfTzTtXcfOlzGEee8O+c+MmUgGrNiBcXnuWxuFJHe6a5Hz7qwhwe5OgaSYI0IJvkLqWX1ASG+cJOkEiA==}
     engines: {node: '>=10'}
 
-  antd@5.26.7:
-    resolution: {integrity: sha512-iCyXN6+i2CUVEOSzzJKfbKeg115qoJhGvSkCh5uzAf9hANwHUOJQhsMn+KtN+Lx/2NQ6wfM7nGZ+7NPNO5Pn1w==}
+  antd@5.27.4:
+    resolution: {integrity: sha512-rhArohoAUCxhkPjGI/BXthOrrjaElL4Fb7d4vEHnIR3DpxFXfegd4rN21IgGdiF+Iz4EFuUZu8MdS8NuJHLSVQ==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -1876,8 +1876,8 @@ packages:
       react: '*'
       react-dom: '*'
 
-  rc-slider@11.1.8:
-    resolution: {integrity: sha512-2gg/72YFSpKP+Ja5AjC5DPL1YnV8DEITDQrcc1eASrUYjl0esptaBVJBh5nLTXCCp15eD8EuGjwezVGSHhs9tQ==}
+  rc-slider@11.1.9:
+    resolution: {integrity: sha512-h8IknhzSh3FEM9u8ivkskh+Ef4Yo4JRIY2nj7MrH6GQmrwV6mcpJf5/4KgH5JaVI1H3E52yCdpOlVyGZIeph5A==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
@@ -1896,15 +1896,15 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  rc-table@7.51.1:
-    resolution: {integrity: sha512-5iq15mTHhvC42TlBLRCoCBLoCmGlbRZAlyF21FonFnS/DIC8DeRqnmdyVREwt2CFbPceM0zSNdEeVfiGaqYsKw==}
+  rc-table@7.53.1:
+    resolution: {integrity: sha512-firAd7Z+liqIDS5TubJ1qqcoBd6YcANLKWQDZhFf3rfoOTt/UNPj4n3O+2vhl+z4QMqwPEUVAil661WHA8H8Aw==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  rc-tabs@15.6.1:
-    resolution: {integrity: sha512-/HzDV1VqOsUWyuC0c6AkxVYFjvx9+rFPKZ32ejxX0Uc7QCzcEjTA9/xMgv4HemPKwzBNX8KhGVbbumDjnj92aA==}
+  rc-tabs@15.7.0:
+    resolution: {integrity: sha512-ZepiE+6fmozYdWf/9gVp7k56PKHB1YYoDsKeQA1CBlJ/POIhjkcYiv0AGP0w2Jhzftd3AVvZP/K+V+Lpi2ankA==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '>=16.9.0'
@@ -2342,10 +2342,10 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  '@ant-design/nextjs-registry@1.1.0(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/nextjs-registry@1.1.0(@ant-design/cssinjs@1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(antd@5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(next@15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      antd: 5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       next: 15.3.5(@babel/core@7.28.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
@@ -2359,9 +2359,9 @@ snapshots:
       resize-observer-polyfill: 1.5.1
       throttle-debounce: 5.0.2
 
-  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@ant-design/v5-patch-for-react-19@1.0.3(antd@5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
-      antd: 5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      antd: 5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
@@ -3988,7 +3988,7 @@ snapshots:
 
   ansi-styles@5.2.0: {}
 
-  antd@5.26.7(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  antd@5.27.4(date-fns@4.1.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@ant-design/colors': 7.2.1
       '@ant-design/cssinjs': 1.23.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4026,11 +4026,11 @@ snapshots:
       rc-resize-observer: 1.4.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-segmented: 2.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-select: 14.16.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rc-slider: 11.1.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rc-slider: 11.1.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-steps: 6.0.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-switch: 4.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rc-table: 7.51.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      rc-tabs: 15.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rc-table: 7.53.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      rc-tabs: 15.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-textarea: 1.10.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-tooltip: 6.4.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       rc-tree: 5.13.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4570,7 +4570,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  rc-slider@11.1.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  rc-slider@11.1.9(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.6
       classnames: 2.5.1
@@ -4594,7 +4594,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  rc-table@7.51.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  rc-table@7.53.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.6
       '@rc-component/context': 1.4.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4605,7 +4605,7 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
-  rc-tabs@15.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  rc-tabs@15.7.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.6
       classnames: 2.5.1
