@@ -40,9 +40,9 @@ export const getObjects = async (
 					Key: object.Key
 				});
 
-				// Generate a signed URL that expires in 1 hour
+				// Generate a signed URL that expires in 30 minutes
 				const url: string = await getSignedUrl(s3Client, getCommand, {
-					expiresIn: 3600
+					expiresIn: 1800
 				});
 
 				// Extract the filename from the key
