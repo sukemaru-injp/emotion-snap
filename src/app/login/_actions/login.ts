@@ -9,6 +9,12 @@ export const loginWithGoogle = async (): Promise<void> => {
 	const origin = requestHeaders.get('origin');
 	// Prefer explicit SITE_URL, then header-derived origin, then local default
 	const baseUrl = process.env.SITE_URL ?? origin ?? 'http://localhost:3100';
+	console.log(
+		process.env.SITE_URL
+			? 'Using SITE_URL for redirect'
+			: 'Using request origin for redirect'
+	);
+
 	const supabase = await createClient();
 
 	const { data, error } = await supabase.auth.signInWithOAuth({
