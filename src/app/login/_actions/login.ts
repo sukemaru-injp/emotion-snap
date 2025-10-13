@@ -7,12 +7,14 @@ import { createClient } from '@/libs/supabase/server';
 export const loginWithGoogle = async (): Promise<void> => {
 	const requestHeaders = await headers();
 	const origin = requestHeaders.get('origin');
+	// Prefer explicit SITE_URL, then header-derived origin, then local default
+	const baseUrl = process.env.SITE_URL ?? origin ?? 'http://localhost:3100';
 	const supabase = await createClient();
 
 	const { data, error } = await supabase.auth.signInWithOAuth({
 		provider: 'google',
 		options: {
-			redirectTo: `${origin}/auth/callback`
+			redirectTo: `${baseUrl}/auth/callback`
 		}
 	});
 
