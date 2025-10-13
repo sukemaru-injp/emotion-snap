@@ -18,15 +18,13 @@ export async function GET(request: Request) {
 				'Successfully exchanged code for session:',
 				`${origin}${next}`
 			);
-			const forwardedHost = request.headers.get('x-forwarded-host'); // original origin before load balancer
-			const isLocalEnv = process.env.NODE_ENV === 'development';
-			if (isLocalEnv) {
-				// we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-				return NextResponse.redirect(`${origin}${next}`);
+			// Prefer explicit site URL when provided
+			const siteUrl = process.env.SITE_URL;
+			if (siteUrl) {
+				console.log('Using SITE_URL for redirect:', siteUrl);
+				return NextResponse.redirect(`${siteUrl}${next}`);
 			}
-			if (forwardedHost) {
-				return NextResponse.redirect(`https://${forwardedHost}${next}`);
-			}
+
 			return NextResponse.redirect(`${origin}${next}`);
 		}
 	}
