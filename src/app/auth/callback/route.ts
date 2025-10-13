@@ -25,6 +25,7 @@ export async function GET(request: Request) {
 				return NextResponse.redirect(`${siteUrl}${next}`);
 			}
 
+			console.log('SITE_URL not found:', origin);
 			return NextResponse.redirect(`${origin}${next}`);
 		}
 	}
