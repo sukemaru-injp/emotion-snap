@@ -6,14 +6,12 @@ import { createClient } from '@/libs/supabase/server';
 
 export const loginWithGoogle = async (): Promise<void> => {
 	const requestHeaders = await headers();
-	const origin = requestHeaders.get('origin');
-	// Prefer explicit SITE_URL, then header-derived origin, then local default
-	const baseUrl = process.env.SITE_URL ?? origin ?? 'http://localhost:3100';
-	console.log(
-		process.env.SITE_URL
-			? 'Using SITE_URL for redirect'
-			: 'Using request origin for redirect'
-	);
+	// Build origin from forwarded headers/host to ensure host consistency
+	const protocol = requestHeaders.get('x-forwarded-proto') ?? 'http';
+	const host =
+		requestHeaders.get('x-forwarded-host') ?? requestHeaders.get('host') ?? '';
+	const baseUrl = `${protocol}://${host}`;
+	console.log('Using request origin for redirect:', baseUrl);
 
 	const supabase = await createClient();
 

@@ -18,14 +18,7 @@ export async function GET(request: Request) {
 				'Successfully exchanged code for session:',
 				`${origin}${next}`
 			);
-			// Prefer explicit site URL when provided
-			const siteUrl = process.env.SITE_URL;
-			if (siteUrl) {
-				console.log('Using SITE_URL for redirect:', siteUrl);
-				return NextResponse.redirect(`${siteUrl}${next}`);
-			}
-
-			console.log('SITE_URL not found:', origin);
+			// Always redirect back to the same origin that initiated the flow
 			return NextResponse.redirect(`${origin}${next}`);
 		}
 	}
