@@ -13,7 +13,8 @@ const client = new S3Client({
 	credentials: {
 		accessKeyId,
 		secretAccessKey
-	}
+	},
+	endpoint: 'https://s3.ap-northeast-1.amazonaws.com'
 });
 
 export default client;
