@@ -34,7 +34,9 @@ export const handleUpload = async (
 	const key = `/${params.eventId}/${params.userName}${format(new Date(), 'yyyyMMddHHmmss')}-${params.file.name}`;
 
 	try {
+		console.log(`Uploading file to S3 with key:${key},${bucketName}`);
 		const fileBuffer = await params.file.arrayBuffer();
+		console.log(`File buffer created for:${key}`);
 		const command = new PutObjectCommand({
 			Bucket: bucketName,
 			Key: key,
