@@ -19,7 +19,7 @@ export const getObjects = async (
 		// List objects in the bucket
 		const listCommand = new ListObjectsV2Command({
 			Bucket: bucketName,
-			Prefix: `/${eventId}/`
+			Prefix: `${eventId}/`
 		});
 
 		const listResponse = await s3Client.send(listCommand);

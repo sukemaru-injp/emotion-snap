@@ -23,7 +23,7 @@ export async function deleteObjectsByPrefix(
 	eventId: number
 ): Promise<Result<null, number>> {
 	const bucketName = `${process.env.NEXT_PUBLIC_APP_ENV}-emotion-snap-user-photos`;
-	const prefix = `/${eventId}/`;
+	const prefix = `${eventId}/`;
 
 	try {
 		const listCommand = new ListObjectsV2Command({
