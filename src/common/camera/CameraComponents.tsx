@@ -3,7 +3,7 @@ import { FaCamera } from 'react-icons/fa';
 import { MdCameraswitch } from 'react-icons/md';
 import { theme } from '@/styles/theme';
 import { useCamera } from './useCamera';
-import './style.css';
+import './style.module.css';
 
 interface CameraComponentProps {
 	onCapture?: (imageFile: File) => void;

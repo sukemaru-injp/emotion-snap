@@ -1,9 +1,11 @@
 'use client';
 
-import { Alert, Card, Input, QRCode } from 'antd';
+import { Alert, Button, Card, Input, QRCode } from 'antd';
 import type React from 'react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
 import { theme } from '@/styles/theme';
+import { QRCodeFullScreenModal } from './QRCodeFullScreenModal';
 
 type QRCodeCardProps = {
 	eventId: number;
@@ -18,12 +20,25 @@ const QRCodeCard: React.FC<QRCodeCardProps> = ({ eventId, isPublished }) => {
 		return undefined;
 	}, [eventId]);
 
+	const [open, setOpen] = useState(false);
+
 	if (!qrCodeUrl) {
 		return null;
 	}
 
 	return (
-		<Card title="Event QR Code">
+		<Card
+			title="Event QR Code"
+			extra={
+				<Button
+					type="text"
+					aria-label="QRを全画面で表示"
+					icon={<FaInfoCircle width="36px" height="36px" />}
+					onClick={() => setOpen(true)}
+					disabled={!isPublished}
+				/>
+			}
+		>
 			<div
 				style={{
 					textAlign: 'center',
@@ -47,6 +62,12 @@ const QRCodeCard: React.FC<QRCodeCardProps> = ({ eventId, isPublished }) => {
 					/>
 				)}
 			</div>
+
+			<QRCodeFullScreenModal
+				open={open}
+				onClose={() => setOpen(false)}
+				url={qrCodeUrl}
+			/>
 		</Card>
 	);
 };
