@@ -1,5 +1,6 @@
-import React from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
+import { MdCameraswitch } from 'react-icons/md';
 import { theme } from '@/styles/theme';
 import { useCamera } from './useCamera';
 import './style.css';
@@ -19,6 +20,16 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 	className = '',
 	isRetake = false
 }) => {
+	const [currentFacingMode, setCurrentFacingMode] = useState<
+		'user' | 'environment'
+	>(facingMode);
+
+	const isMobile = useMemo(() => {
+		return typeof navigator !== 'undefined'
+			? /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+			: false;
+	}, []);
+
 	const {
 		videoRef,
 		isActive,
@@ -27,27 +38,37 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 		startCamera,
 		stopCamera,
 		capturePhoto
-	} = useCamera({ facingMode });
+	} = useCamera({ facingMode: currentFacingMode });
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (error && onError) {
 			onError(error);
 		}
 	}, [error, onError]);
 
-	const handleCapture = async () => {
+	const handleCapture = useCallback(async () => {
 		const imageFile = await capturePhoto();
 		if (imageFile && onCapture) {
 			onCapture(imageFile);
 		}
-	};
+	}, [capturePhoto, onCapture]);
+
+	const toggleFacingMode = useCallback(() => {
+		const next = currentFacingMode === 'user' ? 'environment' : 'user';
+		setCurrentFacingMode(next);
+		if (isActive) {
+			// ここで停止→再起動（イベントハンドラー内で処理）
+			stopCamera();
+			startCamera({ facingMode: next });
+		}
+	}, [currentFacingMode, isActive, startCamera, stopCamera]);
 
 	return (
 		<div className={`camera-container ${className}`}>
 			{!isActive && (
 				<button
 					type="button"
-					onClick={startCamera}
+					onClick={() => startCamera()}
 					disabled={isLoading}
 					className="camera-button start"
 					style={{
@@ -98,6 +119,34 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 				>
 					<FaCamera size={24} color={theme.colors.primary} />
 				</button>
+
+				{/* カメラ切替ボタン（モバイルのみ表示） - 撮影ボタンの右横 */}
+				{isMobile && (
+					<button
+						type="button"
+						onClick={toggleFacingMode}
+						className="camera-button switch"
+						aria-label="カメラ切替"
+						style={{
+							position: 'absolute',
+							bottom: '28px',
+							left: 'calc(50% + 70px)',
+							transform: 'translateX(-50%)',
+							width: '44px',
+							height: '44px',
+							borderRadius: '50%',
+							backgroundColor: 'rgba(255, 255, 255, 0.9)',
+							border: `1px solid ${theme.colors.primary}`,
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							cursor: 'pointer',
+							boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)'
+						}}
+					>
+						<MdCameraswitch size={22} color={theme.colors.primary} />
+					</button>
+				)}
 
 				{/* 停止ボタン - ビデオの右上に配置 */}
 				<button

@@ -23,42 +23,45 @@ export const useCamera = (options: CameraOptions = {}) => {
 
 	const videoRef = useRef<HTMLVideoElement>(null);
 
-	const startCamera = useCallback(async () => {
-		setState((prev) => ({ ...prev, isLoading: true, error: null }));
+	const startCamera = useCallback(
+		async (override?: Partial<CameraOptions>) => {
+			setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
-		try {
-			const constraints: MediaStreamConstraints = {
-				video: options.video || {
-					facingMode: options.facingMode || 'user',
-					width: { ideal: 1280 },
-					height: { ideal: 720 }
-				},
-				audio: options.audio || false
-			};
+			try {
+				const constraints: MediaStreamConstraints = {
+					video: (override?.video ?? options.video) || {
+						facingMode: override?.facingMode || options.facingMode || 'user',
+						width: { ideal: 1280 },
+						height: { ideal: 720 }
+					},
+					audio: override?.audio ?? options.audio ?? false
+				};
 
-			const stream = await navigator.mediaDevices.getUserMedia(constraints);
+				const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
-			if (videoRef.current) {
-				videoRef.current.srcObject = stream;
+				if (videoRef.current) {
+					videoRef.current.srcObject = stream;
+				}
+
+				setState({
+					stream,
+					isActive: true,
+					error: null,
+					isLoading: false
+				});
+			} catch (error) {
+				setState((prev) => ({
+					...prev,
+					error:
+						error instanceof Error
+							? error.message
+							: 'カメラアクセスに失敗しました',
+					isLoading: false
+				}));
 			}
-
-			setState({
-				stream,
-				isActive: true,
-				error: null,
-				isLoading: false
-			});
-		} catch (error) {
-			setState((prev) => ({
-				...prev,
-				error:
-					error instanceof Error
-						? error.message
-						: 'カメラアクセスに失敗しました',
-				isLoading: false
-			}));
-		}
-	}, [options]);
+		},
+		[options]
+	);
 
 	const stopCamera = useCallback(() => {
 		if (state.stream) {

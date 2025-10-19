@@ -36,7 +36,6 @@ export const handleUpload = async (
 	try {
 		console.log(`Uploading file to S3 with key:${key},${bucketName}`);
 		const fileBuffer = await params.file.arrayBuffer();
-		console.log(`File buffer created for:${key}`);
 		const command = new PutObjectCommand({
 			Bucket: bucketName,
 			Key: key,
