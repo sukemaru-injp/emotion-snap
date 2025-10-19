@@ -2,8 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { MdCameraswitch } from 'react-icons/md';
 import { theme } from '@/styles/theme';
+import styles from './style.module.css';
 import { useCamera } from './useCamera';
-import './style.module.css';
 
 interface CameraComponentProps {
 	onCapture?: (imageFile: File) => void;
@@ -92,7 +92,7 @@ export const CameraComponent: React.FC<CameraComponentProps> = ({
 					autoPlay
 					playsInline
 					muted
-					className="camera-video"
+					className={styles.cameraVideo}
 				/>
 
 				{/* 撮影ボタン - ビデオの中央下部に配置 */}
