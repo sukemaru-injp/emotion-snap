@@ -8,6 +8,7 @@ import { EmptyState } from '@/common/ui/EmptyState';
 import { theme } from '@/styles/theme';
 import type { EventImage } from '../types/EventImage';
 import type { S3ObjectInfo } from '../types/S3ObjectInfo';
+import styles from './_styles/ImagesPresenter.module.css';
 import { RankingModal, type ScoreType } from './RankingModal';
 
 const { Title, Text } = Typography;
@@ -79,7 +80,11 @@ export const ImagesPresenter: React.FC<Props> = ({ images, objects }) => {
 						return (
 							<Col key={object.key} xs={24} sm={12} md={8} lg={6}>
 								<Card title={userName}>
-									<Image src={object.url} alt={userName || 'Event image'} />
+									<Image
+										src={object.url}
+										alt={userName || 'Event image'}
+										className={styles.image}
+									/>
 								</Card>
 							</Col>
 						);

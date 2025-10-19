@@ -2,7 +2,7 @@
 
 import { Input, Modal, QRCode, Typography } from 'antd';
 import type React from 'react';
-import styles from './QRCodeFullScreenModal.module.css';
+import styles from './_styles/QRCodeFullScreenModal.module.css';
 
 type Props = {
 	open: boolean;
