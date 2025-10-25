@@ -10,15 +10,21 @@ import { QRCodeFullScreenModal } from './QRCodeFullScreenModal';
 type QRCodeCardProps = {
 	eventId: number;
 	isPublished: boolean;
+	eventCode: string;
 };
 
-const QRCodeCard: React.FC<QRCodeCardProps> = ({ eventId, isPublished }) => {
+const QRCodeCard: React.FC<QRCodeCardProps> = ({
+	eventId,
+	isPublished,
+	eventCode
+}) => {
 	const qrCodeUrl = useMemo(() => {
 		if (typeof window !== 'undefined') {
-			return `${window.location.origin}/public/event/${eventId}`;
+			const query = new URLSearchParams({ code: eventCode });
+			return `${window.location.origin}/public/event/${eventId}?${query.toString()}`;
 		}
 		return undefined;
-	}, [eventId]);
+	}, [eventCode, eventId]);
 
 	const [open, setOpen] = useState(false);
 

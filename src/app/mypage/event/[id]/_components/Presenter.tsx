@@ -338,6 +338,7 @@ export const Presenter: React.FC<PresenterProps> = ({
 				{showQR && (
 					<QRCodeCard
 						eventId={event.id}
+						eventCode={event.code}
 						isPublished={publishData.isPublished}
 					/>
 				)}
