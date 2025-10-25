@@ -27,6 +27,11 @@ const scoreLabels: Record<ScoreType, string> = {
 	happy_smile_combined: 'Happy+Smile'
 };
 
+const truncateScoreToFourDecimals = (score: number) => {
+	if (!Number.isFinite(score)) return 0;
+	return Math.trunc(score * 10000) / 10000;
+};
+
 const getRankIcon = (rank: number) => {
 	if (rank === 1)
 		return <FaCrown style={{ color: '#FFD700', fontSize: '32px' }} />;
@@ -142,6 +147,8 @@ export const RankingModal: React.FC<Props> = ({
 						{sortedImages.map((item, index) => {
 							const rank = index + 1;
 							const scoreValue = item.score || 0;
+							const truncatedScoreValue =
+								truncateScoreToFourDecimals(scoreValue);
 							const rankIcon = getRankIcon(rank);
 							const rankStyleClass = getRankStyleClass(rank);
 
@@ -169,7 +176,7 @@ export const RankingModal: React.FC<Props> = ({
 													className={styles.scoreValue}
 													style={{ color: theme.colors.primary }}
 												>
-													{scoreValue} Points
+													{truncatedScoreValue} Points
 												</Text>
 											</div>
 										}

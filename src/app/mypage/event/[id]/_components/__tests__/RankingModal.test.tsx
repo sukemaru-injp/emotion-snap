@@ -258,6 +258,36 @@ describe('RankingModal', () => {
 		expect(screen.getByText('#3')).toBeInTheDocument();
 	});
 
+	it('truncates score display to four decimal places without rounding', () => {
+		const decimalProps = {
+			...defaultProps,
+			images: [
+				{
+					id: 4,
+					s3_key: 'decimal.jpg',
+					angry_score: null,
+					happy_score: 12.345678,
+					sad_score: null,
+					smile_score: null,
+					surprised_score: null,
+					user_name: 'Decimal User'
+				}
+			],
+			objects: [
+				{
+					key: 'decimal.jpg',
+					url: 'https://example.com/decimal.jpg',
+					size: 1234,
+					lastModified: new Date()
+				}
+			]
+		};
+
+		render(<RankingModal {...decimalProps} />);
+
+		expect(screen.getByText('12.3456 Points')).toBeInTheDocument();
+	});
+
 	it('calls onScoreTypeChange when score type is changed', () => {
 		const onScoreTypeChange = vi.fn();
 		render(
