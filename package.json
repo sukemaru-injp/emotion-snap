@@ -21,7 +21,7 @@
 		"@next/third-parties": "^15.4.5",
 		"@supabase/ssr": "^0.7.0",
 		"@supabase/supabase-js": "^2.75.0",
-		"antd": "^5.28.1",
+		"antd": "^5.29.1",
 		"date-fns": "^4.1.0",
 		"dayjs": "^1.11.18",
 		"neverthrow": "^8.2.0",
