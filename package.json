@@ -42,7 +42,7 @@
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
 		"@types/uuid": "^10.0.0",
-		"@vitejs/plugin-react": "^4.7.0",
+		"@vitejs/plugin-react": "^5.1.2",
 		"jsdom": "^26.1.0",
 		"typescript": "^5.9.3",
 		"vite-tsconfig-paths": "^5.1.4",
